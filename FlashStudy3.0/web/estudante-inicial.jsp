@@ -36,7 +36,6 @@
         <% 
             Usuario us = (Usuario)request.getAttribute("Usuario");
             session.setAttribute("Usuario", us );
-            out.print(us.getNome());
         %>
         
         

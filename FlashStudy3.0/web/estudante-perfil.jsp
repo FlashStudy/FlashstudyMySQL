@@ -35,9 +35,10 @@
     
     <body>
         
-        <% 
+        <%
             Usuario us = (Usuario) session.getAttribute("Usuario");
         %>
+        
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand h1 mb-0 icon icon-group" href="estudante-inicial.jsp"> FlashStudy</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,7 +93,6 @@
                                     <input type="hidden" class="form-control" id="senhaC" name="senhaC">
                                 </div>
                                 <button type="button" onclick="editaDados(this.value)" class="btn btn-primary">Editar dados</button>
-                                
                             </form>
                         </div>
                     </div>
