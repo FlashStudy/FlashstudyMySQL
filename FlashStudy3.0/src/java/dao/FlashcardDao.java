@@ -5,28 +5,28 @@
  */
 package dao;
 
-import model.Usuario;
+import model.Flashcard;
 import org.hibernate.Session;
 
 /**
  *
  * @author Bruno
  */
-public class UsuarioDao {
+public class FlashcardDao {
     private Session sessao;
     private HibernateSessionFactory factory;
     
-    public UsuarioDao() {
+    public FlashcardDao() {
     }
     
-    public int salvar (Usuario us){
+    public int salvar (Flashcard card){
         
         try{
             sessao = factory.getSessao().openSession();
             
             sessao.beginTransaction();
 
-            sessao.save(us);
+            sessao.save(card);
 
             sessao.getTransaction().commit();
 
@@ -37,20 +37,4 @@ public class UsuarioDao {
             return 1;
         }
     }
-    
-    public Usuario procuraEmail (String email){
-        Usuario usuario = new Usuario();
-        
-        sessao = factory.getSessao().openSession();
-            
-        sessao.beginTransaction();
-            
-        usuario = (Usuario) sessao.get(Usuario.class, email);
-            
-        sessao.close();
-        
-        return usuario;
-
-    }
-    
 }

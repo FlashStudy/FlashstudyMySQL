@@ -5,12 +5,15 @@
  */
 package controler;
 
+import dao.FlashcardDao;
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Flashcard;
+import model.Usuario;
 
 /**
  *
@@ -29,19 +32,28 @@ public class FlashcardServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet FlashcardServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet FlashcardServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        Usuario us = (Usuario) request.getAttribute("Usuario");
+        String titulo = request.getParameter("titulo");
+        String pergunta = request.getParameter("pergunta");
+        String resposta = request.getParameter("resposta");
+        
+        Flashcard card = new Flashcard();
+        card.setPergunta(pergunta);
+        card.setTitulo(titulo);
+        card.setResposta(resposta);
+        
+        //card.setUsuario(us);
+        
+        FlashcardDao dao = new FlashcardDao();
+        
+        dao.salvar(card);
+        System.out.print(us.getNome());
+        if(true){
+            RequestDispatcher dispatcher = request.getRequestDispatcher("estudante-inicial.jsp");
+            dispatcher.forward(request, response);
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

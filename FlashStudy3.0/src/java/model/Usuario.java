@@ -22,7 +22,7 @@ public class Usuario  implements java.io.Serializable {
         this.nome = nome;
         this.senha = senha;
     }
-    
+
     public String getEmail() {
         return email;
     }
@@ -55,7 +55,4 @@ public class Usuario  implements java.io.Serializable {
         this.foto = foto;
     }
     
-    
 }
-
-
