@@ -32,28 +32,36 @@ public class FlashcardServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        Usuario us = (Usuario) request.getAttribute("Usuario");
+
+        Usuario us = new Usuario();
+        us.setEmail(request.getParameter("email").toString());
+
+        String publico = request.getParameter("publico") != null
+                ? request.getParameter("publico").toString() : "";
         String titulo = request.getParameter("titulo");
         String pergunta = request.getParameter("pergunta");
         String resposta = request.getParameter("resposta");
-        
+
         Flashcard card = new Flashcard();
         card.setPergunta(pergunta);
         card.setTitulo(titulo);
         card.setResposta(resposta);
-        
-        //card.setUsuario(us);
-        
-        FlashcardDao dao = new FlashcardDao();
-        
-        dao.salvar(card);
-        System.out.print(us.getNome());
-        if(true){
-            RequestDispatcher dispatcher = request.getRequestDispatcher("estudante-inicial.jsp");
-            dispatcher.forward(request, response);
+
+        if (publico.equals("true")) {
+            card.setPublico(true);
+        } else {
+            card.setPublico(false);
         }
+
+        card.setUsuario(us);
+
+        FlashcardDao dao = new FlashcardDao();
+
+        dao.salvar(card);
         
+        RequestDispatcher dispatcher = request.getRequestDispatcher("estudante-flashcards.jsp");
+        dispatcher.forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -82,6 +82,7 @@
     <body>
         <%
             Usuario us = (Usuario) session.getAttribute("Usuario");
+            String email = us.getEmail();
         %>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand h1 mb-0 icon icon-group" href="estudante-inicial.jsp"> FlashStudy</a>
@@ -93,7 +94,6 @@
                     <a class="nav-item nav-link icon icon-calendar"     href="estudante-cronograma.jsp" style="color: #383838"> Cronograma</a>
                     <a class="nav-item nav-link icon icon-refresh link"      href="estudante-ciclo.jsp" style="color: #383838"> Ciclo de estudos</a>
                     <a class="nav-item nav-link icon icon-pushpin"      href="estudante-flashcards.jsp" style="color: #383838"> Flashcards</a>  
-                    <a class="nav-item nav-link icon icon-book"         href="estudante-anotacoes.jsp" style="color: #383838"> Anotações</a>
                     <a class="nav-item nav-link icon icon-user"         href="estudante-perfil.jsp" style="color: #383838"> Perfil</a>
                     <a class="nav-item nav-link icon icon-question-sign" href="estudante-ajuda.jsp" style="color: #383838"> Ajuda</a>
                     <a class="nav-item nav-link icon icon-signout"      href="index.html" style="color: #383838"> Sair</a>
@@ -110,32 +110,34 @@
             <div class="jumbotron">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="btn-group-wrap">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary" title="Favoritar" id="btnFav"><a class="icon icon-star"></a></button>
-                                <button type="button" class="btn btn-primary" title="Criar novo" id="btnNovo"><a class="icon icon-plus-sign"></a></button>
-                                <button type="button" class="btn btn-primary" title="Deletar" id="btnDel"><a class="icon icon-trash"></a></button>
-                                <button type="button" class="btn btn-primary" title="Editar um flashcard" id="btnEdit"><a class="icon icon-edit"></a></button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> Fundo pergunta </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#"></a>
-                                        <a class="dropdown-item" href="#"></a>
-                                    </div>
-                                </div>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> Fundo resposta </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Tablet</a>
-                                        <a class="dropdown-item" href="#">Smartphone</a>
-                                    </div>
-                                </div>
-                            </div>   
-                        </div>  
-                    </div>
-                    <div class="col-lg-12">
                         <form action="FlashcardServlet" method="GET">
                             <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="btn-group-wrap">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary" title="Favoritar" id="btnFav"><a class="icon icon-star"></a></button>
+                                            <button type="button" class="btn btn-primary" title="Criar novo" id="btnNovo"><a class="icon icon-plus-sign"></a></button>
+                                            <button type="button" class="btn btn-primary" title="Deletar" id="btnDel"><a class="icon icon-trash"></a></button>
+                                            <button type="button" class="btn btn-primary" title="Editar um flashcard" id="btnEdit"><a class="icon icon-edit"></a></button>
+                                            <button type="button" class="btn btn-primary" title="Outras pessoas terão acesso ao flashcard" id="btnPublic">
+                                                <input type="checkbox" name="publico" value="true">  Público?</button>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> Fundo pergunta </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="#"></a>
+                                                    <a class="dropdown-item" href="#"></a>
+                                                </div>
+                                            </div>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> Fundo resposta </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="#">Tablet</a>
+                                                    <a class="dropdown-item" href="#">Smartphone</a>
+                                                </div>
+                                            </div>
+                                        </div>   
+                                    </div>  
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="display-4">
                                         <h4>Pergunta</h4>
@@ -156,6 +158,7 @@
                                     <div class="jumbotron" id="flash2">
                                         <div class="form-group">
                                             <textarea class="form-control" placeholder="Insira a sua resposta aqui" id="resposta" name="resposta"></textarea>
+                                            <input type="hidden" name="email" value="<%= email%>"/>
                                             <button type="submit" class="btn btn-primary">Salvar</button>
                                         </div>
                                     </div>

@@ -101,7 +101,6 @@
                     <a class="nav-item nav-link icon icon-calendar"     href="estudante-cronograma.jsp" style="color: #383838"> Cronograma</a>
                     <a class="nav-item nav-link icon icon-refresh link"      href="estudante-ciclo.jsp" style="color: #383838"> Ciclo de estudos</a>
                     <a class="nav-item nav-link icon icon-pushpin"      href="estudante-flashcards.jsp" style="color: #383838"> Flashcards</a>  
-                    <a class="nav-item nav-link icon icon-book"         href="estudante-anotacoes.jsp" style="color: #383838"> Anotações</a>
                     <a class="nav-item nav-link icon icon-user"         href="estudante-perfil.jsp" style="color: #383838"> Perfil</a>
                     <a class="nav-item nav-link icon icon-question-sign" href="estudante-ajuda.jsp" style="color: #383838"> Ajuda</a>
                     <a class="nav-item nav-link icon icon-signout"      href="index.html" style="color: #383838"> Sair</a>

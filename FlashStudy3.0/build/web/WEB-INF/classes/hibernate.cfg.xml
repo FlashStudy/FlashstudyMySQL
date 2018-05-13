@@ -54,5 +54,6 @@ Contributor(s):
 
 
         <mapping class="model.Usuario"></mapping>
+        <mapping class="model.Flashcard"></mapping>
     </session-factory>
 </hibernate-configuration>
