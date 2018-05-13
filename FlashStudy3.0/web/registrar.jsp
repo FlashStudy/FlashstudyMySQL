@@ -50,7 +50,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 col-xsm-12">
                     <div class="jumbotron">
                         <div class="container">
-                            <div id="login">
+                            <div id="registrar">
                                 <h2>Registre-se:</h2>
                                 <form action="UsuarioServlet" method="POST">
                                     <div class="form-group">
