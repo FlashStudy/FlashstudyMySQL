@@ -99,7 +99,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                            <!--
                             <div class="card">
                                 <div class="card-header">
                                     <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
@@ -112,6 +112,7 @@
                                     </div>
                                 </div>
                             </div>
+                            -->
                         </div>
                         
                     </div>

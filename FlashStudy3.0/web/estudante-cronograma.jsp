@@ -38,12 +38,41 @@
                 background-color: #ffffff
             }
         </style>
+
+        <script type="text/javascript">
+            function addMateriaTbl() {
+
+                if (document.getElementById("materia").value != "") {
+
+                    var table = document.getElementById("tblMaterias");
+                    var row = table.insertRow(1);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    cell1.innerHTML = document.getElementById("selMes").value;
+                    cell2.innerHTML = document.getElementById("materia").value;
+                }
+            }
+
+            function resetTbl() {
+                var x = document.getElementById("tblMaterias").rows.length;
+
+                if (x > 1) {
+
+                    var i = 1;
+                    while (i<=x) {
+                        document.getElementById("tblMaterias").deleteRow(i);
+                    }
+                }
+            }
+        </script>
     </head>
 
     <body>
 
         <%
             Usuario us = (Usuario) session.getAttribute("Usuario");
+            String meses[] = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+                "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
         %>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -70,7 +99,63 @@
 
         <div class="container-fluid">
             <div class="jumbotron">
-                <button type="button" class="btn btn-primary icon icon-edit" id="btnEdit"> Editar cronograma</button>
+
+                <button type="button" class="btn btn-primary" id="btnCiclo" data-toggle="modal" data-target="#myModal" onclick="addHorarios()">
+                    <spam class = "icon icon-edit"> Editar Cronograma</spam>
+                </button>
+
+                <!-- Modal Formulário -->
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal cabeçalhor -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Cronograma</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal corpo -->
+                            <div class="modal-body" id="mBody">
+                                <div>
+                                    <div class="form-group">
+                                        <label for="sel1"><strong>Selecione o mês:</strong></label>
+                                        <select class="form-control" id="selMes">
+                                            <% for (int i = 0; i < 12; i++) {%>
+                                            <option value="<%= meses[i]%>"><%= meses[i]%></option>
+                                            <%}%>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sel1"><strong>Matéria:</strong></label>
+                                        <input type="text" class="form-control" id="materia" 
+                                               placeholder="Nome da matéria" name="materia"/>                         
+                                    </div>
+                                    <button type="button" class="btn btn-primary" onclick="addMateriaTbl()" style="width: 100%">
+                                        <span class="icon icon-plus-sign"> Adicionar mês e matéria</span>
+                                    </button>
+                                </div>
+                                <table id="tblMaterias">
+                                    <tr>
+                                        <th>Mês</th>
+                                        <th>Matéria</th>
+                                    </tr>
+                                </table>
+                                <table  >
+
+                                </table>
+                            </div>
+
+                            <!-- Modal rodapé -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" data-dismiss="modal">Concluir</button>
+                                <button type="button" class="btn btn-danger" onclick="resetTbl()" data-dismiss="modal">Cancelar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="card">

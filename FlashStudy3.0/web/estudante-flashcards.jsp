@@ -76,14 +76,18 @@
                 margin-left: 50px;
             }
         </style>
-
+        
     </head>
 
     <body>
         <%
             Usuario us = (Usuario) session.getAttribute("Usuario");
             String email = us.getEmail();
+            
+            String aux = request.getAttribute("salvo") != null ?
+                request.getAttribute("salvo").toString() : "";
         %>
+        
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand h1 mb-0 icon icon-group" href="estudante-inicial.jsp"> FlashStudy</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,6 +105,8 @@
             </div>
         </nav>
 
+        
+        
         <div class="title">
             <h2 class="icon icon-pushpin"> Flashcards</h2>
             <span class="byline">Crie e edite todos os seus flashcards</span>
@@ -121,20 +127,6 @@
                                             <button type="button" class="btn btn-primary" title="Editar um flashcard" id="btnEdit"><a class="icon icon-edit"></a></button>
                                             <button type="button" class="btn btn-primary" title="Outras pessoas terão acesso ao flashcard" id="btnPublic">
                                                 <input type="checkbox" name="publico" value="true">  Público?</button>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> Fundo pergunta </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"></a>
-                                                    <a class="dropdown-item" href="#"></a>
-                                                </div>
-                                            </div>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> Fundo resposta </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#">Tablet</a>
-                                                    <a class="dropdown-item" href="#">Smartphone</a>
-                                                </div>
-                                            </div>
                                         </div>   
                                     </div>  
                                 </div>
