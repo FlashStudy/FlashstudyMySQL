@@ -58,12 +58,13 @@ public class FlashcardServlet extends HttpServlet {
         FlashcardDao dao = new FlashcardDao();
 
         int aux = dao.salvar(card);
-        
-        if(aux == 0)
+
+        if (aux == 0) {
             request.setAttribute("salvo", "salvo");
-        else
+        } else {
             request.setAttribute("salvo", "erro");
-        
+        }
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("estudante-flashcards.jsp");
         dispatcher.forward(request, response);
 

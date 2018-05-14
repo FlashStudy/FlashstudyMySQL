@@ -12,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 import model.Usuario;
 
 /**
@@ -33,46 +32,45 @@ public class UsuarioServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Usuario us;
-        
+
         UsuarioDao dao = new UsuarioDao();
         String email;
         String senha;
         String nome;
         String acao = request.getParameter("acao").toString();
-        
-        if(acao.equals("login")){
+
+        if (acao.equals("login")) {
             email = request.getParameter("email").toString();
             senha = request.getParameter("senha").toString();
-            
+
             us = dao.procuraEmail(email);
-            
+
             request.setAttribute("Usuario", us);
-            
-            if(!us.getEmail().equals("") && us.getEmail()!=null){
+
+            if (!us.getEmail().equals("") && us.getEmail() != null) {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("estudante-inicial.jsp");
                 dispatcher.forward(request, response);
             }
         }
-        
-        if(acao.equals("cadastro")){
+
+        if (acao.equals("cadastro")) {
             nome = request.getParameter("nome").toString();
             email = request.getParameter("email").toString();
             senha = request.getParameter("senha").toString();
 
             us = new Usuario(email, nome, senha);
-            
+
             int resultado;
             resultado = dao.salvar(us);
 
-            
             request.setAttribute("Usuario", us);
-            
-            if(resultado == 0){
+
+            if (resultado == 0) {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("estudante-inicial.jsp");
                 dispatcher.forward(request, response);
             }
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

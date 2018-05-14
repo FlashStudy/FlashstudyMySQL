@@ -52,8 +52,9 @@ Contributor(s):
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
 
-
         <mapping class="model.Usuario"></mapping>
         <mapping class="model.Flashcard"></mapping>
+        
     </session-factory>
 </hibernate-configuration>
+
