@@ -1,14 +1,14 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
     <head>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <link rel="shortcut icon" href="images/icon.ico" type="image/ico">        
 
-        <title>FlashStudy</title>
+        <title>FlashStudy: Página inicial</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -27,6 +27,55 @@
     </head>
 
     <body id="page-top">
+
+        <%
+            HttpSession sessao = request.getSession();
+            if (sessao.getAttribute("usuario_logado") == null) {
+                sessao.setAttribute("usuario_logado", "false");
+            }
+        %>
+
+        <script type="text/javascript">
+            function validaReg() {
+                var nome = document.getElementById("nomer").value;
+                var email = document.getElementById("emailr").value;
+                var senha1 = document.getElementById("senhar").value;
+                var senha2 = document.getElementById("csenha").value;
+                if ((senha1 === "") || (senha2 === "") || (nome === "") || (email === "")) {
+                    window.alert("Algum campo está em branco!");
+                } else {
+                    if (validaEmail(email)) {
+                        window.alert("Endereço de email inválido!");
+                    } else {
+                        if (senha1 !== senha2) {
+                            window.alert("As senhas diferem!");
+                        } else {
+                            document.getElementById("formReg").submit();
+                        }
+                    }
+                }
+            }
+            function validaLogin() {
+                var email = document.getElementById("email").value;
+                var senha = document.getElementById("pwd").value;
+                if ((senha === "") || (email === "")) {
+                    window.alert("Algum campo está em branco!");
+                } else {
+                    if (validaEmail(email)) {
+                        window.alert("Endereço de email inválido!");
+                    } else {
+                        document.getElementById("formLogin").submit();
+                    }
+                }
+            }
+            function validaEmail(email) {
+                var atpos = email.indexOf("@");
+                var dotpos = email.lastIndexOf(".");
+                if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= email.length) {
+                    return true;
+                }
+            }
+        </script>
 
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
@@ -132,7 +181,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
 
-                    <!-- Modal cabeçalhor -->
+                    <!-- Modal cabeçalho -->
                     <div class="modal-header">
                         <center><h4 class="modal-title">LOGIN </h4></center>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -141,8 +190,7 @@
                     <!-- Modal corpo -->
                     <div class="modal-body" id="mBody">
                         <div id="login">
-                            <h2>Login:</h2>
-                            <form action="UsuarioServlet" method="POST">
+                            <form name="formLogin" id="formLogin" action="executar_login" method="POST">
                                 <div class="form-group">
                                     <label for="email">Email:</label>
                                     <input type="email" class="form-control" id="email" placeholder="Entre com email" name="email" required="required">
@@ -152,11 +200,16 @@
                                     <input type="password" class="form-control" id="pwd" placeholder="Entre com a senha" name="senha" required="required">
                                     <input type="hidden" name="acao" value="login"/>
                                 </div>
-                                <a style="color: black" href="registrar.jsp"><span>Ainda não é registrado? Clique aqui!</span></a><br>
-                                <button type="submit" class="btn btn-primary">Login</button>
-                                <button type="button" class="btn btn-success" data-dismiss="modal" data-toggle="modal" data-target="#myModalRegistra">Registre-se</button>
                             </form>
                         </div>  
+                    </div>
+
+                    <!-- Modal rodapé -->
+                    <div class="modal-footer">
+                        <button type="button" onclick="validaLogin()" class="btn btn-primary">Login</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#myModalRegistra">Registre-se</button>
+
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
             </div>
@@ -175,31 +228,30 @@
                     <!-- Modal corpo -->
                     <div class="modal-body" id="mBody">
                         <div id="registrar">
-                            <h2>Registre-se:</h2>
-                            <form action="UsuarioServlet" method="POST">
+                            <form name = "formReg" id="formReg" action="executar_login" method="POST">
                                 <div class="form-group">
                                     <label for="nome">Nome:</label>
-                                    <input type="text" class="form-control" id="nome" placeholder="Nome completo" name="nome">
+                                    <input type="text" class="form-control" id="nomer" placeholder="Nome completo" name="nome">
                                 </div><div class="form-group">
                                     <label for="email">Email:</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Entre com email" name="email">
+                                    <input type="email" class="form-control" id="emailr" placeholder="Entre com email" name="email">
                                 </div>
                                 <div class="form-group">
                                     <label for="pwd">Senha:</label>
-                                    <input type="password" class="form-control" id="pwd" placeholder="Entre com a senha" name="senha">
+                                    <input type="password" class="form-control" id="senhar" placeholder="Entre com a senha" name="senha">
                                 </div>
                                 <div class="form-group">
                                     <label for="pwd2">Confirme a senha:</label>
-                                    <input type="password" class="form-control" id="pwd2" placeholder="Entre com a senha nvamente" name="csenha">
+                                    <input type="password" class="form-control" id="csenha" placeholder="Entre com a senha nvamente" name="csenha">
                                     <input type="hidden" name="acao" value="cadastro"/>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Registrar-se</button>
                             </form>
                         </div>
                     </div>
 
                     <!-- Modal rodapé -->
                     <div class="modal-footer">
+                        <button type="button" onclick="validaReg(this.value)" class="btn btn-primary">Registrar-se</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     </div>
 
@@ -246,8 +298,6 @@
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
-                            <br>
-                            <div id="success"></div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-xl" id="sendMessageButton">Enviar</button>
                             </div>

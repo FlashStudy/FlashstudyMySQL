@@ -76,18 +76,19 @@
                 margin-left: 50px;
             }
         </style>
-        
+
     </head>
 
     <body>
         <%
-            Usuario us = (Usuario) session.getAttribute("Usuario");
+            HttpSession sessao = request.getSession();
+            Usuario us = (Usuario)sessao.getAttribute("usuario");
+            
             String email = us.getEmail();
             
-            String aux = request.getAttribute("salvo") != null ?
-                request.getAttribute("salvo").toString() : "";
+            out.println(us.getNome());
         %>
-        
+
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand h1 mb-0 icon icon-group" href="estudante-inicial.jsp"> FlashStudy</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,13 +101,13 @@
                     <a class="nav-item nav-link icon icon-pushpin"      href="estudante-flashcards.jsp" style="color: #383838"> Flashcards</a>  
                     <a class="nav-item nav-link icon icon-user"         href="estudante-perfil.jsp" style="color: #383838"> Perfil</a>
                     <a class="nav-item nav-link icon icon-question-sign" href="estudante-ajuda.jsp" style="color: #383838"> Ajuda</a>
-                    <a class="nav-item nav-link icon icon-signout"      href="index.html" style="color: #383838"> Sair</a>
+                    <a class="nav-item nav-link icon icon-signout"      href="executar_login" style="color: #383838"> Sair</a>
                 </div>
             </div>
         </nav>
 
-        
-        
+
+
         <div class="title">
             <h2 class="icon icon-pushpin"> Flashcards</h2>
             <span class="byline">Crie e edite todos os seus flashcards</span>

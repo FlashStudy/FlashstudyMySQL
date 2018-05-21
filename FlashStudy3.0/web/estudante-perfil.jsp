@@ -30,7 +30,7 @@
             .jumbotron{
                 width: 80%;
             }
-            
+
             #contFt{
                 text-align: center;
             }
@@ -38,9 +38,11 @@
     </head>
 
     <body>
-
         <%
-            Usuario us = (Usuario) session.getAttribute("Usuario");
+            HttpSession sessao = request.getSession();
+            Usuario us = (Usuario)sessao.getAttribute("usuario");
+            
+            out.println(us.getNome());
         %>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -55,7 +57,7 @@
                     <a class="nav-item nav-link icon icon-pushpin"      href="estudante-flashcards.jsp" style="color: #383838"> Flashcards</a>  
                     <a class="nav-item nav-link icon icon-user"         href="estudante-perfil.jsp" style="color: #383838"> Perfil</a>
                     <a class="nav-item nav-link icon icon-question-sign" href="estudante-ajuda.jsp" style="color: #383838"> Ajuda</a>
-                    <a class="nav-item nav-link icon icon-signout"      href="index.html" style="color: #383838"> Sair</a>
+                    <a class="nav-item nav-link icon icon-signout"      href="executar_login" style="color: #383838"> Sair</a>
                 </div>
             </div>
         </nav>
