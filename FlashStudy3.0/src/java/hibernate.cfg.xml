@@ -47,13 +47,20 @@ Contributor(s):
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">root</property>
         <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.format_sql">false</property>
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hbm2ddl.auto">create</property>
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
 
-        <mapping class="model.Usuario"></mapping>
+        <mapping class="model.Assunto"></mapping>
+        <mapping class="model.Cronograma"></mapping>
+        <mapping class="model.Disciplina"></mapping>
+        <mapping class="model.Executado"></mapping>
+        <mapping class="model.ExecutadoId"></mapping>
         <mapping class="model.Flashcard"></mapping>
+        <mapping class="model.Horario"></mapping>
+        <mapping class="model.Pasta"></mapping>
+        <mapping class="model.Usuario"></mapping>
         
     </session-factory>
 </hibernate-configuration>

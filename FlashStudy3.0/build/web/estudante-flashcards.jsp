@@ -1,4 +1,9 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="model.Usuario"%>
+<%@page import="model.Flashcard"%>
+<%@page import="dao.FlashcardDao"%>
+
 <!DOCTYPE html>
 
 <html lang="pt-BR">
@@ -6,17 +11,26 @@
         <title>Flashstudy: Flashcards</title>
 
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <link rel="shortcut icon" href="images/icon.ico" type="image/ico">        
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link href="css/estudante-padrao.css" rel="stylesheet" type="text/css" media="all" />
         <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="javascript/acoes.js"></script>
+        <link rel="shortcut icon" href="img/icon.png" type="image/ico">        
+
+        <!-- Bootstrap core CSS -->
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom fonts for this template -->
+        <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+        <!-- Plugin CSS -->
+        <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+
+        <!-- Custom styles for this template -->
+        <link href="css/freelancer.min.css" rel="stylesheet">
 
         <style type="text/css">
             #area{
@@ -87,6 +101,10 @@
             String email = us.getEmail();
             
             out.println(us.getNome());
+            
+            FlashcardDao dao = new FlashcardDao();
+            
+            ArrayList<Flashcard> cards =(ArrayList) dao.getByEmail(email);
         %>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -117,7 +135,7 @@
             <div class="jumbotron">
                 <div class="row">
                     <div class="col-lg-12">
-                        <form action="FlashcardServlet" method="GET">
+                        <form action="FlashcardServlet" method="POST">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="btn-group-wrap">
@@ -126,8 +144,8 @@
                                             <button type="button" class="btn btn-primary" title="Criar novo" id="btnNovo"><a class="icon icon-plus-sign"></a></button>
                                             <button type="button" class="btn btn-primary" title="Deletar" id="btnDel"><a class="icon icon-trash"></a></button>
                                             <button type="button" class="btn btn-primary" title="Editar um flashcard" id="btnEdit"><a class="icon icon-edit"></a></button>
-                                            <button type="button" class="btn btn-primary" title="Outras pessoas terão acesso ao flashcard" id="btnPublic">
-                                                <input type="checkbox" name="publico" value="true">  Público?</button>
+                                            <button type="button" class="btn btn-primary" title="Outras pessoas terÃ£o acesso ao flashcard" id="btnPublic">
+                                                <input type="checkbox" name="publico" value="PÃºblico"/>  PÃºblico?</button>
                                         </div>   
                                     </div>  
                                 </div>
@@ -137,7 +155,7 @@
                                     </div>
                                     <div class="jumbotron" id="flash1">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="titulo" placeholder="Título do flashcard" name="titulo">
+                                            <input type="text" class="form-control" id="titulo" placeholder="TÃ­tulo do flashcard" name="titulo">
                                         </div>
                                         <div class="form-group">
                                             <textarea class="form-control" placeholder="Insira a sua pergunta aqui" id="pergunta" name="pergunta"></textarea>
@@ -162,6 +180,47 @@
                 </div>
             </div>
         </div>
+        <div class="jumbotron">
+            <div class="row">
+                <%
+                    int i;
+                    for(i=0; i<cards.size();i++){     
+                %>
+                <div class="col-lg-3 col-sm-12">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= cards.get(i).getTitulo()%></h5>
+                            <p class="card-text">
+                            <ul>
+                                <li>NÃ­vel:<%= cards.get(i).getNivel()%></li>
+                                <li>Status:<%= cards.get(i).isPublico()%></li>
+                            </ul>
+                            </p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <%
+                    }
+                %>    
+            </div>
+        </div>
+
+            
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Plugin JavaScript -->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+        <!-- Contact Form JavaScript -->
+        <script src="js/jqBootstrapValidation.js"></script>
+        <script src="js/contact_me.js"></script>
+
+        <!-- Custom scripts for this template -->
+        <script src="js/freelancer.min.js"></script>
 
     </body>
 </html>

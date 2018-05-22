@@ -37,11 +37,11 @@ public class UsuarioServlet extends HttpServlet {
         String email;
         String senha;
         String nome;
-        String acao = request.getParameter("acao").toString();
+        String acao = request.getParameter("acao");
 
         if (acao.equals("login")) {
-            email = request.getParameter("email").toString();
-            senha = request.getParameter("senha").toString();
+            email = request.getParameter("email");
+            senha = request.getParameter("senha");
 
             us = dao.procuraEmail(email);
 
@@ -54,9 +54,9 @@ public class UsuarioServlet extends HttpServlet {
         }
 
         if (acao.equals("cadastro")) {
-            nome = request.getParameter("nome").toString();
-            email = request.getParameter("email").toString();
-            senha = request.getParameter("senha").toString();
+            nome = request.getParameter("nome");
+            email = request.getParameter("email");
+            senha = request.getParameter("senha");
 
             us = new Usuario(email, nome, senha);
 

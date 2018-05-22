@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.Usuario"%>
 <!DOCTYPE html>
 
@@ -6,17 +7,26 @@
         <title>Flashstudy: Cronograma de Estudos</title>
 
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <link rel="shortcut icon" href="images/icon.ico" type="image/ico">        
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link href="css/estudante-padrao.css" rel="stylesheet" type="text/css" media="all" />
         <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="javascript/acoes.js"></script>
+        <link rel="shortcut icon" href="img/icon.png" type="image/ico">        
+
+        <!-- Bootstrap core CSS -->
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom fonts for this template -->
+        <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+        <!-- Plugin CSS -->
+        <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+
+        <!-- Custom styles for this template -->
+        <link href="css/freelancer.min.css" rel="stylesheet">
 
         <style type="text/css">
             table {
@@ -70,7 +80,7 @@
     <body>
 
         <%
-            String meses[] = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+            String meses[] = {"Janeiro", "Fevereiro", "MarÃ§o", "Abril", "Maio", "Junho",
                 "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
         %>
         <%
@@ -99,7 +109,7 @@
 
         <div class="title">
             <h2 class="icon icon-calendar"> Cronograma</h2>
-            <span class="byline">Calendário com todos os seus planejamentos</span>
+            <span class="byline">CalendÃ¡rio com todos os seus planejamentos</span>
         </div>
 
         <div class="container-fluid">
@@ -109,12 +119,12 @@
                     <spam class = "icon icon-edit"> Editar Cronograma</spam>
                 </button>
 
-                <!-- Modal Formulário -->
+                <!-- Modal FormulÃ¡rio -->
                 <div class="modal fade" id="myModal">
                     <div class="modal-dialog">
                         <div class="modal-content">
 
-                            <!-- Modal cabeçalhor -->
+                            <!-- Modal cabeÃ§alhor -->
                             <div class="modal-header">
                                 <h4 class="modal-title">Cronograma</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -124,7 +134,7 @@
                             <div class="modal-body" id="mBody">
                                 <div>
                                     <div class="form-group">
-                                        <label for="sel1"><strong>Selecione o mês:</strong></label>
+                                        <label for="sel1"><strong>Selecione o mÃªs:</strong></label>
                                         <select class="form-control" id="selMes">
                                             <% for (int i = 0; i < 12; i++) {%>
                                             <option value="<%= meses[i]%>"><%= meses[i]%></option>
@@ -132,18 +142,18 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="sel1"><strong>Matéria:</strong></label>
+                                        <label for="sel1"><strong>MatÃ©ria:</strong></label>
                                         <input type="text" class="form-control" id="materia" 
-                                               placeholder="Nome da matéria" name="materia"/>                         
+                                               placeholder="Nome da matÃ©ria" name="materia"/>                         
                                     </div>
                                     <button type="button" class="btn btn-primary" onclick="addMateriaTbl()" style="width: 100%">
-                                        <span class="icon icon-plus-sign"> Adicionar mês e matéria</span>
+                                        <span class="icon icon-plus-sign"> Adicionar mÃªs e matÃ©ria</span>
                                     </button>
                                 </div>
                                 <table id="tblMaterias">
                                     <tr>
-                                        <th>Mês</th>
-                                        <th>Matéria</th>
+                                        <th>MÃªs</th>
+                                        <th>MatÃ©ria</th>
                                     </tr>
                                 </table>
                                 <table  >
@@ -151,7 +161,7 @@
                                 </table>
                             </div>
 
-                            <!-- Modal rodapé -->
+                            <!-- Modal rodapÃ© -->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-success" data-dismiss="modal">Concluir</button>
                                 <button type="button" class="btn btn-danger" onclick="resetTbl()" data-dismiss="modal">Cancelar</button>
@@ -191,9 +201,9 @@
                             <div id="collapseTwo" class="collapse show" data-parent="#accordion">
                                 <div class="card-body">
                                     <ul>
-                                        <li>Português</li>
-                                        <li>Matemática</li>
-                                        <li>Física</li>
+                                        <li>PortuguÃªs</li>
+                                        <li>MatemÃ¡tica</li>
+                                        <li>FÃ­sica</li>
                                     </ul>
                                 </div>
                             </div>
@@ -204,7 +214,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <a class="card-link" data-toggle="collapse" href="#collapseThree">
-                                    <strong>Março</strong>
+                                    <strong>MarÃ§o</strong>
                                 </a>
                             </div>
                             <div id="collapseThree" class="collapse show" data-parent="#accordion">
@@ -212,7 +222,7 @@
                                     <ul>
                                         <li>Filosofia</li>
                                         <li>Sociologia</li>
-                                        <li>Química</li>
+                                        <li>QuÃ­mica</li>
                                     </ul>
                                 </div>
                             </div>
@@ -222,5 +232,22 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Plugin JavaScript -->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+        <!-- Contact Form JavaScript -->
+        <script src="js/jqBootstrapValidation.js"></script>
+        <script src="js/contact_me.js"></script>
+
+        <!-- Custom scripts for this template -->
+        <script src="js/freelancer.min.js"></script>
+
     </body>
 </html>

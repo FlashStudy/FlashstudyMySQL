@@ -1,4 +1,6 @@
 <%@page import="model.Usuario"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 
 <html lang="pt-BR">
@@ -6,17 +8,26 @@
         <title>Flashstudy: Perfil</title>
 
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <link rel="shortcut icon" href="images/icon.ico" type="image/ico">        
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link href="css/estudante-padrao.css" rel="stylesheet" type="text/css" media="all" />
         <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="javascript/acoes.js"></script>
+        <link rel="shortcut icon" href="img/icon.png" type="image/ico">        
+
+        <!-- Bootstrap core CSS -->
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom fonts for this template -->
+        <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+        <!-- Plugin CSS -->
+        <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+
+        <!-- Custom styles for this template -->
+        <link href="css/freelancer.min.css" rel="stylesheet">
 
         <style>
             IMG.displayed {
@@ -73,7 +84,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xsm-12">
                     <div class="container" id="contFt">
-                        <IMG class="displayed" src="images/user-default.png" alt="Usuário"></IMG>
+                        <IMG class="displayed" src="images/user-default.png" alt="UsuÃ¡rio"></IMG>
                         <button type="button"class="btn btn-primary">Mudar foto</button>
                     </div>
                 </div>
@@ -105,5 +116,22 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Plugin JavaScript -->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+        <!-- Contact Form JavaScript -->
+        <script src="js/jqBootstrapValidation.js"></script>
+        <script src="js/contact_me.js"></script>
+
+        <!-- Custom scripts for this template -->
+        <script src="js/freelancer.min.js"></script>
+
     </body>
 </html>

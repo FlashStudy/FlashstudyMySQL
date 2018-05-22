@@ -2,11 +2,9 @@ package model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbUsuario")
-public class Usuario  implements java.io.Serializable {
+public class Usuario implements java.io.Serializable {
 
     @Id
     private String email;
@@ -54,5 +52,10 @@ public class Usuario  implements java.io.Serializable {
     public void setFoto(String foto) {
         this.foto = foto;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "email=" + email + ", nome=" + nome + ", senha=" + senha + ", foto=" + foto + '}';
+    }
+
 }

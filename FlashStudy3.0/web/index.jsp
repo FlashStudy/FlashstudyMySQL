@@ -1,14 +1,20 @@
+<%-- 
+    Document   : index
+    Created on : May 16, 2018, 2:42:37 PM
+    Author     : Igor
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
     <head>
+        <title>FlashStudy: Página inicial</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="shortcut icon" href="images/icon.ico" type="image/ico">        
 
-        <title>FlashStudy: Página inicial</title>
+        <link rel="shortcut icon" href="img/icon.png" type="image/ico">        
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -30,6 +36,7 @@
 
         <%
             HttpSession sessao = request.getSession();
+
             if (sessao.getAttribute("usuario_logado") == null) {
                 sessao.setAttribute("usuario_logado", "false");
             }
@@ -41,6 +48,7 @@
                 var email = document.getElementById("emailr").value;
                 var senha1 = document.getElementById("senhar").value;
                 var senha2 = document.getElementById("csenha").value;
+
                 if ((senha1 === "") || (senha2 === "") || (nome === "") || (email === "")) {
                     window.alert("Algum campo está em branco!");
                 } else {
@@ -55,9 +63,11 @@
                     }
                 }
             }
+
             function validaLogin() {
                 var email = document.getElementById("email").value;
                 var senha = document.getElementById("pwd").value;
+
                 if ((senha === "") || (email === "")) {
                     window.alert("Algum campo está em branco!");
                 } else {
@@ -68,6 +78,7 @@
                     }
                 }
             }
+
             function validaEmail(email) {
                 var atpos = email.indexOf("@");
                 var dotpos = email.lastIndexOf(".");

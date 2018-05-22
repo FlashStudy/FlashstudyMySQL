@@ -34,10 +34,10 @@ public class FlashcardServlet extends HttpServlet {
             throws ServletException, IOException {
 
         Usuario us = new Usuario();
-        us.setEmail(request.getParameter("email").toString());
+        us.setEmail(request.getParameter("email"));
 
         String publico = request.getParameter("publico") != null
-                ? request.getParameter("publico").toString() : "";
+                ? request.getParameter("publico") : "";
         String titulo = request.getParameter("titulo");
         String pergunta = request.getParameter("pergunta");
         String resposta = request.getParameter("resposta");
@@ -47,10 +47,10 @@ public class FlashcardServlet extends HttpServlet {
         card.setTitulo(titulo);
         card.setResposta(resposta);
 
-        if (publico.equals("true")) {
-            card.setPublico(true);
+        if (publico.equals("Público")) {
+            card.setPublico("Público");
         } else {
-            card.setPublico(false);
+            card.setPublico("Privado");
         }
 
         card.setUsuario(us);
@@ -67,7 +67,6 @@ public class FlashcardServlet extends HttpServlet {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("estudante-flashcards.jsp");
         dispatcher.forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
