@@ -45,6 +45,10 @@
             #contFt{
                 text-align: center;
             }
+            
+            body{
+                background-color: #2C3E50;
+            }
         </style>
     </head>
 
@@ -53,10 +57,9 @@
             HttpSession sessao = request.getSession();
             Usuario us = (Usuario)sessao.getAttribute("usuario");
             
-            out.println(us.getNome());
         %>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary rounded">
             <a class="navbar-brand h1 mb-0 icon icon-group" href="estudante-inicial.jsp"> FlashStudy</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -74,9 +77,9 @@
         </nav>
 
         <div class="container-fluid">
-            <div class="title">
-                <h2 class="icon icon-user"> Perfil</h2>
-                <span class="byline">Verifique e edite os seus dados</span>
+            <div class="title" >
+                <h2 class="icon icon-user" style="color: #cccccc"> Perfil</h2>
+                <span class="byline" style="color: #cccccc">Verifique e edite os seus dados</span>
             </div>
         </div>
 
@@ -84,7 +87,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xsm-12">
                     <div class="container" id="contFt">
-                        <IMG class="displayed" src="images/user-default.png" alt="Usuário"></IMG>
+                        <IMG class="displayed" src="img/user-default.png" alt="Usuário"></IMG>
                         <button type="button"class="btn btn-primary">Mudar foto</button>
                     </div>
                 </div>
@@ -116,7 +119,7 @@
                 </div>
             </div>
         </div>
-
+                                
 
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
@@ -132,6 +135,6 @@
 
         <!-- Custom scripts for this template -->
         <script src="js/freelancer.min.js"></script>
-
+        
     </body>
 </html>

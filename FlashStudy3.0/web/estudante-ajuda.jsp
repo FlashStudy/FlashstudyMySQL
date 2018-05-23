@@ -29,8 +29,8 @@
         <link href="css/freelancer.min.css" rel="stylesheet">
 
         <style type="text/css">
-            .jumbotron{
-                background-color: #99ccff;
+            body{
+                background-color: #2C3E50;
             }
 
             .container{
@@ -48,10 +48,9 @@
             HttpSession sessao = request.getSession();
             Usuario us = (Usuario)sessao.getAttribute("usuario");
 
-            out.println(us.getNome());
         %>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary rounded">
             <a class="navbar-brand h1 mb-0 icon icon-group" href="estudante-inicial.jsp"> FlashStudy</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -69,8 +68,8 @@
         </nav>
 
         <div class="title">
-            <h2 class="icon icon-question-sign"> Ajuda</h2>
-            <span class="byline">Veja aqui algumas dicas de como usar o <strong>Flashstudy</strong></span>
+            <h2 class="icon icon-question-sign" style="color: #cccccc"> Ajuda</h2>
+            <span class="byline" style="color: #cccccc">Veja aqui algumas dicas de como usar o <strong>Flashstudy</strong></span>
         </div>
 
         <div class="container-fluid">

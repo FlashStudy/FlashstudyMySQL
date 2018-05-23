@@ -9,7 +9,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <link href="css/estudante-padrao.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/estudante-padrao.css" rel="stylesheet" type="text/css"/>
         <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
 
         <link rel="shortcut icon" href="img/icon.png" type="image/ico">        
@@ -29,6 +29,11 @@
         <link href="css/freelancer.min.css" rel="stylesheet">
 
         <style>
+
+            body{
+                background-color: #2C3E50;
+            }
+
             .carousel-inner img {
                 width: 100%;
                 height: 100%;
@@ -47,11 +52,10 @@
             HttpSession sessao = request.getSession();
             Usuario us = (Usuario)sessao.getAttribute("usuario");
             
-            out.println(us.getNome());
         %>
 
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary rounded">
             <a class="navbar-brand h1 mb-0 icon icon-group" href="estudante-inicial.jsp"> FlashStudy</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -68,8 +72,8 @@
             </div>
         </nav>
 
-        <div class="title">
-            <h2 class="icon icon-home"> Bem-vindo!</h2>
+        <div class="title ">
+            <h2 class="icon icon-home" style="color: #cccccc"> Bem-vindo!</h2>
         </div>
 
 

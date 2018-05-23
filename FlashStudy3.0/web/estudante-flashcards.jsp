@@ -40,7 +40,7 @@
             #flash1{
                 background-color: cadetblue;
                 width: 80%;
-                height: 300px;
+                height: 250px;
                 margin: auto;
                 margin-bottom: 20px;
                 padding: 5px;
@@ -49,7 +49,7 @@
             #flash2{
                 background-color: lightgreen;
                 width: 80%;
-                height: 300px;
+                height: 250px;
                 margin: auto;
                 margin-bottom: 20px;
                 padding: 5px;;
@@ -89,8 +89,25 @@
                 padding: auto;
                 margin-left: 50px;
             }
+
+            body{
+                background-color: #2C3E50;
+            }
         </style>
 
+        <script type="text/javascript">
+            function validaCampos() {
+                titulo = document.getElementById("titulo").value;
+                pergunta = document.getElementById("pergunta").value;
+                resposta = document.getElementById("resposta").value;
+
+                if ((titulo === "") || (pergunta === "") || (resposta === "")) {
+                    window.alert("Algum campo não está preenchido!");
+                } else {
+                    document.getElementById("flashcard").submit();
+                }
+            }
+        </script>
     </head>
 
     <body>
@@ -99,27 +116,25 @@
             Usuario us = (Usuario)sessao.getAttribute("usuario");
             
             String email = us.getEmail();
-            
-            out.println(us.getNome());
-            
+                        
             FlashcardDao dao = new FlashcardDao();
             
-            ArrayList<Flashcard> cards =(ArrayList) dao.getByEmail(email);
+            ArrayList<Flashcard> cards = dao.getByEmail(email);
         %>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary rounded">
             <a class="navbar-brand h1 mb-0 icon icon-group" href="estudante-inicial.jsp"> FlashStudy</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ml-auto">
-                    <a class="nav-item nav-link icon icon-calendar"     href="estudante-cronograma.jsp" style="color: #383838"> Cronograma</a>
-                    <a class="nav-item nav-link icon icon-refresh link"      href="estudante-ciclo.jsp" style="color: #383838"> Ciclo de estudos</a>
-                    <a class="nav-item nav-link icon icon-pushpin"      href="estudante-flashcards.jsp" style="color: #383838"> Flashcards</a>  
-                    <a class="nav-item nav-link icon icon-user"         href="estudante-perfil.jsp" style="color: #383838"> Perfil</a>
-                    <a class="nav-item nav-link icon icon-question-sign" href="estudante-ajuda.jsp" style="color: #383838"> Ajuda</a>
-                    <a class="nav-item nav-link icon icon-signout"      href="executar_login" style="color: #383838"> Sair</a>
+                    <a class="nav-item nav-link icon icon-calendar"      href="estudante-cronograma.jsp" style="color: #383838"> Cronograma</a>
+                    <a class="nav-item nav-link icon icon-refresh link"  href="estudante-ciclo.jsp"      style="color: #383838"> Ciclo de estudos</a>
+                    <a class="nav-item nav-link icon icon-pushpin"       href="estudante-flashcards.jsp" style="color: #383838"> Flashcards</a>  
+                    <a class="nav-item nav-link icon icon-user"          href="estudante-perfil.jsp"     style="color: #383838"> Perfil</a>
+                    <a class="nav-item nav-link icon icon-question-sign" href="estudante-ajuda.jsp"      style="color: #383838"> Ajuda</a>
+                    <a class="nav-item nav-link icon icon-signout"       href="executar_login"           style="color: #383838"> Sair</a>
                 </div>
             </div>
         </nav>
@@ -127,25 +142,37 @@
 
 
         <div class="title">
-            <h2 class="icon icon-pushpin"> Flashcards</h2>
-            <span class="byline">Crie e edite todos os seus flashcards</span>
+            <h2 class="icon icon-pushpin" style="color: #cccccc"> Flashcards</h2>
+            <span class="byline" style="color: #cccccc">Crie e edite todos os seus flashcards</span>
         </div>
 
         <div class="container" id="area">
             <div class="jumbotron">
                 <div class="row">
                     <div class="col-lg-12">
-                        <form action="FlashcardServlet" method="POST">
+                        <form id="flashcard" action="FlashcardServlet" method="POST">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="btn-group-wrap">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-primary" title="Favoritar" id="btnFav"><a class="icon icon-star"></a></button>
-                                            <button type="button" class="btn btn-primary" title="Criar novo" id="btnNovo"><a class="icon icon-plus-sign"></a></button>
-                                            <button type="button" class="btn btn-primary" title="Deletar" id="btnDel"><a class="icon icon-trash"></a></button>
-                                            <button type="button" class="btn btn-primary" title="Editar um flashcard" id="btnEdit"><a class="icon icon-edit"></a></button>
-                                            <button type="button" class="btn btn-primary" title="Outras pessoas terão acesso ao flashcard" id="btnPublic">
-                                                <input type="checkbox" name="publico" value="Público"/>  Público?</button>
+                                            <button type="button" class="btn btn-dark" title="Favoritar"        id="btnFav" >
+                                                <a class="icon icon-star"> Favoritar</a>
+                                            </button>
+                                            <button type="button" class="btn btn-dark" title="Salvar"           id="btnSave" onclick="validaCampos()">
+                                                <a class="icon icon-save"> Salvar</a></button>
+                                            <button type="button" class="btn btn-dark" title="Criar novo"       id="btnNovo">
+                                                <a class="icon icon-plus-sign"> Novo</a>
+                                            </button>
+                                            <button type="button" class="btn btn-dark" title="Editar flashcard" id="btnEdit">
+                                                <a class="icon icon-edit"> Editar</a>
+                                            </button>
+                                            <button type="button" class="btn btn-dark" title="Deletar"          id="btnDel" >
+                                                <a class="icon icon-trash"> Deletar</a>
+                                            </button>
+                                            <button type="button" class="btn btn-dark" id="btnPublic">
+                                                <input title="Outros terão acesso ao flashcard" type="checkbox" name="publico" value="Público"/>
+                                                <spam> Público?</spam>
+                                            </button>
                                         </div>   
                                     </div>  
                                 </div>
@@ -170,7 +197,6 @@
                                         <div class="form-group">
                                             <textarea class="form-control" placeholder="Insira a sua resposta aqui" id="resposta" name="resposta"></textarea>
                                             <input type="hidden" name="email" value="<%= email%>"/>
-                                            <button type="submit" class="btn btn-primary">Salvar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -180,33 +206,42 @@
                 </div>
             </div>
         </div>
-        <div class="jumbotron">
-            <div class="row">
-                <%
-                    int i;
-                    for(i=0; i<cards.size();i++){     
-                %>
-                <div class="col-lg-3 col-sm-12">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= cards.get(i).getTitulo()%></h5>
-                            <p class="card-text">
-                            <ul>
-                                <li>Nível:<%= cards.get(i).getNivel()%></li>
-                                <li>Status:<%= cards.get(i).isPublico()%></li>
-                            </ul>
-                            </p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+
+        <div class="container">
+
+            <div class="jumbotron">
+                <div class="title">
+                    <h2>Seus flashcards</h2>
+                </div>
+                <div class="row">
+                    <%
+                        int i;
+                        for(i=0; i<cards.size();i++){     
+                    %>
+                    <div class="col-lg-4 col-md-6 col-sm-12" style="margin-top: 5px">
+                        <div class="card align-self-center" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= cards.get(i).getTitulo()%></h5>
+                                <p class="card-text">
+                                <ul>
+                                    <li>Nível: <%= cards.get(i).getNivel()%></li>
+                                    <li>Status: <%= cards.get(i).getPublico()%></li>
+                                    <li>Matéria: null</li>
+                                    <li>Assunto: null</li>
+                                </ul>
+                                </p>
+                                <a href="#" class="btn btn-primary">Selecionar</a>
+                            </div>
                         </div>
                     </div>
+                    <%
+                        }
+                    %>    
                 </div>
-                <%
-                    }
-                %>    
             </div>
         </div>
 
-            
+
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

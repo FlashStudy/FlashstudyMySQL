@@ -1,6 +1,6 @@
 package dao;
 
-import java.util.List;
+import java.util.ArrayList;
 import model.Flashcard;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -9,10 +9,9 @@ import org.hibernate.Session;
 public class FlashcardDao {
 
     private final Session sessao;
-    private HibernateSessionFactory factory;
 
     public FlashcardDao() {
-        sessao = factory.getSessao().openSession();
+        sessao = HibernateSessionFactory.getSessao().openSession();
     }
 
     public int salvar(Flashcard card) {
@@ -35,12 +34,14 @@ public class FlashcardDao {
         }
     }
 
-    public List<Flashcard> getByEmail(String email) {
-        List<Flashcard> cards = null;
+    public ArrayList<Flashcard> getByEmail(String email) {
+        ArrayList<Flashcard> cards;
 
+        sessao.beginTransaction();
+        
         Query consulta = sessao.createQuery("from Flashcard where usuario_email = ?");
 
-        cards = consulta.setString(0, email).list();
+        cards = (ArrayList) consulta.setString(0, email).list();
 
         sessao.flush();
         sessao.clear();

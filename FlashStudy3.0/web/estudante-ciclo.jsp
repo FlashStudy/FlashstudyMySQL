@@ -77,6 +77,10 @@
                 border-color: black;
             }
 
+            body{
+                background-color: #2C3E50;
+            }
+
             th, td {
                 text-align: center;
                 padding: 16px;
@@ -100,11 +104,9 @@
         <%
             HttpSession sessao = request.getSession();
             Usuario us = (Usuario)sessao.getAttribute("usuario");
-
-            out.println(us.getNome());
         %>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary rounded">
             <a class="navbar-brand h1 mb-0 icon icon-group" href="estudante-inicial.jsp"> FlashStudy</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -122,8 +124,8 @@
         </nav>
 
         <div class="title">
-            <h2 class="icon icon-refresh"> Ciclo de Estudos</h2>
-            <span class="byline">Veja aqui o que há para hoje e para a semana</span>
+            <h2 class="icon icon-refresh" style="color: #cccccc"> Ciclo de Estudos</h2>
+            <span class="byline" style="color: #cccccc">Veja aqui o que há para hoje e para a semana</span>
         </div>
 
         <div class="container">
