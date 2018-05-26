@@ -1,15 +1,12 @@
 package model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Flashcard implements java.io.Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int codigo;
     private String pergunta;
     private String resposta;
@@ -17,30 +14,36 @@ public class Flashcard implements java.io.Serializable {
     private String titulo;
     private String publico;
 
+    @ManyToOne
     private Usuario usuario;
-    private Assunto assunto;
-    
-    public Flashcard() {
 
+    @ManyToOne
+    @JoinColumn(name = "disciplina_codigo")
+    private Disciplina disciplina;
+
+    @ManyToOne
+    @JoinColumn(name = "assunto_codigo")
+    private Assunto assunto;
+
+    public Flashcard() {
     }
 
-    public Flashcard(String pergunta, String resposta, String nivel, String titulo, String publico, Usuario usuario, Assunto assunto) {
+    public Flashcard(String pergunta, String resposta, String nivel, String titulo, String publico, Usuario usuario, Disciplina disciplina, Assunto assunto) {
         this.pergunta = pergunta;
         this.resposta = resposta;
         this.nivel = nivel;
         this.titulo = titulo;
         this.publico = publico;
         this.usuario = usuario;
+        this.disciplina = disciplina;
         this.assunto = assunto;
     }
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Integer getCodigo() {
+
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(Integer codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
@@ -84,7 +87,6 @@ public class Flashcard implements java.io.Serializable {
         this.publico = publico;
     }
 
-    @ManyToOne
     public Usuario getUsuario() {
         return usuario;
     }
@@ -92,8 +94,15 @@ public class Flashcard implements java.io.Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
-    @ManyToMany
+
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
+    }
+
     public Assunto getAssunto() {
         return assunto;
     }
@@ -104,8 +113,7 @@ public class Flashcard implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return "Flashcard{" + "codigo=" + codigo + ", pergunta=" + pergunta + ", resposta=" + resposta + ", nivel=" + nivel + ", titulo=" + titulo + ", publico=" + publico + ", usuario=" + usuario + ", assunto=" + assunto + '}';
+        return "Flashcard{" + "codigo=" + codigo + ", pergunta=" + pergunta + ", resposta=" + resposta + ", nivel=" + nivel + ", titulo=" + titulo + ", publico=" + publico + ", usuario=" + usuario + ", disciplina=" + disciplina + ", assunto=" + assunto + '}';
     }
-    
-    
+
 }

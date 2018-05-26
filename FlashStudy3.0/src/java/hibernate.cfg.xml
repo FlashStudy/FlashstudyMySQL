@@ -53,12 +53,12 @@ Contributor(s):
         <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
 
         <!--
-        <mapping class="model.Assunto"></mapping>
-        <mapping class="model.Cronograma"></mapping>
-        <mapping class="model.Disciplina"></mapping>
         <mapping class="model.Executado"></mapping>
         <mapping class="model.ExecutadoId"></mapping>
         -->
+        <mapping class="model.Assunto"></mapping>
+        <mapping class="model.Cronograma"></mapping>
+        <mapping class="model.Disciplina"></mapping>
         <mapping class="model.Flashcard"></mapping>
         <!--
         <mapping class="model.Horario"></mapping>

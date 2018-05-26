@@ -1,30 +1,28 @@
 package model;
 
+import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 @Entity
 public class Disciplina implements java.io.Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer codigo;
     private String nome;
 
-    private Cronograma cronograma;
-    
+    @OneToMany
+    private List<Assunto> assunto;
+
     public Disciplina() {
     }
 
-    public Disciplina(String nome, Cronograma cronograma) {
+    public Disciplina(String nome, List assunto) {
         this.nome = nome;
-        this.cronograma = cronograma;
+        this.assunto = assunto;
     }
-    
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -41,18 +39,17 @@ public class Disciplina implements java.io.Serializable {
         this.nome = nome;
     }
 
-    @ManyToMany
-    public Cronograma getCronograma() {
-        return cronograma;
+    public List getAssunto() {
+        return assunto;
     }
 
-    public void setCronograma(Cronograma cronograma) {
-        this.cronograma = cronograma;
+    public void setAssunto(List assunto) {
+        this.assunto = assunto;
     }
 
     @Override
     public String toString() {
-        return "Disciplina{" + "codigo=" + codigo + ", nome=" + nome + ", cronograma=" + cronograma + '}';
+        return "Disciplina{" + "codigo=" + codigo + ", nome=" + nome + ", assunto=" + assunto + '}';
     }
 
 }

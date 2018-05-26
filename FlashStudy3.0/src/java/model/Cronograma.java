@@ -1,35 +1,49 @@
 package model;
 
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import java.util.List;
+import javax.persistence.*;
 
 @Entity
 public class Cronograma implements java.io.Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer codigo;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date inicio;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date fim;
 
+    @ManyToOne
     private Usuario usuario;
-    private Disciplina disciplina;
-    
+
+    @ManyToMany
+    @JoinTable(name = "usuario_cria_cronograma", joinColumns
+            = {
+                @JoinColumn(name = "cronograma_codigo")}, inverseJoinColumns
+            = {
+                @JoinColumn(name = "disciplina_codigo")})
+    private List<Disciplina> disciplinas;
+
     public Cronograma() {
     }
 
-    public Cronograma(Date inicio, Date fim, Usuario usuario, Disciplina disciplina) {
+    public Cronograma(Date inicio, Date fim, Usuario usuario, List disciplinas) {
         this.inicio = inicio;
         this.fim = fim;
         this.usuario = usuario;
-        this.disciplina = disciplina;
+        this.disciplinas = disciplinas;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Cronograma(Integer codigo, Date inicio, Date fim, Usuario usuario, List disciplinas) {
+        this.codigo = codigo;
+        this.inicio = inicio;
+        this.fim = fim;
+        this.usuario = usuario;
+        this.disciplinas = disciplinas;
+    }
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -54,7 +68,6 @@ public class Cronograma implements java.io.Serializable {
         this.fim = fim;
     }
 
-    @ManyToOne
     public Usuario getUsuario() {
         return usuario;
     }
@@ -63,18 +76,17 @@ public class Cronograma implements java.io.Serializable {
         this.usuario = usuario;
     }
 
-    @ManyToMany
-    public Disciplina getDisciplina() {
-        return disciplina;
+    public List getDisciplinas() {
+        return disciplinas;
     }
 
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
+    public void setDisciplinas(List disciplinas) {
+        this.disciplinas = disciplinas;
     }
 
     @Override
     public String toString() {
-        return "Cronograma{" + "codigo=" + codigo + ", inicio=" + inicio + ", fim=" + fim + ", usuario=" + usuario + ", disciplina=" + disciplina + '}';
+        return "Cronograma{" + "codigo=" + codigo + ", inicio=" + inicio + ", fim=" + fim + ", usuario=" + usuario + ", disciplinas=" + disciplinas + '}';
     }
-    
+
 }

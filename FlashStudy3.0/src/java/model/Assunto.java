@@ -1,64 +1,53 @@
 package model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Assunto implements java.io.Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer codigo;
     private String tema;
 
+    @ManyToOne
     private Disciplina disciplina;
-    private Flashcard flashcard;
 
     public Assunto() {
     }
 
-    public Assunto(Disciplina disciplina, Flashcard flashcard, String tema) {
-        this.disciplina = disciplina;
-        this.flashcard = flashcard;
+    public Assunto(String tema, Disciplina disciplina) {
         this.tema = tema;
+        this.disciplina = disciplina;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer getCodigo() {
-        return this.codigo;
+        return codigo;
     }
 
     public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
 
-    @ManyToOne
+    public String getTema() {
+        return tema;
+    }
+
+    public void setTema(String tema) {
+        this.tema = tema;
+    }
+
     public Disciplina getDisciplina() {
-        return this.disciplina;
+        return disciplina;
     }
 
     public void setDisciplina(Disciplina disciplina) {
         this.disciplina = disciplina;
     }
 
-    @ManyToMany
-    public Flashcard getFlashcard() {
-        return this.flashcard;
-    }
-
-    public void setFlashcard(Flashcard flashcard) {
-        this.flashcard = flashcard;
-    }
-
-    public String getTema() {
-        return this.tema;
-    }
-
-    public void setTema(String tema) {
-        this.tema = tema;
+    @Override
+    public String toString() {
+        return "Assunto{" + "codigo=" + codigo + ", tema=" + tema + ", disciplina=" + disciplina + '}';
     }
 
 }

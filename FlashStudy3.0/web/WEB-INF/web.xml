@@ -13,8 +13,8 @@
         <servlet-class>controler.CronoServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>executa_login</servlet-name>
-        <servlet-class>controler.executa_login</servlet-class>
+        <servlet-name>executar_login</servlet-name>
+        <servlet-class>controler.executar_login</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UsuarioServlet</servlet-name>
@@ -29,8 +29,8 @@
         <url-pattern>/CronoServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>executa_login</servlet-name>
-        <url-pattern>/executa_login</url-pattern>
+        <servlet-name>executar_login</servlet-name>
+        <url-pattern>/executar_login</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
