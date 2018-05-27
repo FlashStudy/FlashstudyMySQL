@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.time.*;
 import java.util.List;
 import javax.persistence.*;
 
@@ -10,10 +10,8 @@ public class Cronograma implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer codigo;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date inicio;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fim;
+    private LocalDate inicio;
+    private LocalDate fim;
 
     @ManyToOne
     private Usuario usuario;
@@ -29,15 +27,7 @@ public class Cronograma implements java.io.Serializable {
     public Cronograma() {
     }
 
-    public Cronograma(Date inicio, Date fim, Usuario usuario, List disciplinas) {
-        this.inicio = inicio;
-        this.fim = fim;
-        this.usuario = usuario;
-        this.disciplinas = disciplinas;
-    }
-
-    public Cronograma(Integer codigo, Date inicio, Date fim, Usuario usuario, List disciplinas) {
-        this.codigo = codigo;
+    public Cronograma(LocalDate inicio, LocalDate fim, Usuario usuario, List<Disciplina> disciplinas) {
         this.inicio = inicio;
         this.fim = fim;
         this.usuario = usuario;
@@ -52,19 +42,19 @@ public class Cronograma implements java.io.Serializable {
         this.codigo = codigo;
     }
 
-    public Date getInicio() {
+    public LocalDate getInicio() {
         return inicio;
     }
 
-    public void setInicio(Date inicio) {
+    public void setInicio(LocalDate inicio) {
         this.inicio = inicio;
     }
 
-    public Date getFim() {
+    public LocalDate getFim() {
         return fim;
     }
 
-    public void setFim(Date fim) {
+    public void setFim(LocalDate fim) {
         this.fim = fim;
     }
 
@@ -76,11 +66,11 @@ public class Cronograma implements java.io.Serializable {
         this.usuario = usuario;
     }
 
-    public List getDisciplinas() {
+    public List<Disciplina> getDisciplinas() {
         return disciplinas;
     }
 
-    public void setDisciplinas(List disciplinas) {
+    public void setDisciplinas(List<Disciplina> disciplinas) {
         this.disciplinas = disciplinas;
     }
 

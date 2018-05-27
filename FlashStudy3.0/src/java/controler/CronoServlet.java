@@ -6,11 +6,15 @@
 package controler;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.time.LocalDate;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Cronograma;
+import model.Usuario;
 
 /**
  *
@@ -29,23 +33,33 @@ public class CronoServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String a = request.getParameter("mes").toString();
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CronoServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CronoServlet at " + a + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        HttpSession sessao = request.getSession();
+        Usuario us = (Usuario) sessao.getAttribute("usuario");
+
+        String minicio = request.getParameter("minicio");
+        String mfim = request.getParameter("mfim");
+        String strURL = "/cronograma-disciplinas.jsp";
+
+        if (minicio != null) {
+            LocalDate dinicio = LocalDate.parse(minicio);
+            LocalDate dfim = LocalDate.parse(mfim);
+
+            Cronograma cronograma = new Cronograma();
+            cronograma.setInicio(dinicio);
+            cronograma.setFim(dfim);
+            cronograma.setUsuario(us);
+
+            sessao.setAttribute("cronograma", cronograma);
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher(strURL);
+            dispatcher.forward(request, response);
+        }else{
+        
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -57,7 +71,6 @@ public class CronoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**
@@ -71,7 +84,6 @@ public class CronoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**

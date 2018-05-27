@@ -45,11 +45,49 @@
             #contFt{
                 text-align: center;
             }
-            
+
             body{
                 background-color: #2C3E50;
             }
         </style>
+
+        <script type="text/javascript">
+            function editaDados() {
+                document.getElementById("btnSalva").type = "button";
+                document.getElementById("btnCancela").type = "button";
+                document.getElementById("csenha").disabled = false;
+                document.getElementById("nome").disabled = false;
+                document.getElementById("senha").disabled = false;
+                document.getElementById("ft").disabled = false;
+
+            }
+
+            function salvaDados() {
+                var s1 = document.getElementById("senha").value;
+                var s2 = document.getElementById("csenha").value;
+
+                if (s1 !== s2) {
+                    window.alert("As senhas diferem!");
+                } else {
+                    var r = window.confirm("Tem certeza em editar os dados?");
+                    if (r == true) {
+                        document.getElementById("formUs").submit();
+                    }
+
+                }
+            }
+
+            function cancela() {
+                document.getElementById("btnSalva").type = "hidden";
+                document.getElementById("btnCancela").type = "hidden";
+                document.getElementById("csenha").disabled = true;
+                document.getElementById("nome").disabled = true;
+                document.getElementById("senha").disabled = true;
+                document.getElementById("ft").disabled = true;
+
+            }
+        </script>
+
     </head>
 
     <body>
@@ -87,39 +125,96 @@
             <div class="row">
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xsm-12">
                     <div class="container" id="contFt">
-                        <IMG class="displayed" src="img/user-default.png" alt="Usuário"></IMG>
-                        <button type="button"class="btn btn-primary">Mudar foto</button>
+                        <IMG class="displayed" src="img/user-default.png" alt="Usuário"/>              
                     </div>
                 </div>
 
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xsm-12">
                     <div class="container">                                
                         <div class="jumbotron">
-                            <form action="/action_page.php">
-                                <div class="form-group">
-                                    <label for="email">Nome:</label>
-                                    <input type="text" class="form-control" id="nome" value="<%=us.getNome()%>" name="nome" disabled>
+
+                            <form name="formUs"  id="formUs" action="UsuarioServlet" method="GET">
+
+                                <div class="form-group row">
+                                    <label for="inputPassword" class="col-sm-2 col-form-label">Nome:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="nome" name="nome" value="<%=us.getNome()%>" disabled/>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="pwd">Email:</label>
-                                    <input type="email" class="form-control" id="email" value="<%=us.getEmail()%>" name="email" disabled>
+                                <div class="form-group row">
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">Email:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly class="form-control" id="email" name="email" value="<%=us.getEmail()%>"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="senha" class="col-sm-2 col-form-label">Senha:</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="senha" name="senha" value="<%=us.getSenha()%>" disabled/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="csenha" class="col-sm-2 col-form-label">Confirma:</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="csenha" name="csenha" placeholder="Confirma nova senha"  disabled/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="ft" class="col-sm-2 col-form-label">Foto:</label>
+                                    <div class="col-sm-10">
+                                        <input type=file class="form-control" id="ft" name="ft" disabled/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group form-inline">
+
+                                    <input type="button" onclick="editaDados()" class="form-control btn btn-primary" id="btnEdita" value="Editar dados" style="margin:10px"/>
+                                    <input type="hidden" onclick="salvaDados()" class="form-control btn btn-success" id="btnSalva" value="Salvar dados" style="margin:10px"/>
+                                    <input type="hidden" onclick="cancela()" class="form-control btn btn-danger"  id="btnCancela" value="Cancelar" style="margin:10px"/>
+
+                                </div>
+                            </form>
+
+                            <!--
+                            <form action="/action_page.php">
+                                <div class="form-inline">
+
+                                    <div class="form-group">
+                                        <label for="nome">Nome:</label>
+                                        <input type="text" class="form-control" id="nome" value="<%=us.getNome()%>" name="nome" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="emai">Email:</label>
+                                        <input class="form-control" type="text" placeholder="<%=us.getEmail()%>" readonly>
+
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="pwd">Senha:</label>
                                     <input type="password" class="form-control" id="senha" value="<%=us.getSenha()%>" name="senha" disabled>
+                                    <br>
                                 </div>
+
+
                                 <div class="form-group">
                                     <p id="lblsenha"></p>
                                     <input type="hidden" class="form-control" id="senhaC" name="senhaC">
                                 </div>
-                                <button type="button" onclick="editaDados(this.value)" class="btn btn-primary">Editar dados</button>
+                                <div class="form-inline">
+                                    <button type="button" onclick="editaDados(this.value)" class="btn btn-primary">Editar dados</button>
+                                    <input type="hidden" onclick="salvaDados()" id="btnSalva" class="btn btn-success" value="Salvar dados"/>
+                                    <input type="hidden" onclick="cancela()" id="btnCancela" class="btn btn-danger" value="Cancelar"/>
+                                </div>
                             </form>
+                            -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-                                
+
 
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
@@ -135,6 +230,6 @@
 
         <!-- Custom scripts for this template -->
         <script src="js/freelancer.min.js"></script>
-        
+
     </body>
 </html>
