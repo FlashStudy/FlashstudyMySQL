@@ -79,15 +79,46 @@
                     }
                 }
             }
+
+            function testa() {
+                meses = [];
+
+                var mi = document.getElementById("minicio").value;
+                var mf = document.getElementById("mfim").value;
+
+                if ((mi !== "") && (mf !== "")) {
+                    var dInicio = new Date(mi);
+                    var dFim = new Date(mf);
+                    var total = (dInicio.getFullYear() - dFim.getFullYear()) * 12 +
+                            (dFim.getMonth() - dInicio.getMonth());
+
+                    for (i = 0; i < total; i++) {
+                        addCampo(dInicio, i);
+                    }
+                }
+            }
+
+            function addCampo(dInicio, i) {
+
+                var meses
+                ["Janeiro", "Fevereiro", "Março",
+                    "Abril", "Maio", "Junho",
+                    "Julho", "Agosto", "Setembro",
+                    "Outubro", "Novembro", "Dezembro"
+                ];
+
+                var table = document.getElementById("tblMaterias");
+                var row = table.insertRow(1);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                cell1.innerHTML = document.getElementById("selMes").value;
+                cell2.innerHTML = document.getElementById("materia").value;
+            }
         </script>
     </head>
 
     <body>
 
-        <%
-            String meses[] = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-                "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
-        %>
         <%
             HttpSession sessao = request.getSession();
             Usuario us = (Usuario)sessao.getAttribute("usuario");
@@ -136,41 +167,47 @@
 
                             <!-- Modal corpo -->
                             <div class="modal-body" id="mBody">
-                                <div>
-                                    <div class="form-group">
-                                        <label for="sel1"><strong>Selecione o mês:</strong></label>
-                                        <select class="form-control" id="selMes">
-                                            <% for (int i = 0; i < 12; i++) {%>
-                                            <option value="<%= meses[i]%>"><%= meses[i]%></option>
-                                            <%}%>
-                                        </select>
+                                <form action="" method="GET">
+                                    <div class="row">
+                                        <div class="form-group col">
+                                            <label for="mInicio"><strong>Selecione o mês inicial:</strong></label>
+                                            <input onchange="testa()" class="rounded" type="date" id="minicio" name="minicio"/>
+                                        </div>
+
+                                        <div class="form-group col">
+                                            <label for="mFim"><strong>Selecione o mês final:</strong></label>
+                                            <input onchange="testa()" class="rounded" type="date" id="mfim" name="mfim"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="materia"><strong>Matéria:</strong></label>
+                                            <input type="text" class="form-control" id="materia" 
+                                                   placeholder="Nome da matéria" name="materia" 
+                                                   data-toggle="tooltip" data-placement="top"
+                                                   title="Selecione os meses para habilitar esse campo!"/>                         
+                                        </div>  
+                                        <button type="button" class="btn btn-primary" onclick="addMateriaTbl()" style="width: 100%">
+                                            <span class="icon icon-plus-sign"> Adicionar mês e matéria</span>
+                                        </button>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="sel1"><strong>Matéria:</strong></label>
-                                        <input type="text" class="form-control" id="materia" 
-                                               placeholder="Nome da matéria" name="materia"/>                         
-                                    </div>  
-                                    <button type="button" class="btn btn-primary" onclick="addMateriaTbl()" style="width: 100%">
-                                        <span class="icon icon-plus-sign"> Adicionar mês e matéria</span>
-                                    </button>
+
+
+                                    <table id="tblMaterias">
+                                        <tr>
+                                            <th>Matérias</th>
+                                        </tr>
+                                    </table>
+
+                                    <table></table>
+
+                                </form>
+
+                                <!-- Modal rodapé -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" data-dismiss="modal">Salvar</button>
+                                    <button type="button" class="btn btn-danger" onclick="" data-dismiss="modal">Cancelar</button>
                                 </div>
-                                <table id="tblMaterias">
-                                    <tr>
-                                        <th>Mês</th>
-                                        <th>Matéria</th>
-                                    </tr>
-                                </table>
-                                <table  >
 
-                                </table>
                             </div>
-
-                            <!-- Modal rodapé -->
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-success" data-dismiss="modal">Concluir</button>
-                                <button type="button" class="btn btn-danger" onclick="resetTbl()" data-dismiss="modal">Cancelar</button>
-                            </div>
-
                         </div>
                     </div>
                 </div>
