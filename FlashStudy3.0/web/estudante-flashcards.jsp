@@ -230,7 +230,7 @@
                                     <li>Assunto: null</li>
                                 </ul>
                                 </p>
-                                <a href="#" class="btn btn-primary">Selecionar</a>
+                                <a href="#" class="btn btn-primary">Seleciona</a>
                             </div>
                         </div>
                     </div>
