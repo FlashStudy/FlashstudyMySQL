@@ -14,7 +14,7 @@ public class Horario implements java.io.Serializable {
     private String fim;
     private int ordem;
     private Integer tempo;
-    
+
     private Executado executado;
     private Usuario usuario;
 
@@ -71,7 +71,7 @@ public class Horario implements java.io.Serializable {
     public void setTempo(Integer tempo) {
         this.tempo = tempo;
     }
-    
+
     @ManyToOne
     public Executado getExecutado() {
         return executado;
@@ -89,7 +89,5 @@ public class Horario implements java.io.Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
-    
-    
+
 }
