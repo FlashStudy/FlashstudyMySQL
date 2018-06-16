@@ -1,12 +1,13 @@
 package dao;
 
 import model.Cronograma;
+import model.Disciplina;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 public class CronogramaDao {
-    
+
     private final Session sessao;
 
     public CronogramaDao() {
@@ -20,7 +21,9 @@ public class CronogramaDao {
             sessao.beginTransaction();
 
             sessao.save(cronograma);
-
+            for (Disciplina d : cronograma.getDisciplinas()) {
+                sessao.save(d);
+            }
             sessao.flush();
             sessao.clear();
             sessao.getTransaction().commit();
@@ -29,25 +32,32 @@ public class CronogramaDao {
 
             return 0;
         } catch (HibernateException e) {
+            e.printStackTrace();
             return 1;
         }
     }
 
     public Cronograma getByEmail(String email) {
-        Cronograma cronograma;
+        try {
+            Cronograma cronograma;
 
-        sessao.beginTransaction();
-        
-        Query consulta = sessao.createQuery("from Cronograma where usuario_email = ?");
+            sessao.beginTransaction();
 
-        cronograma = (Cronograma) consulta.setString(0, email).list().get(0);
+            Query consulta = sessao.createQuery("from Cronograma where usuario_email = ?");
 
-        sessao.flush();
-        sessao.clear();
-        sessao.getTransaction().commit();
+            cronograma = (Cronograma) consulta.setString(0, email).list().get(0);
 
-        sessao.close();
+            sessao.flush();
+            sessao.clear();
+            sessao.getTransaction().commit();
 
-        return cronograma;
+            sessao.close();
+
+            return cronograma;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 }

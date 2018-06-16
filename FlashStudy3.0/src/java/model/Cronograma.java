@@ -1,6 +1,5 @@
 package model;
 
-import java.time.*;
 import java.util.List;
 import javax.persistence.*;
 
@@ -10,8 +9,8 @@ public class Cronograma implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer codigo;
-    private LocalDate inicio;
-    private LocalDate fim;
+    private String inicio;
+    private String fim;
 
     @ManyToOne
     private Usuario usuario;
@@ -27,7 +26,21 @@ public class Cronograma implements java.io.Serializable {
     public Cronograma() {
     }
 
-    public Cronograma(LocalDate inicio, LocalDate fim, Usuario usuario, List<Disciplina> disciplinas) {
+    public Cronograma(String inicio, String fim, Usuario usuario) {
+        this.inicio = inicio;
+        this.fim = fim;
+        this.usuario = usuario;
+    }
+
+    public Cronograma(String inicio, String fim, Usuario usuario, List<Disciplina> disciplinas) {
+        this.inicio = inicio;
+        this.fim = fim;
+        this.usuario = usuario;
+        this.disciplinas = disciplinas;
+    }
+
+    public Cronograma(Integer codigo, String inicio, String fim, Usuario usuario, List<Disciplina> disciplinas) {
+        this.codigo = codigo;
         this.inicio = inicio;
         this.fim = fim;
         this.usuario = usuario;
@@ -42,19 +55,19 @@ public class Cronograma implements java.io.Serializable {
         this.codigo = codigo;
     }
 
-    public LocalDate getInicio() {
+    public String getInicio() {
         return inicio;
     }
 
-    public void setInicio(LocalDate inicio) {
+    public void setInicio(String inicio) {
         this.inicio = inicio;
     }
 
-    public LocalDate getFim() {
+    public String getFim() {
         return fim;
     }
 
-    public void setFim(LocalDate fim) {
+    public void setFim(String fim) {
         this.fim = fim;
     }
 

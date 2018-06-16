@@ -108,7 +108,7 @@ public class executar_login extends HttpServlet {
             senha = request.getParameter("senha");
 
             us = new Usuario(email, nome, senha);
-
+            us.setFoto("padrao");
             int resultado;
             resultado = dao.salvar(us);
 

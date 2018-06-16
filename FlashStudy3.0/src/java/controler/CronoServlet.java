@@ -5,8 +5,9 @@
  */
 package controler;
 
+import dao.CronogramaDao;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Cronograma;
+import model.Disciplina;
 import model.Usuario;
 
 /**
@@ -37,29 +39,37 @@ public class CronoServlet extends HttpServlet {
         HttpSession sessao = request.getSession();
         Usuario us = (Usuario) sessao.getAttribute("usuario");
 
-        String minicio = request.getParameter("minicio");
-        String mfim = request.getParameter("mfim");
-        String strURL = "/cronograma-disciplinas.jsp";
+        String minicio = request.getParameter("minicio") + "-01";
+        String mfim = request.getParameter("mfim") + "-01";
+        String materias = request.getParameter("materias");
+        String strURL = "/estudante-cronograma.jsp";
 
-        if (minicio != null) {
-            LocalDate dinicio = LocalDate.parse(minicio);
-            LocalDate dfim = LocalDate.parse(mfim);
+        ArrayList<Disciplina> disciplinas = new ArrayList();
+        String[] arrMaterias = materias.split(";");
 
-            Cronograma cronograma = new Cronograma();
-            cronograma.setInicio(dinicio);
-            cronograma.setFim(dfim);
-            cronograma.setUsuario(us);
+        Cronograma cronograma = new Cronograma();
+        cronograma.setInicio(minicio);
+        cronograma.setFim(mfim);
+        cronograma.setUsuario(us);
 
-            sessao.setAttribute("cronograma", cronograma);
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher(strURL);
-            dispatcher.forward(request, response);
-        }else{
-        
+        for (String arrMateria : arrMaterias) {
+            Disciplina d = new Disciplina();
+            System.out.println(arrMateria);
+            d.setNome(arrMateria);
+            disciplinas.add(d);
         }
-    }
 
+        cronograma.setDisciplinas(disciplinas);
+        sessao.setAttribute("cronograma", cronograma);
+
+        CronogramaDao dao = new CronogramaDao();
+        dao.salvar(cronograma);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher(strURL);
+        dispatcher.forward(request, response);
+    }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -71,6 +81,8 @@ public class CronoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
+
     }
 
     /**
@@ -84,6 +96,8 @@ public class CronoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
+
     }
 
     /**

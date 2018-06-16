@@ -36,6 +36,7 @@
                 border-spacing: 0;
                 width: 100%;
                 border: 1px solid #ddd;
+                margin: 10px 5px;
             }
 
             th, td {
@@ -56,7 +57,46 @@
 
         </style>
 
+        <script src="js/jquery.js" type="text/javascript"></script>
+        <script src="js/" type="text/javascript"></script>
+
         <script type="text/javascript">
+            $(document).ready(function () {
+                $("#minicio").change(function () {
+                    if ($("#mfim").val() !== "") {
+                        $("#materia").prop("disabled", false);
+                    }
+                });
+
+                $("#mfim").change(function () {
+                    if ($("#minicio").val() !== "") {
+                        $("#materia").prop("disabled", false);
+                    }
+                });
+
+                $("#addMateria").click(function () {
+                    if ($("#materia").val() !== "") {
+                        $("#tblMaterias").append("<tr><td>" + $("#materia").val() + "</td></tr>");
+                        if ($("#materias").val() === "")
+                            $("#materias").val($("#materia").val());
+                        else
+                            $("#materias").val($("#materias").val() + ";" + $("#materia").val());
+                        $("#materia").val("");
+                    } else {
+                        alert("O campo está vazio!");
+                    }
+                });
+
+                $("#btnCancelar").click(function () {
+                    $("#tblMaterias").empty();
+                    $("#tblMaterias").append("<tr><th>Matérias</tr></th>");
+                });
+
+                $(".close").click(function () {
+                    $("#tblMaterias").empty();
+                    $("#tblMaterias").append("<tr><th>Matérias</tr></th>");
+                });
+            });
         </script>
     </head>
 
@@ -65,12 +105,14 @@
         <%
             HttpSession sessao = request.getSession();
             Usuario us = (Usuario)sessao.getAttribute("usuario");
-            //CronogramaDao dao = new CronogramaDao();
-            //Cronograma = dao.getByEmail(us.getEmail());
+            CronogramaDao dao = new CronogramaDao();
+            Cronograma cronograma = dao.getByEmail(us.getEmail());
+            String strInicio = cronograma.getInicio();
+            int intInicio = Integer.parseInt(strInicio.substring(5,6));
         %>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-primary rounded">
-            <a class="navbar-brand h1 mb-0 icon icon-group" href="estudante-inicial.jsp"> FlashStudy</a>
+        <nav class=" navbar navbar-expand-lg navbar-light bg-primary rounded">
+            <a class="navbar-brand  h1 mb-0  icon icon-group" href="estudante-inicial.jsp"> FlashStudy</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -94,10 +136,10 @@
         <div class="container">
             <div class="jumbotron">
                 <!-- Large modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><spam class = "icon icon-edit"> Editar Cronograma</spam></button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal"><spam class = "icon icon-edit"> Editar Cronograma</spam></button>
 
-                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
+                <div class="modal fade bd-example-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
                         <div class="modal-content">
 
                             <!-- Cabeçalho -->
@@ -112,19 +154,42 @@
 
                                         <div class="form-group col-md-6">
                                             <label for="mInicio">Selecione o mês inicial:</label>
-                                            <input onchange="testa()" class="form-control rounded" type="date" id="minicio" name="minicio"/>
+                                            <input class="form-control rounded" type="month" id="minicio" name="minicio"/>
                                         </div>
 
                                         <div class="form-group col-md-6">
                                             <label for="mFim">Selecione o mês final:</label>
-                                            <input onchange="testa()" class="form-control rounded" type="date" id="mfim" name="mfim"/>
+                                            <input class="form-control rounded" type="month" id="mfim" name="mfim"/>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="materia">Matéria:</label>
-                                            <input type="text" class="form-control" id="materia" placeholder="Matemática, história ...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="materia"><strong>Matéria:</strong></label>
+                                        <input type="text" style="width: 100%" class="form-control" id="materia" 
+                                               placeholder="Nome da matéria" name="materia" 
+                                               disabled="disabled"/>        
+                                        <input type="hidden" name="materias" id="materias"/>
+                                    </div>  
+                                    <button type="button" class="btn btn-primary" id="addMateria" style="width: 100%">
+                                        <span class="icon icon-plus-sign"> Adicionar matéria</span>
+                                    </button>
+
+                                    <table id="tblMaterias">
+                                        <tr>
+                                            <th>Matérias</th>
+                                        </tr>
+                                    </table>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <input type="submit" class="btn btn-success" value="Confirmar" style="margin-top: 5px; width: 100%" />
+
                                         </div>
 
+                                        <div class="form-group col-md-6">
+
+                                            <button type="button" class="btn btn-danger" id="btnCancelar"
+                                                    data-toggle="modal" data-target=".bd-example-modal" style="margin-top: 5px; width: 100%">Cancelar</button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -155,78 +220,6 @@
                     </div>
                 </div>
             </div>
-            <!--
-            <button type="button" class="btn btn-info" id="btnCiclo" data-toggle="modal" data-target="#myModal" onclick="addHorarios()">
-                <spam class = "icon icon-edit"> Editar Cronograma</spam>
-            </button>
-            
-            <!-- Modal Formulário -->
-            <!--
-            <div class="modal fade modal-lg" id="myModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-            
-            
-            <!-- Modal cabeçalhor -->
-
-            <!--
-            <div class="modal-header">
-                <h4 class="modal-title">Cronograma</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            
-            <!-- Modal corpo -->
-            <!--
-            <div class="modal-body" id="mBody">
-                <form name="fmeses" id="fmeses" action="CronoServlet" method="GET">
-                    <div class="row">
-                        <div class="form-group col">
-                            <label for="mInicio"><strong>Selecione o mês inicial:</strong></label>
-                            <input onchange="testa()" class="rounded" type="date" id="minicio" name="minicio"/>
-                        </div>
-            
-                        <div class="form-group col">
-                            <label for="mFim"><strong>Selecione o mês final:</strong></label>
-                            <input onchange="testa()" class="rounded" type="date" id="mfim" name="mfim"/>
-                        </div>
-                    </div>
-            
-                </form>
-                <div class="form-group">
-                    <label for="materia"><strong>Matéria:</strong></label>
-                    <input type="text" style="width: 100%" class="form-control" id="materia" 
-                           placeholder="Nome da matéria" name="materia" 
-                           data-toggle="tooltip" data-placement="top"
-                           title="Selecione os meses para habilitar esse campo!"
-                           disabled="disabled"/>                         
-                </div>  
-                <button type="button" class="btn btn-primary" onclick="addMateriaTbl()" style="width: 100%">
-                    <span class="icon icon-plus-sign"> Adicionar mês e matéria</span>
-                </button>
-            
-                <table id="tblMaterias">
-                    <tr>
-                        <th>Matérias</th>
-                    </tr>
-                </table>
-            
-                <table></table>
-            
-            
-            <!-- Modal rodapé -->
-            <!--
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Salvar</button>
-                <button type="button" class="btn btn-danger" onclick="" data-dismiss="modal">Cancelar</button>
-            </div>
-            
-            </div>
-            </div>
-            </div>
-            </div>
-            -->
-
-
             <!-- Bootstrap core JavaScript -->
             <script src="vendor/jquery/jquery.min.js"></script>
             <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
