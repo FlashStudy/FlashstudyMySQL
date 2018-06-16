@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.List;
 import model.Cronograma;
 import model.Disciplina;
 import org.hibernate.HibernateException;
@@ -38,26 +39,28 @@ public class CronogramaDao {
     }
 
     public Cronograma getByEmail(String email) {
-        try {
-            Cronograma cronograma;
+        Cronograma cronograma;
 
-            sessao.beginTransaction();
+        sessao.beginTransaction();
 
-            Query consulta = sessao.createQuery("from Cronograma where usuario_email = ?");
+        Query consulta = sessao.createQuery("from Cronograma where usuario_email = ?");
+        consulta.setParameter(0, email);
 
-            cronograma = (Cronograma) consulta.setString(0, email).list().get(0);
+        List<Cronograma> cronogramas = consulta.list();
 
-            sessao.flush();
-            sessao.clear();
-            sessao.getTransaction().commit();
-
-            sessao.close();
-
-            return cronograma;
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            return null;
+        if (!cronogramas.isEmpty()) {
+            cronograma = cronogramas.get(0);
+        } else {
+            cronograma = new Cronograma();
         }
+
+        sessao.flush();
+        sessao.clear();
+        sessao.getTransaction().commit();
+
+        sessao.close();
+
+        return cronograma;
 
     }
 }
