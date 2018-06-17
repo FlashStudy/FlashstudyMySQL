@@ -1,10 +1,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="model.Usuario"%>
+
 <%@page import="model.Assunto"%>
-<%@page import="model.Cronograma"%>
 <%@page import="model.Disciplina" %>
-<%@page import="dao.CronogramaDao"%>
+<%@page import="model.Cronograma" %>
+<%@page import="model.Usuario"%>
 <%@page import="java.util.ArrayList" %>
+
+<jsp:useBean class="dao.CronogramaDao" scope="page" id="dao"/>
+<jsp:useBean class="model.Cronograma" scope="page" id="cronograma"/>
+<jsp:useBean class="model.Usuario" scope="page" id="us"/>
 <!DOCTYPE html>
 
 <html lang="pt-BR">
@@ -107,9 +111,18 @@
 
         <%
             HttpSession sessao = request.getSession();
-            Usuario us = (Usuario)sessao.getAttribute("usuario");
-            //CronogramaDao dao = new CronogramaDao();
-            //Cronograma cronograma = dao.getByEmail(us.getEmail());
+            us = (Usuario) sessao.getAttribute("usuario");
+            cronograma = (Cronograma) sessao.getAttribute("cronograma");
+            if (cronograma == null) {
+                cronograma = new Cronograma();
+            }
+            ArrayList<Disciplina> disciplinas;
+            if (cronograma != null) {
+                disciplinas = (ArrayList) cronograma.getDisciplinas();
+            } else {
+                disciplinas = new ArrayList<>();
+                //    cronograma = dao.getByEmail(us.getEmail());
+            }
         %>
 
         <nav class=" navbar navbar-expand-lg navbar-light bg-primary rounded">
@@ -138,8 +151,13 @@
             <div class="jumbotron">
                 <!-- Large modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal"><spam class = "icon icon-edit"> Editar Cronograma</spam></button>
-                <input class="form-control" type="date" value="<%=//cronograma.getInicio()%>" readonly>
-                <input class="form-control" type="date" value="<%=//cronograma.getFim()%>"  readonly>
+                        <% if (cronograma == null) {%>
+                <input class="form-control" type="text" value="<%=cronograma.getInicio()%>" readonly>
+                <input class="form-control" type="text" value="<%=cronograma.getFim()%>"  readonly>
+                <%
+                    }
+                %>
+                
                 <div class="modal fade bd-example-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -156,12 +174,12 @@
 
                                         <div class="form-group col-md-6">
                                             <label for="mInicio">Selecione o mês inicial:</label>
-                                            <input class="form-control rounded" type="month" id="minicio" name="minicio" value="<%=//cronograma.getInicio()%>"/>
+                                            <input class="form-control rounded" type="month" id="minicio" name="minicio" value="<%=cronograma.getInicio()%>"/>
                                         </div>
 
                                         <div class="form-group col-md-6">
                                             <label for="mFim">Selecione o mês final:</label>
-                                            <input class="form-control rounded" type="month" id="mfim" name="mfim" value="<%=//cronograma.getFim()%>"/>
+                                            <input class="form-control rounded" type="month" id="mfim" name="mfim" value="<%=cronograma.getFim()%>"/>
                                         </div>
 
                                     </div>
@@ -181,12 +199,13 @@
                                             <th>Matérias</th>
                                         </tr>
                                         <%
-                                            //ArrayList<Disciplina> disciplinas = (ArrayList) cronograma.getDisciplinas();
-                                            //for(Disciplina d : disciplinas){
+                                            if (!disciplinas.isEmpty()) {
+                                                for (Disciplina d : disciplinas) {
                                         %>
-                                        <tr><td><%=//d.getNome()%></td></tr>
+                                        <tr><td><%=d.getNome()%></td></tr>
                                         <%
-                                        //}
+                                                }
+                                            }
                                         %>
                                     </table>
                                     <div class="form-row">
@@ -210,26 +229,26 @@
                 </div>
 
                 <div class="row">
-                    <%
-                        //for(Disciplina d : disciplinas){
+                    <%if (disciplinas == null) {
+                            for (Disciplina d : disciplinas) {
                     %>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="card">
                             <div class="card-header">
                                 <a class="card-link" data-toggle="collapse" href="#collapseOne">
-                                    <strong><%=//d.getNome()%></strong>
+                                    <strong><%=d.getNome()%></strong>
                                 </a>
                             </div>
                             <div id="collapseOne" class="collapse show" data-parent="#accordion">
                                 <div class="card-body">
                                     <ul>
                                         <%
-                                            //ArrayList<Assunto> assuntos = (ArrayList) d.getAssunto();
-                                            //for(Assunto a : assuntos){
+                                            ArrayList<Assunto> assuntos = (ArrayList) d.getAssunto();
+                                            for (Assunto a : assuntos) {
                                         %>
-                                        <li><%=//a.getTema()%></li>
+                                        <li><%=a.getTema()%></li>
                                             <%
-                                            //}
+                                                }
                                             %>
                                     </ul>
                                 </div>
@@ -237,7 +256,8 @@
                         </div>
                     </div>
                     <%
-                   // }
+                            }
+                        }
                     %>
 
                 </div>

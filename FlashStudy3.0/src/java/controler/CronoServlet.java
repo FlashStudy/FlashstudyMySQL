@@ -60,11 +60,14 @@ public class CronoServlet extends HttpServlet {
         }
 
         cronograma.setDisciplinas(disciplinas);
-        sessao.setAttribute("cronograma", cronograma);
 
         CronogramaDao dao = new CronogramaDao();
         dao.salvar(cronograma);
 
+        cronograma = dao.getByEmail(us.getEmail());
+        
+        sessao.setAttribute("cronograma", cronograma);
+        
         RequestDispatcher dispatcher = request.getRequestDispatcher(strURL);
         dispatcher.forward(request, response);
     }
