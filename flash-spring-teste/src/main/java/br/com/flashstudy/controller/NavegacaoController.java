@@ -9,34 +9,34 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class NavegacaoController {
 
-	@RequestMapping(path = "estudante-ajuda")
+	@RequestMapping(path = "usuario-ajuda")
 	public String ajuda() {
-		return "estudante-ajdua";
+		return "usuario-ajdua";
 	}
 
-	@RequestMapping(path = "estudante-ciclo")
+	@RequestMapping(path = "usuario-ciclo")
 	public String ciclo() {
-		return "estudante-ciclo";
+		return "usuario-ciclo";
 	}
 
-	@RequestMapping(path = "estudante-cronograma")
+	@RequestMapping(path = "usuario-cronograma")
 	public String cronograma() {
-		return "estudante-cronograma";
+		return "usuario-cronograma";
 	}
 
-	@RequestMapping(path = "estudante-flashcards")
+	@RequestMapping(path = "usuario-flashcards")
 	public String flashcards() {
-		return "estudante-flashcards";
+		return "usuario-flashcards";
 	}
 
-	@RequestMapping(path = "estudante-inicial")
+	@RequestMapping(path = "usuario-inicial")
 	public String inicial() {
-		return "estudante-inicial";
+		return "usuario-inicial.html";
 	}
 
-	@RequestMapping(path = "estudante-perfil")
+	@RequestMapping(path = "usuario-perfil")
 	public String perfil() {
-		return "estudante-perfil";
+		return "usuario-perfil";
 	}
 
 	@RequestMapping(path = "index")

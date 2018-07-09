@@ -72,9 +72,10 @@
                     contentType: "application/json",
                     url: "usuario/cadastro",
                     data: JSON.stringify(usuario),
-                    dataType: 'json',
-                    success: function (resul) {
-                        console.log("isso ae");
+                    dataType: "json",
+                    success: function (resposta) {
+                        console.log(resposta.mensagem);
+                        window.location.replace("estudante-inicial");
                     } 
                 });
 	    	});

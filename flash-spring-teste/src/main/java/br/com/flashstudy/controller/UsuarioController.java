@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.flashstudy.erro.ResourceNotFoundException;
+import br.com.flashstudy.erro.Resposta;
 import br.com.flashstudy.model.Usuario;
 import br.com.flashstudy.repository.UsuarioRepository;
 
@@ -26,8 +27,7 @@ public class UsuarioController {
 	UsuarioRepository usuarioRepository;
 
 	// Finalizar a sessão
-	@RequestMapping(value = "/sair", method = RequestMethod.GET, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = {
-			MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+	@RequestMapping(path = "/sair")
 	public @ResponseBody String sair(HttpSession http) {
 
 		http.invalidate();
@@ -38,20 +38,19 @@ public class UsuarioController {
 
 	// Cadastrar
 	@PostMapping("/cadastro")
-	public @ResponseBody String cadastro(@Valid @RequestBody Usuario usuario, HttpSession http, Model model) {
-
-		System.out.println(usuario.toString());
+	public @ResponseBody ResponseEntity<?> cadastro(@Valid @RequestBody Usuario usuario, Model model) {
 
 		Usuario aux = usuarioRepository.save(usuario);
 
 		model.addAttribute("usuario", aux);
 
-		return "estudante-inicial";
+		System.out.println(aux.toString());
+		
+		return new ResponseEntity<>(new Resposta("Usuario Cadastrado com suceso"), HttpStatus.OK);
 	}
 
 	// Login
-	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = {
-			MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+	@PostMapping("/login")
 	public @ResponseBody String login(@Valid @RequestBody Usuario usuario, HttpSession http) {
 
 		if (usuarioRepository.findOne(usuario.getCodigo()) == null)
