@@ -1,12 +1,13 @@
 package br.com.flashstudy.controller;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 //Controller para a navegação entre as telas
 
 @Component
-@RestController
+@Controller
 public class NavegacaoController {
 
 	@RequestMapping(path = "usuario-ajuda")
@@ -31,7 +32,7 @@ public class NavegacaoController {
 
 	@RequestMapping(path = "usuario-inicial")
 	public String inicial() {
-		return "usuario-inicial.html";
+		return "usuario-inicial";
 	}
 
 	@RequestMapping(path = "usuario-perfil")

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ import br.com.flashstudy.repository.UsuarioRepository;
 //Controller do Usuario
 
 @Component
-@RestController
+@Controller
 @RequestMapping(value = "/usuario")
 public class UsuarioController {
 
@@ -28,7 +29,7 @@ public class UsuarioController {
 
 	// Finalizar a sessão
 	@RequestMapping(path = "/sair")
-	public @ResponseBody String sair(HttpSession http) {
+	public String sair(HttpSession http) {
 
 		http.invalidate();
 
@@ -38,12 +39,13 @@ public class UsuarioController {
 
 	// Cadastrar
 	@PostMapping("/cadastro")
-	public @ResponseBody ResponseEntity<?> cadastro(@Valid @RequestBody Usuario usuario, Model model) {
+	public @ResponseBody ResponseEntity<?> cadastro(@Valid @RequestBody Usuario usuario, Model model, HttpSession httpSession) {
 
 		Usuario aux = usuarioRepository.save(usuario);
 
 		model.addAttribute("usuario", aux);
-
+		httpSession.setAttribute("usuarioL", aux);
+		
 		System.out.println(aux.toString());
 		
 		return new ResponseEntity<>(new Resposta("Usuario Cadastrado com suceso"), HttpStatus.OK);
