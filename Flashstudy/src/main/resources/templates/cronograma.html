@@ -35,6 +35,27 @@
 		body {
 			background-color: #2C3E50;
 		}
+		
+		table {
+        	border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
+            margin: 10px 5px;
+       	}
+        
+        th, td {
+        	text-align: center;
+            padding: 16px;
+       	}
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+    
+        tr:nth-child(odd) {
+    	    background-color: #ffffff
+        }
 	</style>
 
 </head>
@@ -44,19 +65,71 @@
 	<script type="text/javascript">//<![CDATA[
 
 		$(document).ready(function(){
+
+			var rows = 0;
+			var date = new Date();
+			var min = "" + date.getFullYear() + "-0" + (date.getMonth()+1);
+			
+			$("#minicio").prop("min", min);
 			
 			$("#minicio").change(function () {
-                if ($("#mfim").val() !== "") {
-                    $("#materia").prop("disabled", false);
-                }
+                $("#mfim").prop("disabled", false);
+
+				var dInicio = $("#minicio").val();
+
+				var strano = dInicio.substring(0, 4);
+				var strmes = dInicio.substring(6, 7);
+
+				var intmes =  parseInt(strmes);
+
+				$("#mfim").val("");
+    			$("#mfim").prop("min", strano + "-0" + (intmes+1));
             });
             
             $("#mfim").change(function () {
-                if ($("#minicio").val() !== "") {
-                    $("#materia").prop("disabled", false);
-                }
+                $("#materia").prop("disabled", false);
             });
             
+            $("#addMateria").click(function () {
+
+                var row = rows++;
+                
+                if ($("#materia").val() !== "") {
+                    $("#tblMaterias").append("<tr class='materia' id = 'r"+ row +"'><td class='nome'>" + $("#materia").val() + "</td></tr>");
+                    if ($("#materias").val() === "")
+                        $("#materias").val($("#materia").val());
+                    else
+                        $("#materias").val($("#materias").val() + ";" + $("#materia").val());
+                    $("#materia").val("");
+                } else {
+                    alert("O campo está vazio!");
+                }
+            });
+
+			
+            $("#btnCancelar").click(function () {
+                $("#tblMaterias").empty();
+                $("#tblMaterias").append("<tr><th>Matérias</tr></th>");
+            });
+            
+            $("#btnConfirma").click(function(){
+
+				if($("#tblMaterias tr").length > 1){
+
+					var disciplinas = [];
+					
+					$("tr.materia").each(function() {
+						$this = $(this);
+						var disciplina ={nome: $this.find("td.nome").html()};
+
+						disciplinas.push(disciplina);
+						  
+					});
+
+					console.log(disciplinas);
+				}
+				
+            });
 		});
 	
 	//]]></script>
@@ -131,12 +204,13 @@
 	</div>
 
 	<!-- Container da página toda -->
-	<div class="container-fluid">
+	<div class="container">
 	
 		<div class="jumbotron">
 		
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal"><span class = "icon icon-edit"> Editar Cronograma</span></button>
 			
+			<!-- Modal de edição das matérias -->
 			<div class="modal fade bd-example-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     
             	<div class="modal-dialog">
@@ -161,7 +235,7 @@
 
                                     <div class="form-group col-md-6">
                                     	<label for="mFim">Selecione o mês final:</label>
-                                        <input class="form-control rounded" type="month" id="mfim" name="mfim"/>
+                                        <input class="form-control rounded" type="month" id="mfim" name="mfim" disabled="disabled"/>
                                     </div>
 
                                     </div>
@@ -180,7 +254,7 @@
 
                                     <table id="tblMaterias">
                                         <tr>
-                                            <th>Matérias</th>
+                                            <th colspan="2">Matérias</th>
                                         </tr>
                                     </table>
                             </div>

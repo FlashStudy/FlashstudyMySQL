@@ -1,81 +1,105 @@
 package br.com.flashstudy.model;
 
+import java.io.Serializable;
+
+import javax.persistence.*;
+
 @SuppressWarnings("serial")
-public class EstudadoId implements java.io.Serializable {
+@Entity
+@Table(name = "Disciplina_Cronograma_Horario", catalog = "mapeamentohibernate")
+public class EstudadoId implements Serializable {
 
-    private int coddisc;
-    private int codcrono;
-    private int codhora;
-    private String dia;
+	/*
+	 * private int coddisc; private int codcrono; private int codhora; private
+	 * String dia;
+	 */
 
-    public EstudadoId() {
-    }
+	@EmbeddedId
+	@AttributeOverrides({ @AttributeOverride(name = "codigodisciplina", column = @Column(name = "codigodisciplina", nullable = false)),
+			@AttributeOverride(name = "codigocronograma", column = @Column(name = "codigocronograma", nullable = false)),
+			@AttributeOverride(name = "codigohorario", column = @Column(name = "codigohorario", nullable = false)),})
+	private Id id;
 
-    public EstudadoId(int coddisc, int codcrono, int codhora, String dia) {
-        this.coddisc = coddisc;
-        this.codcrono = codcrono;
-        this.codhora = codhora;
-        this.dia = dia;
-    }
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "codigoDisciplina", nullable = false, insertable = false, updatable = false)
+	private Disciplina disciplina;
 
-    public int getCoddisc() {
-        return this.coddisc;
-    }
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "codigoCronograma", nullable = false, insertable = false, updatable = false)
+	private Cronograma cronograma;
 
-    public void setCoddisc(int coddisc) {
-        this.coddisc = coddisc;
-    }
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "codigoHorario", nullable = false, insertable = false, updatable = false)
+	private Horario horario;
+	
+	@Column(name = "dia", nullable = false)
+	private String dia;
 
-    public int getCodcrono() {
-        return this.codcrono;
-    }
+	// getters e setters omitidos
 
-    public void setCodcrono(int codcrono) {
-        this.codcrono = codcrono;
-    }
+	// Id da associacao (chave composta no banco)
+	@Embeddable
+	public static class Id implements Serializable {
 
-    public int getCodhora() {
-        return this.codhora;
-    }
+		@Column(name = "codigoDisciplina", nullable = false)
+		private Long codigoDisciplina;
 
-    public void setCodhora(int codhora) {
-        this.codhora = codhora;
-    }
+		@Column(name = "codigoCronograma", nullable = false)
+		private Long codigoCronograma;
+		
+		@Column(name = "codigoHorario", nullable = false)
+		private Long codigoHorario;
 
-    public String getDia() {
-        return this.dia;
-    }
+		public Long getCodigoDisciplina() {
+			return codigoDisciplina;
+		}
 
-    public void setDia(String dia) {
-        this.dia = dia;
-    }
+		public void setCodigoDisciplina(Long codigoDisciplina) {
+			this.codigoDisciplina = codigoDisciplina;
+		}
 
-    public boolean equals(Object other) {
-        if ((this == other)) {
-            return true;
-        }
-        if ((other == null)) {
-            return false;
-        }
-        if (!(other instanceof EstudadoId)) {
-            return false;
-        }
-        EstudadoId castOther = (EstudadoId) other;
+		public Long getCodigoCronograma() {
+			return codigoCronograma;
+		}
 
-        return (this.getCoddisc() == castOther.getCoddisc())
-                && (this.getCodcrono() == castOther.getCodcrono())
-                && (this.getCodhora() == castOther.getCodhora())
-                && ((this.getDia() == castOther.getDia()) || (this.getDia() != null && castOther.getDia() != null && this.getDia().equals(castOther.getDia())));
-    }
+		public void setCodigoCronograma(Long codigoCronograma) {
+			this.codigoCronograma = codigoCronograma;
+		}
 
-    public int hashCode() {
-        int result = 17;
+		public Long getCodigoHorario() {
+			return codigoHorario;
+		}
 
-        result = 37 * result + this.getCoddisc();
-        result = 37 * result + this.getCodcrono();
-        result = 37 * result + this.getCodhora();
-        result = 37 * result + (getDia() == null ? 0 : this.getDia().hashCode());
-        return result;
-    }
+		public void setCodigoHorario(Long codigoHorario) {
+			this.codigoHorario = codigoHorario;
+		}
 
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = (int) (prime * result + codigoDisciplina);
+			result = (int) (prime * result + codigoCronograma);
+			result = (int) (prime * result + codigoHorario);
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Id other = (Id) obj;
+			if (codigoDisciplina != other.codigoDisciplina)
+				return false;
+			if (codigoCronograma != other.codigoCronograma)
+				return false;
+			if (codigoHorario != other.codigoHorario)
+				return false;
+			return true;
+		}
+	}
 }

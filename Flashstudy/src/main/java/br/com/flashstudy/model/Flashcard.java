@@ -5,33 +5,35 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @SuppressWarnings("serial")
 @Entity
+@Table(name = "Flashcard", catalog = "mapeamentohibernate")
 public class Flashcard implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long codigo;
 
-	@Column
+	@Column(name = "pergunta")
 	@NotEmpty
 	private String pergunta;
 
-	@Column
+	@Column(name = "resposta")
 	@NotEmpty
 	private String resposta;
 
-	@Column
+	@Column(name = "nivel")
 	@NotEmpty
 	private String nivel;
 
-	@Column
+	@Column(name = "titulo")
 	@NotEmpty
 	private String titulo;
 
-	@Column
+	@Column(name = "publico")
 	@NotEmpty
 	private String publico;
 
 	@ManyToOne
+	@JoinColumn(name = "codigo_usuario")
 	private Usuario usuario;
 
 	@ManyToOne

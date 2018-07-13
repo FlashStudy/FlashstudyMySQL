@@ -7,11 +7,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @SuppressWarnings("serial")
 @Entity
-@Table
+@Table(name = "Cronograma", catalog = "mapeamentohibernate")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Cronograma implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "codigo", unique = true, nullable = false)
 	private Long codigo;
 
 	@Column

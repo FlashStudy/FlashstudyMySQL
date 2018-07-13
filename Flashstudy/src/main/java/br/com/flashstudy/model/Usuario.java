@@ -7,28 +7,30 @@ import javax.persistence.*;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table
+@Table(name = "Usuario", catalog = "mapeamentohibernate")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "codigo", unique = true, nullable = false)
 	private Long codigo;
 
-	@Column
+	@Column(name = "nome")
 	@NotEmpty
 	private String nome;
 
-	@Column(unique = true)
+	@Column(name = "email", unique = true)
 	@NotEmpty
 	private String email;
 
-	@Column
+	@Column(name = "senha")
 	@NotEmpty
 	private String senha;
 
-	@Column
+	@Column(name = "foto")
 	private String foto;
 
 	public Usuario(String nome, String email, String senha, String foto) {

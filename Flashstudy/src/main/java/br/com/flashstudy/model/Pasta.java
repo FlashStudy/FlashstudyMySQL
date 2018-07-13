@@ -15,11 +15,12 @@ public class Pasta implements java.io.Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long codigo;
 
-	@Column
+	@Column(name = "nome")
 	@NotEmpty
 	private String nome;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "codigo_usuario")
 	private Usuario usuario;
 
 	@OneToMany

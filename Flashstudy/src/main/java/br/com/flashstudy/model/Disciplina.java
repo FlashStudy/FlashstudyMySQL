@@ -8,10 +8,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @SuppressWarnings("serial")
 @Entity
+@Table(name = "Disciplina", catalog = "mapeamentohibernate")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Disciplina implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "codigo", unique = true, nullable = false)
 	private Long codigo;
 
 	@Column

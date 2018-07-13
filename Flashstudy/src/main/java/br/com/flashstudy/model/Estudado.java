@@ -1,6 +1,7 @@
 package br.com.flashstudy.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -20,12 +21,12 @@ public class Estudado implements Serializable {
 	private Disciplina disciplina;
 
 	@ManyToMany
-	private Horario horario;
+	private List<Horario> horario;
 
 	public Estudado() {
 	}
 
-	public Estudado(EstudadoId id, Cronograma cronograma, Disciplina disciplina, Horario horario) {
+	public Estudado(EstudadoId id, Cronograma cronograma, Disciplina disciplina, List<Horario> horario) {
 		this.id = id;
 		this.cronograma = cronograma;
 		this.disciplina = disciplina;
@@ -56,11 +57,11 @@ public class Estudado implements Serializable {
 		this.disciplina = disciplina;
 	}
 
-	public Horario getHorario() {
+	public List<Horario> getHorario() {
 		return this.horario;
 	}
 
-	public void setHorario(Horario horario) {
+	public void setHorario(List<Horario> horario) {
 		this.horario = horario;
 	}
 
