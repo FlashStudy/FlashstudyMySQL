@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Flashstudy: Aluno</title>
+	
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	
+	<link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/ico"/>
+	
+	<link th:href="@{/css/estudante-padrao.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/raiz/fonts.css}" rel="stylesheet" type="text/css" media="all" />
+	
+	
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" />
+	
+	<!-- Custom fonts for this template -->
+	<link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+	
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+	
+	<!-- Plugin CSS -->
+	<link th:href="@{/vendor/magnific-popup/magnific-popup.css}" rel="stylesheet" type="text/css" />
+	
+	<!-- Custom styles for this template -->
+	<link type="text/css" th:href="@{/css/freelancer.min.css}" rel="stylesheet" />
+	
+	<style>
+	body {
+		background-color: #2C3E50;
+	}
+	
+	.carousel-inner img {
+		width: 100%;
+		height: 100%;
+	}
+	
+	.bloco {
+		border-style: solid;
+		margin-top: 30px;
+		margin-bottom: 0px;
+	}
+	</style>
+	
+</head>
+
+<body>	
+	<!-- Menu de navegação -->
+	<nav class="navbar navbar-expand-lg navbar-light bg-primary rounded">
+	
+		<a 	class="navbar-brand h1 mb-0 icon icon-group"
+			href="inicial">
+			 FlashStudy
+		</a>
+		
+		<button class="navbar-toggler" 
+				type="button" 
+				data-toggle="collapse"
+				data-target="#navbarNavAltMarkup" 
+				aria-controls="navbarNavAltMarkup"
+				aria-expanded="false" 
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+		</button>
+		
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			
+			<div class="navbar-nav ml-auto">
+				<a 	class="nav-item nav-link icon icon-calendar"
+					href="cronograma" 
+					style="color: #383838">
+					 Cronograma
+				</a> 
+				
+				<a  class="nav-item nav-link icon icon-refresh link"
+					href="ciclo"
+					style="color: #383838">
+					 Ciclo de estudos 
+				</a>
+				
+				<a 	class="nav-item nav-link icon icon-pushpin"
+					href="flashcards" 
+					style="color: #383838">
+					 Flashcards 
+				</a>
+				
+				<a 	class="nav-item nav-link icon icon-user"
+					href="perfil" 
+					style="color: #383838">
+					 Perfil 
+				</a> 
+				
+				<a	class="nav-item nav-link icon icon-question-sign"
+					href="ajuda"
+					style="color: #383838">
+					 Ajuda 
+				</a> 
+				
+				<a	class="nav-item nav-link icon icon-signout"
+					href="usuario/sair"
+					style="color: #383838">
+					 Sair 
+				</a>
+			
+			</div>
+		</div>
+	</nav>
+
+	<!-- Título da página -->
+	<div class="title ">
+		<h2 class="icon icon-home" style="color: #cccccc">Bem-vindo!</h2>
+	</div>
+
+	<!-- Carousel com as imagens -->
+	<div class="container">
+		<div id="carouselSite" class="carousel slide" data-ride="carousel">
+			
+			<ol class="carousel-indicators">
+				<li data-target="#carouselSite" data-slide-to="0" class="active"></li>
+				<li data-target="#carouselSite" data-slide-to="1"></li>
+			</ol>
+
+			<div class="carousel-inner">
+				
+				<!-- Imagem 1 -->
+				<div class="carousel-item active">
+					<img th:src="@{/img/carrousel1.jpg}"/>
+					
+					<div class="carousel-caption d-none d-md-block">
+						<h1>Uma infinidade de opções!</h1>
+						<p class="lead">Tenha acesso a diversos materiais</p>
+					</div>
+				</div>
+				
+				<!-- Imagem 2 -->
+				<div class="carousel-item">
+					<img th:src="@{/img/carrousel2.jpg}"/>
+					
+					<div class="carousel-caption d-none d-md-block">
+						<h1>Diminua o espaço!</h1>
+						<p class="lead">Tenha tudo em um só lugar</p>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Botão para voltar o carousel -->
+			<a 	class="carousel-control-prev" href="#carouselSite" role="button"
+				data-slide="prev">
+				<span class="carousel-control-prev-icon"></span>
+				<span class="sr-only"> Anterior</span>
+			</a>
+			
+			<!-- Botão para avançar o carousel -->
+			<a 	class="carousel-control-next" href="#carouselSite" role="button"
+				data-slide="next">
+				<span class="carousel-control-next-icon"></span>
+				<span class="sr-only"> Próximo</span>
+			</a>
+
+		</div>
+	</div>
+
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" th:src="@{/vendor/jquery/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+	<!-- Plugin JavaScript -->
+	<script type="text/javascript" th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+	<script type="text/javascript" th:src="@{/vendor/magnific-popup/jquery.magnific-popup.min.js}"></script>
+
+	<!-- Contact Form JavaScript -->
+	<script type="text/javascript" th:src="@{/js/jqBootstrapValidation.js}"></script>
+	<script type="text/javascript" th:src="@{/js/contact_me.js}"></script>
+
+	<!-- Custom scripts for this template -->
+	<script type="text/javascript" th:src="@{/js/freelancer.min.js}"></script>
+
+</body>
+</html>

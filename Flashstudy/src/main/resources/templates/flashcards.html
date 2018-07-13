@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Flashstudy: Flashcards</title>
+	
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	
+	<link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/ico"/>
+	
+	<link th:href="@{/css/estudante-padrao.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/raiz/fonts.css}" rel="stylesheet" type="text/css" media="all" />
+	
+	
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" />
+	
+	<!-- Custom fonts for this template -->
+	<link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+	
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+	
+	<!-- Plugin CSS -->
+	<link th:href="@{/vendor/magnific-popup/magnific-popup.css}" rel="stylesheet" type="text/css" />
+	
+	<!-- Custom styles for this template -->
+	<link type="text/css" th:href="@{/css/freelancer.min.css}" rel="stylesheet" />
+	
+	<script th:src="@{/js/jquery.min.js}"></script>
+	
+	<style type="text/css">
+	#area {
+		height: 100%;
+	}
+	
+	#flash1 {
+		background-color: cadetblue;
+		width: 80%;
+		height: 250px;
+		margin: auto;
+		margin-bottom: 20px;
+		padding: 5px;
+	}
+	
+	#flash2 {
+		background-color: lightgreen;
+		width: 80%;
+		height: 250px;
+		margin: auto;
+		margin-bottom: 20px;
+		padding: 5px;;
+	}
+	
+	#resposta {
+		height: 240px;
+	}
+	
+	#pergunta {
+		height: 180px;
+	}
+	
+	.jumbotron {
+		height: 100%;
+	}
+	
+	.btn-group-wrap {
+		text-align: center;
+	}
+	
+	div.btn-group {
+		margin: 0 auto;
+		text-align: center;
+		width: inherit;
+	}
+	
+	a {
+		float: left;
+	}
+	
+	form {
+		padding-top: 15px;
+	}
+	
+	h4 {
+		padding: auto;
+		margin-left: 50px;
+	}
+	
+	body {
+		background-color: #2C3E50;
+	}
+	</style>
+</head>
+
+<body>
+
+<!-- <div class="card bg-primary">
+    <div class="card-body text-center">
+     <h4 class="card-title">Card title</h4>
+    
+      <p class="card-text">Some text inside the first card</p>
+    </div>
+  </div> -->
+
+	<script type="text/javascript">//<![CDATA[
+		$(document).ready(function(){
+
+			$.get("flashcard/lista", function (cards) {
+				console.log(cards);
+				console.log("");
+				console.log(cards.length);
+
+				var strCard;
+
+				for( i = 0; i < cards.length; i++){
+					console.log(i);
+					strCard = "<div class='col-lg-4 col-md-6 col-sm-12 col-12' style='margin-top: 5px'>" +
+								"<div class='card align-self-center' style='width: 18rem;'>" +
+									"<div class='card-body'>" +
+										"<h5 class='card-title'>" + cards[i].titulo + "</h5>" +
+										"<p class='card-text'>"+
+											"<ul>" +
+												"<li>Nível: "+ cards[i].nivel +"</li>" +
+												"<li>Situação:" + cards[i].publico + " </li>" +
+												"<li>Disciplina: "+ cards[i].nivel +" </li>" +
+												"<li>Assunto: " + cards[i].publico + " </li>" +
+											"</ul>" +	
+										"</p>" +
+									"</div>" +
+								"</div>" +
+							"</div>";
+
+					$("#cardsRow").append(strCard);	
+				}
+            });
+            
+			$("#btnSalvar").click(function(){
+				if(verificaCampos()){
+					console.log("Chamando requisicao");
+
+					var card = { titulo: $("#titulo").val(),
+								 pergunta: $("#pergunta").val(),
+								 resposta: $("#resposta").val()};
+					$.ajax({
+	                    type: "POST",
+	                    cache: false,
+	                    contentType: "application/json",
+	                    url: "/flashcard/salvar",
+	                    data: JSON.stringify(card),
+	                    dataType: "json",
+	                    success: function (resposta) {
+	                        console.log(resposta.mensagem);
+	                        window.location.replace("flashcards");
+	                    } 
+	                }); 
+					console.log("Salvo");
+				}else{
+					console.log("Erro");
+				}
+			});
+		});
+
+		function verificaCampos(){
+			var titulo 	 = $("#titulo").val();
+			var pergunta = $("#pergunta").val();
+			var resposta = $("#resposta").val();
+
+			console.log(titulo);
+			console.log(pergunta);
+			console.log(resposta);
+			
+			if((titulo === "") || (pergunta === "") || (resposta=== "")){
+				alert("Algum campo não foi preenchido!");
+				return false;
+			}else{
+				return true;
+			}
+		}
+		
+		 //]]></script>
+
+
+	<!-- Menu de navegação -->
+	<nav class="navbar navbar-expand-lg navbar-light bg-primary rounded">
+	
+		<a 	class="navbar-brand h1 mb-0 icon icon-group"
+			href="inicial">
+			 FlashStudy
+		</a>
+		
+		<button class="navbar-toggler" 
+				type="button" 
+				data-toggle="collapse"
+				data-target="#navbarNavAltMarkup" 
+				aria-controls="navbarNavAltMarkup"
+				aria-expanded="false" 
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+		</button>
+		
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			
+			<div class="navbar-nav ml-auto">
+				<a 	class="nav-item nav-link icon icon-calendar"
+					href="cronograma" 
+					style="color: #383838">
+					 Cronograma
+				</a> 
+				
+				<a  class="nav-item nav-link icon icon-refresh link"
+					href="ciclo"
+					style="color: #383838">
+					 Ciclo de estudos 
+				</a>
+				
+				<a 	class="nav-item nav-link icon icon-pushpin"
+					href="flashcards" 
+					style="color: #383838">
+					 Flashcards 
+				</a>
+				
+				<a 	class="nav-item nav-link icon icon-user"
+					href="perfil" 
+					style="color: #383838">
+					 Perfil 
+				</a> 
+				
+				<a	class="nav-item nav-link icon icon-question-sign"
+					href="ajuda"
+					style="color: #383838">
+					 Ajuda 
+				</a> 
+				
+				<a	class="nav-item nav-link icon icon-signout"
+					href="usuario/sair"
+					style="color: #383838">
+					 Sair 
+				</a>
+			
+			</div>
+		</div>
+	</nav>
+
+	<!-- Título da página -->
+	<div class="title">
+		<h2 class="icon icon-pushpin" style="color: #cccccc">Flashcards</h2>
+		<span class="byline" style="color: #cccccc">
+			Crie e edite todos os seus flashcards
+		</span>
+	</div>
+
+	<!-- Container com os dados do flashcard -->
+	<div class="container" id="area">
+	 	
+		<div class="jumbotron">
+	    	
+	    	<div class="row justify-content-center">
+	    	<div class="col-lg-5 col-md-7 col-sm-10 col-10">
+	        	
+	        		<div class="btn-btn-toolbar mb-3" role="toolbar" aria-label="Menu com botoes">
+		
+						<div class="btn-group mr-1" role="group" aria-label="Primeiro grupo">
+					    	
+					    	<!-- Salvar o flashcard -->
+					    	<button type="button" 
+					    			class="btn btn-dark" 
+					    			title="Salvar" 
+					    			id="btnSalvar">
+					    			<span class="icon icon-save"> Salvar</span>
+					    	</button>
+					    	
+					    	<!-- Editar o card selecionado -->
+					    	<button type="button" 
+					    			class="btn btn-dark" 
+					    			title="Salvar" 
+					    			id="btnSalvar">
+					    			<span class="icon icon-edit"> Editar</span>
+					    	</button>
+					    	
+					    	<!-- Deletar o card selecionado -->
+					    	<button type="button" 
+					    			class="btn btn-dark" 
+					    			title="Salvar" 
+					    			id="btnSalvar">
+					    			<span class="icon icon-trash"> Deletar</span>
+					    	</button>
+					    	
+					    	<!-- Limpar os campos para novo flashcard -->
+					    	<button type="button" 
+					    			class="btn btn-dark" 
+					    			title="Salvar" 
+					    			id="btnSalvar">
+					    			<span class="icon icon-plus-sign"> Novo</span>
+					    	</button>
+					  	</div>
+					</div>
+	        	</div>
+	    	</div>
+	    	
+	   		<div class="row">
+	        	
+	        	<!-- Título e pergunta do flashcard -->
+	        	<div class="col-lg-6 col-md-6 col-sm-12">
+	            	
+	            	<div class="display-4">
+	                	<h4>Pergunta</h4>
+	                </div>
+	                
+	                <div class="jumbotron" id="flash1">
+	                
+	                	<div class="form-group">
+	                    	<input 	type="text" 
+	                    			class="form-control" 
+	                    			id="titulo" 
+	                    			placeholder="Título do flashcard" 
+	                    			name="titulo"/>
+	                    </div>
+	                    
+	                    <div class="form-group">
+	                    	<textarea 	class="form-control" 
+	                    				placeholder="Insira a sua pergunta aqui" 
+	                    				id="pergunta" 
+	                    				name="pergunta"/>
+	                    </div>
+	                </div> 
+	           	</div>
+	           	
+	           	<!-- Resposta do flashcard -->
+	           	<div class="col-lg-6 col-md-6 col-sm-12">
+	           	
+	           		<div class="display-4">
+	                	<h4>Resposta</h4>
+	                </div>
+	        
+	                <div class="jumbotron" id="flash2">
+	                	<div class="form-group">
+	                    	<textarea 	class="form-control" 
+	                        			placeholder="Insira a sua resposta aqui" 
+	                        			id="resposta" 
+	                        			name="resposta"/>
+	                    </div>
+	                </div>
+	            </div>    
+	        </div><!-- Fim row -->
+		</div><!-- Fim jumbotron -->
+	</div><!-- Fim container -->
+	
+	<!-- Container com todos os flashcards cadastrados -->
+	<div class="container" id="containerFlashcards">
+
+		<div class="jumbotron">
+			
+			<div class="title">
+				<h2>Seus flashcards</h2>
+			</div>
+			
+			<div class="row" id="cardsRow">
+			
+			</div>
+		</div>
+	</div>
+
+
+		
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" th:src="@{/vendor/jquery/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+	<!-- Plugin JavaScript -->
+	<script type="text/javascript" th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+	<script type="text/javascript" th:src="@{/vendor/magnific-popup/jquery.magnific-popup.min.js}"></script>
+
+	<!-- Contact Form JavaScript -->
+	<script type="text/javascript" th:src="@{/js/jqBootstrapValidation.js}"></script>
+	<script type="text/javascript" th:src="@{/js/contact_me.js}"></script>
+
+	<!-- Custom scripts for this template -->
+	<script type="text/javascript" th:src="@{/js/freelancer.min.js}"></script>
+
+</body>
+</html>
