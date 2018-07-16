@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "Cronograma", catalog = "mapeamentohibernate")
+@Table(name = "Cronograma")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Cronograma implements java.io.Serializable {
 
@@ -28,11 +28,17 @@ public class Cronograma implements java.io.Serializable {
 	private Usuario usuario;
 
 	@ManyToMany
-	@JoinTable(name = "usuario_cria_cronograma", joinColumns = {
+	@JoinTable(name = "cronograma_possui_disciplinas", joinColumns = {
 			@JoinColumn(name = "cronograma_codigo") }, inverseJoinColumns = { @JoinColumn(name = "disciplina_codigo") })
 	private List<Disciplina> disciplinas;
 
 	public Cronograma() {
+	}
+
+	public Cronograma(String inicio, String fim) {
+		super();
+		this.inicio = inicio;
+		this.fim = fim;
 	}
 
 	public Cronograma(String inicio, String fim, Usuario usuario) {

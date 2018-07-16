@@ -1,5 +1,6 @@
 package br.com.flashstudy.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -8,7 +9,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "Disciplina", catalog = "mapeamentohibernate")
+@Table(name = "Disciplina")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Disciplina implements java.io.Serializable {
 
@@ -21,15 +22,25 @@ public class Disciplina implements java.io.Serializable {
 	@NotEmpty
 	private String nome;
 
-	@OneToMany
-	private List<Assunto> assunto;
+	@OneToMany(
+	        mappedBy = "disciplina", 
+	        cascade = CascadeType.ALL, 
+	        orphanRemoval = true
+	    )
+	private List<Assunto> assuntos = new ArrayList<>();
+
+	@ManyToOne
+	private Usuario usuario;
 
 	public Disciplina() {
+		super();
 	}
 
-	public Disciplina(String nome, List<Assunto> assunto) {
+	public Disciplina(String nome, List<Assunto> assuntos, Usuario usuario) {
+		super();
 		this.nome = nome;
-		this.assunto = assunto;
+		this.assuntos = assuntos;
+		this.usuario = usuario;
 	}
 
 	public Long getCodigo() {
@@ -48,18 +59,26 @@ public class Disciplina implements java.io.Serializable {
 		this.nome = nome;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public List getAssunto() {
-		return assunto;
+	public List<Assunto> getAssuntos() {
+		return assuntos;
 	}
 
-	public void setAssunto(List<Assunto> assunto) {
-		this.assunto = assunto;
+	public void setAssunto(List<Assunto> assuntos) {
+		this.assuntos = assuntos;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override
 	public String toString() {
-		return "Disciplina{" + "codigo=" + codigo + ", nome=" + nome + ", assunto=" + assunto + '}';
+		return "Disciplina [codigo=" + codigo + ", nome=" + nome + ", assunto=" + assuntos + ", usuario=" + usuario
+				+ "]";
 	}
 
 }

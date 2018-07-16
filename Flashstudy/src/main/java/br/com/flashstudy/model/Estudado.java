@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @SuppressWarnings("serial")
 @Entity
-@Table
+@Table(name = "Estudado")
 public class Estudado implements Serializable {
 
 	@Id

@@ -101,7 +101,11 @@
 	                    success: function (resposta) {
 	                        console.log(resposta.mensagem);
 	                        window.location.replace("inicial");
-	                    }
+	                    },
+	                    error: function (resposta){
+	                        console.log("Email ou senha inválidos");
+							alert("Email ou senha inválidos");
+		                }
 	                }); 
 				}
 	    		

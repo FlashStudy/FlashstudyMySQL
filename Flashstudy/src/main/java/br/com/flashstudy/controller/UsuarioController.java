@@ -52,7 +52,7 @@ public class UsuarioController {
 
 		if (usuarioRepository.findByEmail(usuario.getEmail()) == null)
 
-			throw new ResourceNotFoundException("Usuário não cadastrado!");
+			return new ResponseEntity<>(new Resposta("Usuário não encontrado!"), HttpStatus.NOT_FOUND);
 
 		else {
 

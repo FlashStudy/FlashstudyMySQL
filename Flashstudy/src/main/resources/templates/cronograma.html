@@ -66,6 +66,49 @@
 
 		$(document).ready(function(){
 
+			$.get("cronograma/atual", function (cronograma) {
+
+				var disciplinas = [];
+
+				console.log(cronograma);
+				console.log("");
+
+				disciplinas = cronograma.disciplinas;
+				
+				console.log(disciplinas);
+				if(cronograma.inicio != null){
+					$("#minicio").val(cronograma.inicio);
+					$("#mfim").val(cronograma.fim);
+
+	                $("#mfim").prop("disabled", false);
+	                $("#materia").prop("disabled", false);
+					
+				}
+
+				
+				var strDisciplina = "";
+				
+				for(i = 0; i < disciplinas.length; i++){
+					console.log(i);
+                    $("#tblMaterias").append("<tr class='materia' id = 'r"+ i +"'><td class='nome'>" + disciplinas[i].nome + "</td></tr>");
+
+                    var assuntos = [];
+    				assuntos = disciplinas[i].assuntos;
+    				var strassunto = "";
+    				for(j = 0; j < assuntos.length; j++){
+    					strassunto += "<li>" + assuntos[i].tema + "</li>";
+    				}
+
+    				strDisciplina = "<div class='card bg-secundary' title='Clique para editar as informações da matéria' id='"+disciplinas[i].codigo+"'>" +
+    								"<div class='card-body text-center'> <h4 class='card-title'>" + disciplinas[i].nome + "</h4>"+
+    								"<p class='card-text'> <ul>" + strassunto + "</ul></p></div></div>";
+					$("#materiasDeck").append(strDisciplina);
+    			}
+				
+            });
+
+
+			
 			var rows = 0;
 			var date = new Date();
 			var min = "" + date.getFullYear() + "-0" + (date.getMonth()+1);
@@ -116,20 +159,39 @@
 
 				if($("#tblMaterias tr").length > 1){
 
-					var disciplinas = [];
+					var arrdisciplinas = [];
 					
 					$("tr.materia").each(function() {
 						$this = $(this);
 						var disciplina ={nome: $this.find("td.nome").html()};
 
-						disciplinas.push(disciplina);
+						arrdisciplinas.push(disciplina);
 						  
 					});
 
-					console.log(disciplinas);
+					console.log(arrdisciplinas);
+
+					var cronograma = {inicio : $("#minicio").val(),
+										fim : $("#mfim").val(),
+										disciplinas : arrdisciplinas};
+					
+					$.ajax({
+	                    type: "POST",
+	                    cache: false,
+	                    contentType: "application/json",
+	                    url: "/cronograma/salvar",
+	                    data: JSON.stringify(cronograma),
+	                    dataType: "json",
+	                    success: function (resposta) {
+	                        alert(resposta.mensagem);
+	                        window.location.replace("cronograma");
+	                        
+	                    } 
+	                }); 
 				}
 				
             });
+
 		});
 	
 	//]]></script>
@@ -208,7 +270,7 @@
 	
 		<div class="jumbotron">
 		
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal"><span class = "icon icon-edit"> Editar Cronograma</span></button>
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal" style="margin-bottom: 10px"><span class = "icon icon-edit"> Editar Cronograma</span></button>
 			
 			<!-- Modal de edição das matérias -->
 			<div class="modal fade bd-example-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -267,9 +329,12 @@
                                         data-toggle="modal" data-target=".bd-example-modal">Cancelar</button>
 							</div>
                         </div>
-
                     </div>
-                </div>
+                </div><!-- Fim modal -->
+                
+        	<div class="card-deck" id="materiasDeck">
+        	
+        	</div>    
 		</div>
 		
 	</div>

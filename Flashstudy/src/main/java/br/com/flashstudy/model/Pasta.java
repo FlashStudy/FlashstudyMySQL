@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @SuppressWarnings("serial")
 @Entity
-@Table
+@Table(name = "Pasta")
 public class Pasta implements java.io.Serializable {
 
 	@Id

@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @SuppressWarnings("serial")
 @Entity
+@Table(name = "Assunto")
 public class Assunto implements java.io.Serializable {
 
 	@Id
@@ -13,7 +14,8 @@ public class Assunto implements java.io.Serializable {
 	@Column
 	private String tema;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "disciplina_codigo")
 	private Disciplina disciplina;
 
 	public Assunto() {

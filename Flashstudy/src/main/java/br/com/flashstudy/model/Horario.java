@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "Horario", catalog = "mapeamentohibernate")
+@Table(name = "Horario")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Horario implements java.io.Serializable {
 

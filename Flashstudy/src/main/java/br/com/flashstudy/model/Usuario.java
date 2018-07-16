@@ -7,7 +7,7 @@ import javax.persistence.*;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "Usuario", catalog = "mapeamentohibernate")
+@Table(name = "Usuario")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario implements Serializable {
 

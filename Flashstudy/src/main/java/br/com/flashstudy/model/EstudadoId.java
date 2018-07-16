@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "Disciplina_Cronograma_Horario", catalog = "mapeamentohibernate")
+@Table(name = "Disciplina_Cronograma_Horario")
 public class EstudadoId implements Serializable {
 
 	/*

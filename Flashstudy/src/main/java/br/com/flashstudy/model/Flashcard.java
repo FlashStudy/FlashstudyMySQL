@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "Flashcard", catalog = "mapeamentohibernate")
+@Table(name = "Flashcard")
 public class Flashcard implements java.io.Serializable {
 
 	@Id
