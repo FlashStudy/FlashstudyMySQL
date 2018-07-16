@@ -9,12 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import br.com.flashstudy.error.ResourceNotFoundException;
 import br.com.flashstudy.error.Resposta;
 import br.com.flashstudy.model.Usuario;
 import br.com.flashstudy.repository.UsuarioRepository;
 
-//Controller do Usuario
+//Controller do Usário
 
 @Controller
 @RequestMapping(value = "/usuario")
@@ -40,10 +39,10 @@ public class UsuarioController {
 		Usuario aux = usuarioRepository.save(usuario);
 
 		httpSession.setAttribute("usuario", aux);
-		
+
 		System.out.println(aux.toString());
-		
-		return new ResponseEntity<>(new Resposta("Usuário cadastrado com sucesso!"),HttpStatus.OK);
+
+		return new ResponseEntity<>(new Resposta("Usuário cadastrado com sucesso!"), HttpStatus.OK);
 	}
 
 	// Login

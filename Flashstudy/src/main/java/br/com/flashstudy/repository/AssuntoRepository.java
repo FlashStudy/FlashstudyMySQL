@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import br.com.flashstudy.model.Assunto;
 
-
-public interface AssuntoRepository extends CrudRepository<Assunto, Long>{
+//Repository dos assuntos (Comunicação com o BD)
+public interface AssuntoRepository extends CrudRepository<Assunto, Long> {
 
 }

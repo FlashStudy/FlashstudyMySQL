@@ -96,18 +96,12 @@
 </head>
 
 <body>
-
-<!-- <div class="card bg-primary">
-    <div class="card-body text-center">
-     <h4 class="card-title">Card title</h4>
-    
-      <p class="card-text">Some text inside the first card</p>
-    </div>
-  </div> -->
-
+	
+	<!-- Script da página. Futuramente passar para arquivo separado -->
 	<script type="text/javascript">//<![CDATA[
 		$(document).ready(function(){
 
+			/* Envia requisição para listar todos os flashcards */
 			$.get("flashcard/lista", function (cards) {
 				console.log(cards);
 				console.log("");
@@ -136,7 +130,8 @@
 					$("#cardsRow").append(strCard);	
 				}
             });
-            
+
+            /* Salva o novo flashcard */
 			$("#btnSalvar").click(function(){
 				if(verificaCampos()){
 					console.log("Chamando requisicao");
@@ -163,6 +158,7 @@
 			});
 		});
 
+		/* Verifica se há algum campo vazio */
 		function verificaCampos(){
 			var titulo 	 = $("#titulo").val();
 			var pergunta = $("#pergunta").val();
@@ -257,94 +253,96 @@
 	 	
 		<div class="jumbotron">
 	    	
+	    	<!-- Menu de botões de ação -->
 	    	<div class="row justify-content-center">
-	    	<div class="col-lg-5 col-md-7 col-sm-10 col-10">
-	        	
-	        		<div class="btn-btn-toolbar mb-3" role="toolbar" aria-label="Menu com botoes">
-		
-						<div class="btn-group mr-1" role="group" aria-label="Primeiro grupo">
-					    	
-					    	<!-- Salvar o flashcard -->
-					    	<button type="button" 
-					    			class="btn btn-dark" 
-					    			title="Salvar" 
-					    			id="btnSalvar">
-					    			<span class="icon icon-save"> Salvar</span>
-					    	</button>
-					    	
-					    	<!-- Editar o card selecionado -->
-					    	<button type="button" 
-					    			class="btn btn-dark" 
-					    			title="Salvar" 
-					    			id="btnSalvar">
-					    			<span class="icon icon-edit"> Editar</span>
-					    	</button>
-					    	
-					    	<!-- Deletar o card selecionado -->
-					    	<button type="button" 
-					    			class="btn btn-dark" 
-					    			title="Salvar" 
-					    			id="btnSalvar">
-					    			<span class="icon icon-trash"> Deletar</span>
-					    	</button>
-					    	
-					    	<!-- Limpar os campos para novo flashcard -->
-					    	<button type="button" 
-					    			class="btn btn-dark" 
-					    			title="Salvar" 
-					    			id="btnSalvar">
-					    			<span class="icon icon-plus-sign"> Novo</span>
-					    	</button>
-					  	</div>
-					</div>
-	        	</div>
-	    	</div>
 	    	
-	   		<div class="row">
-	        	
-	        	<!-- Título e pergunta do flashcard -->
-	        	<div class="col-lg-6 col-md-6 col-sm-12">
-	            	
-	            	<div class="display-4">
-	                	<h4>Pergunta</h4>
-	                </div>
-	                
-	                <div class="jumbotron" id="flash1">
-	                
-	                	<div class="form-group">
-	                    	<input 	type="text" 
-	                    			class="form-control" 
-	                    			id="titulo" 
-	                    			placeholder="Título do flashcard" 
-	                    			name="titulo"/>
-	                    </div>
-	                    
-	                    <div class="form-group">
-	                    	<textarea 	class="form-control" 
-	                    				placeholder="Insira a sua pergunta aqui" 
-	                    				id="pergunta" 
-	                    				name="pergunta"/>
-	                    </div>
-	                </div> 
-	           	</div>
-	           	
-	           	<!-- Resposta do flashcard -->
-	           	<div class="col-lg-6 col-md-6 col-sm-12">
-	           	
-	           		<div class="display-4">
-	                	<h4>Resposta</h4>
-	                </div>
-	        
-	                <div class="jumbotron" id="flash2">
-	                	<div class="form-group">
-	                    	<textarea 	class="form-control" 
-	                        			placeholder="Insira a sua resposta aqui" 
-	                        			id="resposta" 
-	                        			name="resposta"/>
-	                    </div>
-	                </div>
-	            </div>    
-	        </div><!-- Fim row -->
+		    	<div class="col-lg-5 col-md-7 col-sm-10 col-10">
+		        	
+		        		<div class="btn-btn-toolbar mb-3" role="toolbar" aria-label="Menu com botoes">
+			
+							<div class="btn-group mr-1" role="group" aria-label="Primeiro grupo">
+						    	
+						    	<!-- Salvar o flashcard -->
+						    	<button type="button" 
+						    			class="btn btn-dark" 
+						    			title="Salvar" 
+						    			id="btnSalvar">
+						    			<span class="icon icon-save"> Salvar</span>
+						    	</button>
+						    	
+						    	<!-- Editar o card selecionado -->
+						    	<button type="button" 
+						    			class="btn btn-dark" 
+						    			title="Salvar" 
+						    			id="btnSalvar">
+						    			<span class="icon icon-edit"> Editar</span>
+						    	</button>
+						    	
+						    	<!-- Deletar o card selecionado -->
+						    	<button type="button" 
+						    			class="btn btn-dark" 
+						    			title="Salvar" 
+						    			id="btnSalvar">
+						    			<span class="icon icon-trash"> Deletar</span>
+						    	</button>
+						    	
+						    	<!-- Limpar os campos para novo flashcard -->
+						    	<button type="button" 
+						    			class="btn btn-dark" 
+						    			title="Salvar" 
+						    			id="btnSalvar">
+						    			<span class="icon icon-plus-sign"> Novo</span>
+						    	</button>
+						  	</div>
+						</div>
+		        	</div>
+		    	</div>
+	    	
+		   		<div class="row">
+		        	
+		        	<!-- Título e pergunta do flashcard -->
+		        	<div class="col-lg-6 col-md-6 col-sm-12">
+		            	
+		            	<div class="display-4">
+		                	<h4>Pergunta</h4>
+		                </div>
+		                
+		                <div class="jumbotron" id="flash1">
+		                
+		                	<div class="form-group">
+		                    	<input 	type="text" 
+		                    			class="form-control" 
+		                    			id="titulo" 
+		                    			placeholder="Título do flashcard" 
+		                    			name="titulo"/>
+		                    </div>
+		                    
+		                    <div class="form-group">
+		                    	<textarea 	class="form-control" 
+		                    				placeholder="Insira a sua pergunta aqui" 
+		                    				id="pergunta" 
+		                    				name="pergunta"/>
+		                    </div>
+		                </div> 
+		           	</div>
+		           	
+		           	<!-- Resposta do flashcard -->
+		           	<div class="col-lg-6 col-md-6 col-sm-12">
+		           	
+		           		<div class="display-4">
+		                	<h4>Resposta</h4>
+		                </div>
+		        
+		                <div class="jumbotron" id="flash2">
+		                	<div class="form-group">
+		                    	<textarea 	class="form-control" 
+		                        			placeholder="Insira a sua resposta aqui" 
+		                        			id="resposta" 
+		                        			name="resposta"/>
+		                    </div>
+		                </div>
+		            </div>    
+		        </div><!-- Fim row -->
 		</div><!-- Fim jumbotron -->
 	</div><!-- Fim container -->
 	

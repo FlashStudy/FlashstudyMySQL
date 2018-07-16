@@ -36,10 +36,12 @@
 </head>
 
 <body id="page-top">
-
+	
+	<!-- Script da página. Futuramente passar para arquivo separado -->
 	<script>//<![CDATA[
 		$(document).ready(function(){
-	    	console.log("script");
+
+			/* Testa se as senhas são iguais para cadastro */
 	    	$("#senhaConfirmacao").change(function(){
 	    		console.log("funcao");
 				var senha = $("#senhaRegistro").val();
@@ -54,7 +56,8 @@
 				}
 					
 	    	});
-	    	
+
+	    	/* Envia a requisição de cadastro */
 	    	$("#btnRegistro").click(function(){
 	    		
 	    		var usuarioRegistro = {	nome: $("#nomeRegistro").val(),
@@ -77,6 +80,7 @@
                 }); 
 	    	});
 
+			/* Envia a requisição de login */
 	    	$("#btnLogin").click(function(){
 				var email = $("#emailLogin").val();
 				var senha = $("#senhaLogin").val();

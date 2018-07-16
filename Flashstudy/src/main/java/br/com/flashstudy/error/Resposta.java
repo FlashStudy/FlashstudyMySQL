@@ -1,5 +1,6 @@
 package br.com.flashstudy.error;
 
+//Retornar uma mensagem de erro
 public class Resposta {
 	private String mensagem;
 

@@ -8,7 +8,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	
-	<link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/ico"/>
+	<link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/ico" />
 	
 	<link th:href="@{/css/estudante-padrao.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/raiz/fonts.css}" rel="stylesheet" type="text/css" media="all" />
@@ -19,15 +19,16 @@
 	
 	<!-- Custom fonts for this template -->
 	<link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
-	
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
-	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
 	
 	<!-- Plugin CSS -->
-	<link th:href="@{/vendor/magnific-popup/magnific-popup.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/vendor/magnific-popup/magnific-popup.css}"
+		rel="stylesheet" type="text/css" />
 	
 	<!-- Custom styles for this template -->
-	<link type="text/css" th:href="@{/css/freelancer.min.css}" rel="stylesheet" />
+	<link type="text/css" th:href="@{/css/freelancer.min.css}"
+		rel="stylesheet" />
 	
 	<script th:src="@{/js/jquery.min.js}"></script>
 	
@@ -37,35 +38,37 @@
 		}
 		
 		table {
-        	border-collapse: collapse;
-            border-spacing: 0;
-            width: 100%;
-            border: 1px solid #ddd;
-            margin: 10px 5px;
-       	}
-        
-        th, td {
-        	text-align: center;
-            padding: 16px;
-       	}
-        
-        tr:nth-child(even) {
-            background-color: #f2f2f2
-        }
-    
-        tr:nth-child(odd) {
-    	    background-color: #ffffff
-        }
+			border-collapse: collapse;
+			border-spacing: 0;
+			width: 100%;
+			border: 1px solid #ddd;
+			margin: 10px 5px;
+		}
+		
+		th, td {
+			text-align: center;
+			padding: 16px;
+		}
+		
+		tr:nth-child(even) {
+			background-color: #f2f2f2
+		}
+		
+		tr:nth-child(odd) {
+			background-color: #ffffff
+		}
 	</style>
 
 </head>
 
 <body>
-	
+
+	<!-- Script da página. Futuramente passar para arquivo separado -->
 	<script type="text/javascript">//<![CDATA[
 
 		$(document).ready(function(){
 
+			/* Solicita o cronograma mais atual do usuário */
 			$.get("cronograma/atual", function (cronograma) {
 
 				var disciplinas = [];
@@ -114,7 +117,8 @@
 			var min = "" + date.getFullYear() + "-0" + (date.getMonth()+1);
 			
 			$("#minicio").prop("min", min);
-			
+
+			/* Verifica se o mês inicial foi selecionado */
 			$("#minicio").change(function () {
                 $("#mfim").prop("disabled", false);
 
@@ -128,7 +132,8 @@
 				$("#mfim").val("");
     			$("#mfim").prop("min", strano + "-0" + (intmes+1));
             });
-            
+
+            /* Habilita a digitação da matéria */
             $("#mfim").change(function () {
                 $("#materia").prop("disabled", false);
             });
@@ -149,12 +154,13 @@
                 }
             });
 
-			
+			/* Limpa a tabela ao fechar o modal */
             $("#btnCancelar").click(function () {
                 $("#tblMaterias").empty();
                 $("#tblMaterias").append("<tr><th>Matérias</tr></th>");
             });
-            
+
+            /* Confirma e salva/atualiza o cronograma */
             $("#btnConfirma").click(function(){
 
 				if($("#tblMaterias tr").length > 1){
@@ -195,7 +201,7 @@
 		});
 	
 	//]]></script>
-	
+
 	<!-- Menu de navegação -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-primary rounded">
 	
@@ -260,85 +266,96 @@
 	<!-- Título da página -->
 	<div class="title">
 		<h2 class="icon icon-calendar" style="color: #cccccc">Cronograma</h2>
-		<span class="byline" style="color: #cccccc">
-			Calendário com todos os seus planejamentos
-		</span>
+		<span class="byline" style="color: #cccccc"> Calendário com
+			todos os seus planejamentos </span>
 	</div>
 
 	<!-- Container da página toda -->
 	<div class="container">
-	
-		<div class="jumbotron">
-		
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal" style="margin-bottom: 10px"><span class = "icon icon-edit"> Editar Cronograma</span></button>
-			
-			<!-- Modal de edição das matérias -->
-			<div class="modal fade bd-example-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    
-            	<div class="modal-dialog">
-                        
-                	<div class="modal-content">
 
-                    	<!-- Cabeçalho -->
-                        <div class="modal-header">
-                        	<h4 class="modal-title">Cronograma</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
+		<div class="jumbotron">
+
+			<button type="button" class="btn btn-primary" data-toggle="modal"
+				data-target=".bd-example-modal" style="margin-bottom: 10px">
+				<span class="icon icon-edit"> Editar Cronograma</span>
+			</button>
+
+			<!-- Modal de edição das matérias -->
+			<div class="modal fade bd-example-modal" tabindex="-1" role="dialog"
+				 aria-labelledby="myModalLabel" aria-hidden="true">
+
+				<div class="modal-dialog">
+
+					<div class="modal-content">
+
+						<!-- Cabeçalho -->
+						<div class="modal-header">
+							<h4 class="modal-title">Cronograma</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
 
 						<!-- Corpo -->
-                        <div class="modal-body">
-                        	
-                        	<div class="form-row">
+						<div class="modal-body">
 
-                            	<div class="form-group col-md-6">
-                                	<label for="mInicio">Selecione o mês inicial:</label>
-                                    	<input class="form-control rounded" type="month" id="minicio" name="minicio"/>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                    	<label for="mFim">Selecione o mês final:</label>
-                                        <input class="form-control rounded" type="month" id="mfim" name="mfim" disabled="disabled"/>
-                                    </div>
-
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="materia"><strong>Matéria:</strong></label>
-                                        
-                                        <input type="text" style="width: 100%" class="form-control" id="materia" 
-                                               placeholder="Nome da matéria" name="materia" 
-                                               disabled="disabled"/>        
-                                    </div>
-                                      
-                                    <button type="button" class="btn btn-primary" id="addMateria" style="width: 100%">
-                                        <span class="icon icon-plus-sign"> Adicionar matéria</span>
-                                    </button>
-
-                                    <table id="tblMaterias">
-                                        <tr>
-                                            <th colspan="2">Matérias</th>
-                                        </tr>
-                                    </table>
-                            </div>
-							
-							<!-- Rodapé -->
-							<div class="modal-footer">
-								<button type="button" id="btnConfirma" class="btn btn-success">Confirmar</button>
+							<div class="form-row">
 								
-								<button type="button" class="btn btn-danger" id="btnCancelar"
-                                        data-toggle="modal" data-target=".bd-example-modal">Cancelar</button>
+								<!-- Mês inicial do cronograma -->
+								<div class="form-group col-md-6">
+									<label for="mInicio">Selecione o mês inicial:</label> 
+									<input class="form-control rounded" type="month" id="minicio" name="minicio" />
+								</div>
+
+								<!-- Mês final do cronograma -->
+								<div class="form-group col-md-6">
+									<label for="mFim">Selecione o mês final:</label> 
+									<input class="form-control rounded" type="month" id="mfim" name="mfim" disabled="disabled" />
+								</div>
+
 							</div>
-                        </div>
-                    </div>
-                </div><!-- Fim modal -->
-                
-        	<div class="card-deck" id="materiasDeck">
-        	
-        	</div>    
+
+							<div class="form-group">
+							
+								<!-- Campo para o nome da matéria -->
+								<label for="materia"><strong>Matéria:</strong></label> 
+								<input 	type="text" style="width: 100%" class="form-control"
+										id="materia" placeholder="Nome da matéria" name="materia"
+										disabled="disabled" />
+							</div>
+							
+							<!-- Adiciona a matéria na tabela -->
+							<button type="button" class="btn btn-primary" id="addMateria" style="width: 100%">
+								<span class="icon icon-plus-sign"> Adicionar matéria</span>
+							</button>
+							
+							<!-- Tabela com as matérias -->
+							<table id="tblMaterias">
+								<tr>
+									<th colspan="2">Matérias</th>
+								</tr>
+							</table>
+						</div>
+
+						<!-- Rodapé -->
+						<div class="modal-footer">
+							
+							<!-- Salva/atualiza o cronograma -->
+							<button type="button" id="btnConfirma" class="btn btn-success">Confirmar</button>
+
+							<!-- Fecha o modal -->
+							<button type="button" class="btn btn-danger" id="btnCancelar"
+									data-toggle="modal" data-target=".bd-example-modal">Cancelar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Fim modal -->
+			
+			<!-- Matérias e assuntos -->
+			<div class="card-deck" id="materiasDeck"></div>
 		</div>
-		
+
 	</div>
-	
+
 	<!-- Bootstrap core JavaScript -->
 	<script type="text/javascript" th:src="@{/vendor/jquery/jquery.min.js}"></script>
 	<script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>

@@ -8,20 +8,18 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	
-	<link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/ico"/>
+	<link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/ico" />
 	
 	<link th:href="@{/css/estudante-padrao.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/raiz/fonts.css}" rel="stylesheet" type="text/css" media="all" />
-	
 	
 	<!-- Bootstrap core CSS -->
 	<link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" />
 	
 	<!-- Custom fonts for this template -->
 	<link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
-	
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
-	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
 	
 	<!-- Plugin CSS -->
 	<link th:href="@{/vendor/magnific-popup/magnific-popup.css}" rel="stylesheet" type="text/css" />
@@ -30,17 +28,17 @@
 	<link type="text/css" th:href="@{/css/freelancer.min.css}" rel="stylesheet" />
 	
 	<style type="text/css">
-	body {
-		background-color: #2C3E50;
-	}
-	
-	.container {
-		width: 70%;
-	}
-	
-	textarea {
-		height: 300px;
-	}
+		body {
+			background-color: #2C3E50;
+		}
+		
+		.container {
+			width: 70%;
+		}
+		
+		textarea {
+			height: 300px;
+		}
 	</style>
 </head>
 
@@ -109,61 +107,62 @@
 
 	<!-- Título da página -->
 	<div class="title">
-		<h2 class="icon icon-question-sign" style="color: #cccccc"> Ajuda </h2>
-		<span class="byline" style="color: #cccccc">
+		<h2 class="icon icon-question-sign" style="color: #cccccc">Ajuda</h2>
+		<span class="byline" style="color: #cccccc"> 
 			Veja aqui algumas dicas de como usar o <strong>Flashstudy</strong>
 		</span>
 	</div>
 
 	<!-- Container da página toda -->
 	<div class="container-fluid">
-	
+
 		<div class="row">
-			
+
 			<!-- Container da esqueda com as dicas -->
 			<div class="col-lg-6 col-sm-12">
-					
+
 				<div class="jumbotron">
 					<h3>
 						<strong>Dúvidas frequentes</strong>
 					</h3>
 
 					<div id="accordion">
-						
+
 						<!-- Solicitar um ciclo de estudos -->
 						<div class="card">
-						
+
 							<div class="card-header">
-							
+
 								<a class="card-link" data-toggle="collapse" href="#collapseOne">
 									Solicitando um <strong>Ciclo de Estudos</strong>
 								</a>
 							</div>
-							
-							<div id="collapseOne" class="collapse show" data-parent="#accordion">
-								
+
+							<div id="collapseOne" class="collapse show"
+								data-parent="#accordion">
+
 								<div class="card-body">
 									<ol>
 										<li>Clique no menu <strong>Cronograma</strong> e crie
 											novo cronograma;
 										</li>
-										
+
 										<li>Insira todas as os assuntos e metas que deseja;</li>
-										
+
 										<li>Clique no menu <strong>Ciclo</strong> e clique no
 											botão <strong>solicitar ciclo</strong>;
 										</li>
-										
+
 										<li>Selecione o <strong>dia</strong> e os <strong>horáraios
 												de início e fim</strong> do seu estudo no determinado dia;
 										</li>
-										
+
 										<li>Adicione quantos dias você desejar e clique no botão
 											<strong>criar ciclo</strong>;
 										</li>
-										
+
 										<li>O sistema irá gerar automaticamente o seu <strong>Ciclo
-											de estudos!</strong>
+												de estudos!</strong>
 										</li>
 									</ol>
 								</div>
@@ -172,13 +171,13 @@
 
 						<!-- Criando um flashcard -->
 						<div class="card">
-						
+
 							<div class="card-header">
-								<a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
-									Criando um <strong>Flashcard</strong>
+								<a class="collapsed card-link" data-toggle="collapse"
+									href="#collapseTwo"> Criando um <strong>Flashcard</strong>
 								</a>
 							</div>
-							
+
 							<div id="collapseTwo" class="collapse" data-parent="#accordion">
 								<div class="card-body">Lorem ipsum dolor sit amet,
 									consectetur adipisicing elit, sed do eiusmod tempor incididunt
@@ -187,7 +186,7 @@
 									commodo consequat.</div>
 							</div>
 						</div>
-						
+
 						<!--
                             <div class="card">
                                 <div class="card-header">
@@ -206,41 +205,35 @@
 
 				</div>
 			</div>
-			
+
 			<!-- Container da direita para contato -->
 			<div class="col-lg-6 col-sm-12">
-			
+
 				<div class="jumbotron">
-				
+
 					<div class="container">
-					
+
 						<div id="info">
 							<h2>Para mais informações:</h2>
 							<form action="/action_page.php">
-							
+
 								<div class="form-group">
-									<label for="assunto">
-										<strong>Assunto:</strong>
-									</label>
-									
-									<input	type="text" class="form-control" id="assunto"
-											placeholder="Assunto principal" name="assunto"/>
+									<label for="assunto"> <strong>Assunto:</strong></label>
+									<input  type="text" class="form-control" id="assunto"
+											placeholder="Assunto principal" name="assunto" />
 								</div>
-								
+
 								<div class="form-group">
-									<label for="pwd2">
-										<strong>Descrição:</strong>
+									<label for="pwd2"> <strong>Descrição:</strong>
 									</label>
-									
-									<textarea 	class="form-control" rows="5"
-												placeholder="Críticas, dúvidas, sugestões...">
+
+									<textarea class="form-control" rows="5"
+										placeholder="Críticas, dúvidas, sugestões...">
 									</textarea>
 								</div>
-								<button type="submit"
-									 	class="btn btn-success">
-									 	Enviar mensagem
-								</button>
-							
+								<button type="submit" class="btn btn-success">Enviar
+									mensagem</button>
+
 							</form>
 						</div>
 					</div>
