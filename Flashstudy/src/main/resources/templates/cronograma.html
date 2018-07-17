@@ -84,6 +84,7 @@
 				if(disciplinas == null){
 					console.log("entrou no if");
 					disciplinas = [];
+					objCronograma = {inicio: "", fim: "", disciplinas: disciplinas}
 				}
 				
 				if(cronograma.inicio != null){
@@ -110,9 +111,10 @@
     					strassunto += "<li>" + j + "</li>";
         			}
 
-    				strDisciplina = "<div class='card bg-secundary' title='Clique para editar as informações da matéria' id='" + i + "'>" +
+    				strDisciplina = "<div class='card bg-secundary' title='Clique para editar as informações da matéria'>" +
     								"<div class='card-body text-center'> <h4 class='card-title'>" + disciplinas[i].nome + "</h4>"+
-    								"<p class='card-text'> <ul>" + strassunto + "</ul></p></div></div>";
+    								"<p class='card-text'> <ul>" + strassunto + "</ul><button type='button' class='btn btn-dark btnMateria' value='" + i + 
+    								"' style='width: 100%' data-toggle='modal' data-target='#modalMateria'>Editar</button></p></div></div>";
 					$("#materiasDeck").append(strDisciplina);
     			}
 				
@@ -177,6 +179,20 @@
                 
             });
 
+			/* Limpa as tabelas ao fechar o modal */
+            $(".btnCancelar").click(function () {
+                $("#tblMaterias").empty();
+                $("#tblMaterias").append("<tr><th>Matérias</tr></th>");
+
+				for(i = 0; i < disciplinas.length; i++){
+					addDisciplinasTbl(i);
+				}
+
+                $("#tblAssuntos").empty();
+                $("#tblAssuntos").append("<tr><th>Assuntos</tr></th>");
+
+            });
+			
             /* Confirma e salva/atualiza o cronograma */
             $("#btnConfirma").click(function(){
 				if($("#tblMaterias tr").length > 1){
@@ -207,7 +223,7 @@
 							}
 						}
 					}
-
+					
 					objCronograma.inicio = $("#minicio").val();
 					objCronograma.fim = $("#mfim").val();
 					objCronograma.disciplinas = disciplinas;
@@ -230,27 +246,97 @@
 				}
             });
 
+			/* ----------------------------- */
+			/*  Funções do modal da matéria  */
+			/* ----------------------------- */
+            
 			/* Adiciona as disciplinas na tabela */
             function addDisciplinasTbl(i){
                 $("#tblMaterias").append("<tr class='materia' id = 'r"+ i +"'><td class='nome'>" + disciplinas[i].nome + "</td></tr>");
     		}
-
-    		/* --------------------------------------------------------------------------------------------------------------------------------------------  */
-			/* Funções para manipulação das matérias                                                                                                         */
-    		/* --------------------------------------------------------------------------------------------------------------------------------------------  */
-            
-            $(".card").on('click',{param1: "Hello", param2: "World"}, cool_function);
-
-            // in your function, just grab the event object and go crazy...
-            function cool_function(event){
-                alert(event.data.param1);
-                alert(event.data.param2);
-
-                // access element's id where click occur
-                alert( event.target.id ); 
-            }
-			
     		
+            /* Adiciona o novo assunto na tabela */
+            $("#addAssunto").click(function () {
+
+                if ($("#assunto").val() !== "") {
+                    $("#tblAssuntos").append("<tr class='assunto'><td class='tema'>" + $("#assunto").val() + "</td></tr>");
+
+                    $("#assunto").val("");
+                } else {
+                    alert("O campo está vazio!");
+                }
+            });
+
+            /* Inicializa o modal da matéria selecionada */
+            $( "#materiasDeck" ).on( "click", ".btnMateria", function() {
+           		var materiaSelecionada = disciplinas[$(this).attr("value")];
+            	console.log(materiaSelecionada);
+
+				var nome = materiaSelecionada.nome;
+            	
+            	$("#nomeMateria").html(nome);
+
+				var assuntos =[];
+
+				assuntos = materiaSelecionada.assuntos;
+
+          		for(i = 0; i < assuntos.length; i++){
+                    $("#tblAssuntos").append("<tr class='assunto'><td class='tema'>" + assuntos[i].tema + "</td></tr>");					
+	            }
+            });
+
+            /* Confirma e salva/atualiza os assuntos da materia */
+            $("#btnConfirma").click(function(){
+				if($("#tblMaterias tr").length > 1){
+
+					var arrDisciplinas =[];
+
+					console.log(rows);
+					console.log(disciplinas.length);
+
+					$("tr.materia").each(function() {
+						$this = $(this);
+						var disciplina ={nome: $this.find("td.nome").html()};
+
+						arrDisciplinas.push(disciplina);
+					});
+
+					if(arrDisciplinas.length == disciplinas.length){
+						alert("Nenhuma alteração foi feita nas disciplinas!");
+					}else{
+						if(disciplinas.length == 0){
+							disciplinas = arrDisciplinas;
+						}else{
+							var contador = disciplinas.length;
+							console.log(contador);
+							
+							for(; contador < arrDisciplinas.length; contador++){
+								disciplinas.push(arrDisciplinas[contador]);	
+							}
+						}
+					}
+					
+					objCronograma.inicio = $("#minicio").val();
+					objCronograma.fim = $("#mfim").val();
+					objCronograma.disciplinas = disciplinas;
+					
+					console.log(disciplinas);
+					console.log("");
+					console.log(objCronograma);
+					
+					$.ajax({
+	                    type: "POST",
+	                    cache: false,
+	                    contentType: "application/json",
+	                    url: "/cronograma/salvar",
+	                    data: JSON.stringify(objCronograma),
+	                    dataType: "json",
+	                    success: function (resposta) {
+	                        window.location.replace("cronograma");
+	                    } 
+	                });
+				}
+            });
 		});
 		
 	//]]></script>
@@ -333,112 +419,143 @@
 				<span class="icon icon-edit"> Editar Cronograma</span>
 			</button>
 
-			<!-- Modal de edição do cronograma -->
-			<div class="modal fade bd-example-modal" tabindex="-1" role="dialog"
-				 aria-labelledby="myModalLabel" aria-hidden="true">
-
-				<div class="modal-dialog">
-
-					<div class="modal-content">
-
-						<!-- Cabeçalho -->
-						<div class="modal-header">
-							<h4 class="modal-title">Cronograma</h4>
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-
-						<!-- Corpo -->
-						<div class="modal-body">
-
-							<div class="form-row">
-								
-								<!-- Mês inicial do cronograma -->
-								<div class="form-group col-md-6">
-									<label for="mInicio">Selecione o mês inicial:</label> 
-									<input class="form-control rounded" type="month" id="minicio" name="minicio" />
-								</div>
-
-								<!-- Mês final do cronograma -->
-								<div class="form-group col-md-6">
-									<label for="mFim">Selecione o mês final:</label> 
-									<input class="form-control rounded" type="month" id="mfim" name="mfim" disabled="disabled" />
-								</div>
-
-							</div>
-
-							<div class="form-group">
-							
-								<!-- Campo para o nome da matéria -->
-								<label for="materia"><strong>Matéria:</strong></label> 
-								<input 	type="text" style="width: 100%" class="form-control"
-										id="materia" placeholder="Nome da matéria" name="materia"
-										disabled="disabled" />
-							</div>
-							
-							<!-- Adiciona a matéria na tabela -->
-							<button type="button" class="btn btn-primary" id="addMateria" style="width: 100%">
-								<span class="icon icon-plus-sign"> Adicionar matéria</span>
-							</button>
-							
-							<!-- Tabela com as matérias -->
-							<table id="tblMaterias">
-								<tr>
-									<th colspan="2">Matérias</th>
-								</tr>
-							</table>
-						</div>
-
-						<!-- Rodapé -->
-						<div class="modal-footer">
-							
-							<!-- Salva/atualiza o cronograma -->
-							<button type="button" id="btnConfirma" class="btn btn-success">Confirmar</button>
-
-							<!-- Fecha o modal -->
-							<button type="button" class="btn btn-danger" id="btnCancelar"
-									data-toggle="modal" data-target=".bd-example-modal">Cancelar</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- Fim modal -->
+			
 			
 			<!-- Matérias e assuntos -->
 			<div class="card-columns" id="materiasDeck"></div>
+				
 			
-			<!-- Button to Open the Modal -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-    Open modal
-  </button>
-
-  <!-- The Modal -->
-  <div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Modal Heading</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        
-        <!-- Modal body -->
-        <div class="modal-body">
-          Modal body..
-        </div>
-        
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-        
-      </div>
-    </div>
-  </div>
 		</div>
 
 	</div>
+	
+	<!-- Modals -->
+	<div class="container">
+	
+		<!-- Modal de edição do cronograma -->
+		<div class="modal fade bd-example-modal" tabindex="-1" role="dialog"
+			 aria-labelledby="myModalLabel" aria-hidden="true">
 
+			<div class="modal-dialog">
+
+				<div class="modal-content">
+
+					<!-- Cabeçalho -->
+					<div class="modal-header">
+						<h4 class="modal-title">Cronograma</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<!-- Corpo -->
+					<div class="modal-body">
+
+						<div class="form-row">
+								
+							<!-- Mês inicial do cronograma -->
+							<div class="form-group col-md-6">
+								<label for="mInicio">Selecione o mês inicial:</label> 
+								<input class="form-control rounded" type="month" id="minicio" name="minicio" />
+							</div>
+
+							<!-- Mês final do cronograma -->
+							<div class="form-group col-md-6">
+								<label for="mFim">Selecione o mês final:</label> 
+								<input class="form-control rounded" type="month" id="mfim" name="mfim" disabled="disabled" />
+							</div>
+
+						</div>
+
+						<div class="form-group">
+							
+							<!-- Campo para o nome da matéria -->
+							<label for="materia"><strong>Matéria:</strong></label> 
+							<input 	type="text" style="width: 100%" class="form-control"
+									id="materia" placeholder="Nome da matéria" name="materia"
+									disabled="disabled" />
+						</div>
+							
+						<!-- Adiciona a matéria na tabela -->
+						<button type="button" class="btn btn-primary" id="addMateria" style="width: 100%">
+							<span class="icon icon-plus-sign"> Adicionar matéria</span>
+						</button>
+							
+						<!-- Tabela com as matérias -->
+						<table id="tblMaterias">
+							<tr>
+								<th colspan="2">Matérias</th>
+							</tr>
+						</table>
+					</div>
+
+					<!-- Rodapé -->
+					<div class="modal-footer">
+							
+						<!-- Salva/atualiza o cronograma -->
+						<button type="button" id="btnConfirma" class="btn btn-success">Confirmar</button>
+
+						<!-- Fecha o modal -->
+						<button type="button" class="btn btn-danger btnCancelar"
+								data-toggle="modal" data-target=".bd-example-modal">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Fim modal -->
+	
+		<!-- Modal da materia selecionada -->
+		<div class="modal fade" tabindex="-1" role="dialog"
+			 aria-labelledby="myModalLabel" aria-hidden="true" id="modalMateria">
+
+			<div class="modal-dialog">
+
+				<div class="modal-content">
+
+					<!-- Cabeçalho -->
+					<div class="modal-header">
+						<h4 class="modal-title" id="nomeMateria"></h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<!-- Corpo -->
+					<div class="modal-body">
+
+						<div class="form-group">
+							
+							<!-- Campo para o tema do assunto -->
+							<label for="Assunto"><strong>Assunto:</strong></label> 
+							<input 	type="text" style="width: 100%" class="form-control"
+									id="assunto" name="assunto"/>
+						</div>
+							
+						<!-- Adiciona o assunto na tabela -->
+						<button type="button" class="btn btn-primary" id="addAssunto" style="width: 100%">
+							<span class="icon icon-plus-sign"> Adicionar assunto</span>
+						</button>
+							
+						<!-- Tabela com os assuntos -->
+						<table id="tblAssuntos">
+							<tr>
+								<th colspan="2">Assuntos</th>
+							</tr>
+						</table>
+					</div>
+
+					<!-- Rodapé -->
+					<div class="modal-footer">
+							
+						<!-- Salva/atualiza a matéria -->
+						<button type="button" id="btnSalvaAssunto" class="btn btn-success">Confirmar</button>
+
+						<!-- Fecha o modal -->
+						<button type="button" class="btn btn-danger btnCancelar"
+								data-toggle="modal" data-target="#modalMateria">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Fim modal -->
+	</div>
+	
 	<!-- Bootstrap core JavaScript -->
 	<script type="text/javascript" th:src="@{/vendor/jquery/jquery.min.js}"></script>
 	<script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
