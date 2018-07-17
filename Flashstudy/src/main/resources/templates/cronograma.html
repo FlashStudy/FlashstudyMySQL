@@ -66,19 +66,25 @@
 	<!-- Script da página. Futuramente passar para arquivo separado -->
 	<script type="text/javascript">//<![CDATA[
 
-		/* Guarda o cronograma atual do usuário */
-		var objCronograma = {};
-
-		/* Guarda as disciplinas do cronograma */
-		var disciplinas = [];
-		
 		$(document).ready(function(){
 
+			/* Guarda o cronograma atual do usuário */
+			var objCronograma = {};
+
+			/* Guarda as disciplinas do cronograma */
+			var disciplinas = [];
+			
 			/* Solicita o cronograma mais atual do usuário */
 			$.get("cronograma/atual", function (cronograma) {
 				objCronograma = cronograma;
 	
 				disciplinas = cronograma.disciplinas;
+
+				console.log("testando if");
+				if(disciplinas == null){
+					console.log("entrou no if");
+					disciplinas = [];
+				}
 				
 				if(cronograma.inicio != null){
 					$("#minicio").val(cronograma.inicio);
@@ -95,7 +101,6 @@
 					addDisciplinasTbl(i)
                     
                     var assuntos = [];
-                    
     				assuntos = disciplinas[i].assuntos;
     				
     				var strassunto = "";
@@ -105,7 +110,7 @@
     					strassunto += "<li>" + j + "</li>";
         			}
 
-    				strDisciplina = "<div class='card bg-secundary' title='Clique para editar as informações da matéria' id='"+disciplinas[i].codigo+"'>" +
+    				strDisciplina = "<div class='card bg-secundary' title='Clique para editar as informações da matéria' id='" + i + "'>" +
     								"<div class='card-body text-center'> <h4 class='card-title'>" + disciplinas[i].nome + "</h4>"+
     								"<p class='card-text'> <ul>" + strassunto + "</ul></p></div></div>";
 					$("#materiasDeck").append(strDisciplina);
@@ -176,46 +181,77 @@
             $("#btnConfirma").click(function(){
 				if($("#tblMaterias tr").length > 1){
 
-					var rows = $('#tblMaterias tr').length -1;
-
-					if(rows == disciplinas.length){
-						alert("Nenhuma alteração foi feita!");
-					}
+					var arrDisciplinas =[];
 
 					console.log(rows);
 					console.log(disciplinas.length);
-					
-					/* 
+
 					$("tr.materia").each(function() {
 						$this = $(this);
 						var disciplina ={nome: $this.find("td.nome").html()};
 
-						arrdisciplinas.push(disciplina);
-						  
+						arrDisciplinas.push(disciplina);
 					});
 
-					var cronograma = {inicio : $("#minicio").val(),
-										fim : $("#mfim").val(),
-										disciplinas : arrdisciplinas};
+					if(arrDisciplinas.length == disciplinas.length){
+						alert("Nenhuma alteração foi feita nas disciplinas!");
+					}else{
+						if(disciplinas.length == 0){
+							disciplinas = arrDisciplinas;
+						}else{
+							var contador = disciplinas.length;
+							console.log(contador);
+							
+							for(; contador < arrDisciplinas.length; contador++){
+								disciplinas.push(arrDisciplinas[contador]);	
+							}
+						}
+					}
+
+					objCronograma.inicio = $("#minicio").val();
+					objCronograma.fim = $("#mfim").val();
+					objCronograma.disciplinas = disciplinas;
+					
+					console.log(disciplinas);
+					console.log("");
+					console.log(objCronograma);
 					
 					$.ajax({
 	                    type: "POST",
 	                    cache: false,
 	                    contentType: "application/json",
 	                    url: "/cronograma/salvar",
-	                    data: JSON.stringify(cronograma),
+	                    data: JSON.stringify(objCronograma),
 	                    dataType: "json",
 	                    success: function (resposta) {
 	                        window.location.replace("cronograma");
 	                    } 
-	                }); */ 
+	                });
 				}
             });
-		});
 
-		function addDisciplinasTbl(i){
-            $("#tblMaterias").append("<tr class='materia' id = 'r"+ i +"'><td class='nome'>" + disciplinas[i].nome + "</td></tr>");
-		}
+			/* Adiciona as disciplinas na tabela */
+            function addDisciplinasTbl(i){
+                $("#tblMaterias").append("<tr class='materia' id = 'r"+ i +"'><td class='nome'>" + disciplinas[i].nome + "</td></tr>");
+    		}
+
+    		/* --------------------------------------------------------------------------------------------------------------------------------------------  */
+			/* Funções para manipulação das matérias                                                                                                         */
+    		/* --------------------------------------------------------------------------------------------------------------------------------------------  */
+            
+            $(".card").on('click',{param1: "Hello", param2: "World"}, cool_function);
+
+            // in your function, just grab the event object and go crazy...
+            function cool_function(event){
+                alert(event.data.param1);
+                alert(event.data.param2);
+
+                // access element's id where click occur
+                alert( event.target.id ); 
+            }
+			
+    		
+		});
 		
 	//]]></script>
 
@@ -297,7 +333,7 @@
 				<span class="icon icon-edit"> Editar Cronograma</span>
 			</button>
 
-			<!-- Modal de edição das matérias -->
+			<!-- Modal de edição do cronograma -->
 			<div class="modal fade bd-example-modal" tabindex="-1" role="dialog"
 				 aria-labelledby="myModalLabel" aria-hidden="true">
 
@@ -368,7 +404,37 @@
 			<!-- Fim modal -->
 			
 			<!-- Matérias e assuntos -->
-			<div class="card-deck" id="materiasDeck"></div>
+			<div class="card-columns" id="materiasDeck"></div>
+			
+			<!-- Button to Open the Modal -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Open modal
+  </button>
+
+  <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          Modal body..
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
 		</div>
 
 	</div>
