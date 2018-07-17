@@ -15,9 +15,10 @@ public class EstudadoId implements Serializable {
 	 */
 
 	@EmbeddedId
-	@AttributeOverrides({ @AttributeOverride(name = "codigodisciplina", column = @Column(name = "codigodisciplina", nullable = false)),
+	@AttributeOverrides({
+			@AttributeOverride(name = "codigodisciplina", column = @Column(name = "codigodisciplina", nullable = false)),
 			@AttributeOverride(name = "codigocronograma", column = @Column(name = "codigocronograma", nullable = false)),
-			@AttributeOverride(name = "codigohorario", column = @Column(name = "codigohorario", nullable = false)),})
+			@AttributeOverride(name = "codigohorario", column = @Column(name = "codigohorario", nullable = false)), })
 	private Id id;
 
 	@OneToOne(fetch = FetchType.LAZY)
@@ -31,11 +32,49 @@ public class EstudadoId implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "codigoHorario", nullable = false, insertable = false, updatable = false)
 	private Horario horario;
-	
+
 	@Column(name = "dia", nullable = false)
 	private String dia;
 
-	// getters e setters omitidos
+	public Id getId() {
+		return id;
+	}
+
+	public void setId(Id id) {
+		this.id = id;
+	}
+
+	public Disciplina getDisciplina() {
+		return disciplina;
+	}
+
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
+	}
+
+	public Cronograma getCronograma() {
+		return cronograma;
+	}
+
+	public void setCronograma(Cronograma cronograma) {
+		this.cronograma = cronograma;
+	}
+
+	public Horario getHorario() {
+		return horario;
+	}
+
+	public void setHorario(Horario horario) {
+		this.horario = horario;
+	}
+
+	public String getDia() {
+		return dia;
+	}
+
+	public void setDia(String dia) {
+		this.dia = dia;
+	}
 
 	// Id da associacao (chave composta no banco)
 	@Embeddable
@@ -46,7 +85,7 @@ public class EstudadoId implements Serializable {
 
 		@Column(name = "codigoCronograma", nullable = false)
 		private Long codigoCronograma;
-		
+
 		@Column(name = "codigoHorario", nullable = false)
 		private Long codigoHorario;
 

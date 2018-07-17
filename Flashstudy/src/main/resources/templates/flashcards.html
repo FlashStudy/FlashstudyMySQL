@@ -101,6 +101,10 @@
 	<script type="text/javascript">//<![CDATA[
 		$(document).ready(function(){
 
+			var arrDisciplinas = [];
+
+			var assuntos = [];
+			
 			/* Envia requisição para listar todos os flashcards */
 			$.get("flashcard/lista", function (cards) {
 				console.log(cards);
@@ -131,6 +135,20 @@
 				}
             });
 
+			/* Adiciona as disciplinas ao select */
+			$.get("disciplina/lista", function(disciplinas){
+				console.log(disciplinas);
+
+				arrDisciplinas = disciplinas;
+
+				console.log(arrDisciplinas);
+
+				for(i = 0; i < arrDisciplinas.length; i++){
+					strDisciplina = "<option value='" + i +"'>" + arrDisciplinas[i].nome + "</option>"
+					$("#selectMaterias").append(strDisciplina);
+				}
+			});
+			
             /* Salva o novo flashcard */
 			$("#btnSalvar").click(function(){
 				if(verificaCampos()){
@@ -156,6 +174,21 @@
 					console.log("Erro");
 				}
 			});
+
+			$("#selectMaterias").change(function(){
+                $("#selectAssuntos").prop("disabled", false);
+
+                $("#selectAssuntos").empty();
+                $("#selectAssuntos").append("<option value='default'>Escolha um assunto</option>");
+				
+				var pos = $("#selectMaterias").val();
+
+				assuntos = arrDisciplinas[pos].assuntos;
+
+				for(i = 0; i < assuntos.length; i++){
+					strAssunto = "<option>" + assuntos[i].tema + "</option>"
+				}
+			});
 		});
 
 		/* Verifica se há algum campo vazio */
@@ -175,7 +208,6 @@
 				return true;
 			}
 		}
-		
 		 //]]></script>
 
 
@@ -294,10 +326,30 @@
 						    			<span class="icon icon-plus-sign"> Novo</span>
 						    	</button>
 						  	</div>
+						  							  	
 						</div>
 		        	</div>
 		    	</div>
-	    	
+		    	
+		    	<div class="row justify-content-center">
+		    		<div class="col-lg-5 col-md-7 col-sm-10 col-10">
+		    		<div class="form-group">
+			        		<select id="selectMaterias" name="selectMaterias" class="form-control bg-gray">
+			        			<option value="default">Escolha uma matéria</option>
+			        		</select>
+		           		</div>
+		    		</div>
+		    		<div class="col-lg-5 col-md-7 col-sm-10 col-10">
+		    		<div class="form-group">
+			        		<select id="selectAssuntos" name="selectAssuntos" class="form-control" disabled="disabled">
+			        			<option value="default">Escolha um assunto</option>
+			        		</select>
+		        		</div>
+		    		</div>
+		    	</div>
+		    	<div class="row justify-content-center">
+		    		
+		    	</div>
 		   		<div class="row">
 		        	
 		        	<!-- Título e pergunta do flashcard -->
