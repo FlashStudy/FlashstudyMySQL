@@ -2,6 +2,10 @@ package br.com.flashstudy.model;
 
 import javax.persistence.*;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Assunto")
@@ -11,23 +15,26 @@ public class Assunto implements java.io.Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long codigo;
 
-	@Column
+	@Column(name = "tema", unique = true)
+	@NotEmpty
 	private String tema;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "disciplina_codigo")
+	@JsonBackReference
 	private Disciplina disciplina;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "usuario_codigo")
+	@JoinColumn(name = "codigo_usuario")
 	private Usuario usuario;
 
 	public Assunto() {
 		super();
 	}
 
-	public Assunto(String tema, Disciplina disciplina, Usuario usuario) {
+	public Assunto(Long codigo, String tema, Disciplina disciplina, Usuario usuario) {
 		super();
+		this.codigo = codigo;
 		this.tema = tema;
 		this.disciplina = disciplina;
 		this.usuario = usuario;
@@ -63,12 +70,6 @@ public class Assunto implements java.io.Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	@Override
-	public String toString() {
-		return "Assunto [codigo=" + codigo + ", tema=" + tema + ", disciplina=" + disciplina + ", usuario=" + usuario
-				+ "]";
 	}
 
 	@Override

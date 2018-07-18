@@ -1,7 +1,7 @@
 package br.com.flashstudy.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -23,7 +23,7 @@ public class Disciplina implements java.io.Serializable {
 	private String nome;
 
 	@OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Assunto> assuntos = new ArrayList<>();
+	private Set<Assunto> assuntos = new HashSet<>();
 
 	@ManyToOne
 	private Usuario usuario;
@@ -39,16 +39,9 @@ public class Disciplina implements java.io.Serializable {
 		this.usuario = usuario;
 	}
 
-	public Disciplina(Long codigo, String nome, List<Assunto> assuntos, Usuario usuario) {
+	public Disciplina(Long codigo, String nome, Set<Assunto> assuntos, Usuario usuario) {
 		super();
 		this.codigo = codigo;
-		this.nome = nome;
-		this.assuntos = assuntos;
-		this.usuario = usuario;
-	}
-
-	public Disciplina(String nome, List<Assunto> assuntos, Usuario usuario) {
-		super();
 		this.nome = nome;
 		this.assuntos = assuntos;
 		this.usuario = usuario;
@@ -70,11 +63,11 @@ public class Disciplina implements java.io.Serializable {
 		this.nome = nome;
 	}
 
-	public List<Assunto> getAssuntos() {
+	public Set<Assunto> getAssuntos() {
 		return assuntos;
 	}
 
-	public void setAssuntos(List<Assunto> assuntos) {
+	public void setAssuntos(Set<Assunto> assuntos) {
 		this.assuntos = assuntos;
 	}
 
@@ -95,11 +88,4 @@ public class Disciplina implements java.io.Serializable {
 		assuntos.remove(assunto);
 		assunto.setDisciplina(null);
 	}
-
-	@Override
-	public String toString() {
-		return "Disciplina [codigo=" + codigo + ", nome=" + nome + ", assunto=" + assuntos + ", usuario=" + usuario
-				+ "]";
-	}
-
 }

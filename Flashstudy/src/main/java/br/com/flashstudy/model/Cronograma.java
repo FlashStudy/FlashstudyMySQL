@@ -1,6 +1,8 @@
 package br.com.flashstudy.model;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -27,10 +29,10 @@ public class Cronograma implements java.io.Serializable {
 	@ManyToOne
 	private Usuario usuario;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "cronograma_possui_disciplinas", joinColumns = {
 			@JoinColumn(name = "cronograma_codigo") }, inverseJoinColumns = { @JoinColumn(name = "disciplina_codigo") })
-	private List<Disciplina> disciplinas;
+	private Set<Disciplina> disciplinas = new HashSet<>();
 
 	public Cronograma() {
 	}
@@ -47,19 +49,18 @@ public class Cronograma implements java.io.Serializable {
 		this.usuario = usuario;
 	}
 
-	public Cronograma(String inicio, String fim, Usuario usuario, List<Disciplina> disciplinas) {
+	public Cronograma(String inicio, String fim, Usuario usuario, Set<Disciplina> disciplinas) {
 		this.inicio = inicio;
 		this.fim = fim;
 		this.usuario = usuario;
 		this.disciplinas = disciplinas;
 	}
 
-	public Cronograma(Long codigo, String inicio, String fim, Usuario usuario, List<Disciplina> disciplinas) {
+	public Cronograma(Long codigo, String inicio, String fim, Usuario usuario) {
 		this.codigo = codigo;
 		this.inicio = inicio;
 		this.fim = fim;
 		this.usuario = usuario;
-		this.disciplinas = disciplinas;
 	}
 
 	public Long getCodigo() {
@@ -94,14 +95,18 @@ public class Cronograma implements java.io.Serializable {
 		this.usuario = usuario;
 	}
 
-	public List<Disciplina> getDisciplinas() {
+	public Set<Disciplina> getDisciplinas() {
 		return disciplinas;
 	}
 
-	public void setDisciplinas(List<Disciplina> disciplinas) {
+	public void setDisciplinas(Set<Disciplina> disciplinas) {
 		this.disciplinas = disciplinas;
 	}
 
+	public void addDisciplina(Disciplina disciplina) {
+		disciplinas.add(disciplina);
+	}
+	
 	@Override
 	public String toString() {
 		return "Cronograma{" + "codigo=" + codigo + ", inicio=" + inicio + ", fim=" + fim + ", usuario=" + usuario

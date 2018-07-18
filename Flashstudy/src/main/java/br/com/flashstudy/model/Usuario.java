@@ -6,6 +6,9 @@ import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "Usuario")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -67,18 +70,22 @@ public class Usuario implements Serializable {
 		this.nome = nome;
 	}
 
+	@JsonIgnore
 	public String getEmail() {
 		return email;
 	}
 
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+	@JsonIgnore
 	public String getSenha() {
 		return senha;
 	}
 
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}

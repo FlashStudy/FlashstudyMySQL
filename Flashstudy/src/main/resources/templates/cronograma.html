@@ -83,12 +83,12 @@
 			/* Solicita o cronograma mais atual do usuário */
 			$.get("cronograma/atual", function (cronograma) {
 				objCronograma = cronograma;
-	
+
+				console.log(cronograma);
+				
 				disciplinas = cronograma.disciplinas;
 
-				console.log("testando if");
 				if(disciplinas == null){
-					console.log("entrou no if");
 					disciplinas = [];
 					objCronograma = {inicio: "", fim: "", disciplinas: disciplinas}
 				}
@@ -107,19 +107,21 @@
 				for(i = 0; i < disciplinas.length; i++){
 					addDisciplinasTbl(i)
                     
-                    var assuntos = [];
     				assuntos = disciplinas[i].assuntos;
     				
     				var strassunto = "";
+
+					console.log(assuntos.length);
     				
     				for(j = 0; j < assuntos.length; j++){
-    					//strassunto += "<li>" + assuntos[i].tema + "</li>";
-    					strassunto += "<li>" + j + "</li>";
+    					strassunto += "<div class='form-group row'>" +
+    									"<input type='text' readonly='readonly' class='form-control' value='" + assuntos[j].tema + "'/></div>";
         			}
-
+    				
+					
     				strDisciplina = "<div class='card bg-secundary' title='Clique para editar as informações da matéria'>" +
     								"<div class='card-body text-center'> <h4 class='card-title'>" + disciplinas[i].nome + "</h4>"+
-    								"<p class='card-text'> <ul>" + strassunto + "</ul><button type='button' class='btn btn-dark btnMateria' value='" + i + 
+    								"<p class='card-text'>" + strassunto + "<button type='button' class='btn btn-dark btnMateria' value='" + i + 
     								"' style='width: 100%' data-toggle='modal' data-target='#modalMateria'>Editar</button></p></div></div>";
 					$("#materiasDeck").append(strDisciplina);
     			}
@@ -312,7 +314,7 @@
 							console.log(contador);
 							
 							for(; contador < arrAssuntos.length; contador++){
-								assuntos.push(arrDisciplinas[contador]);	
+								assuntos.push(arrAssuntos[contador]);	
 							}
 						}
 					}
