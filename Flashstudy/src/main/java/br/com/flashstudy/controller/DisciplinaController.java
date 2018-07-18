@@ -1,5 +1,8 @@
 package br.com.flashstudy.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import br.com.flashstudy.error.Resposta;
+import br.com.flashstudy.model.Assunto;
+import br.com.flashstudy.model.Disciplina;
 import br.com.flashstudy.model.Usuario;
+import br.com.flashstudy.repository.AssuntoRepository;
 import br.com.flashstudy.repository.DisciplinaRepository;
 
 //Controller de Disciplinas
@@ -20,10 +27,38 @@ public class DisciplinaController {
 	@Autowired
 	private DisciplinaRepository disciplinaRepository;
 
+	@Autowired
+	private AssuntoRepository assuntoRepository;
+
 	// Lista as disciplinas de um usuário
 	@GetMapping(value = "/lista")
 	public ResponseEntity<?> lista(HttpSession session) {
 		return new ResponseEntity<>(disciplinaRepository.getByUsuario((Usuario) session.getAttribute("usuario")),
 				HttpStatus.OK);
+	}
+
+	// Salva/atualiza a disciplina
+	@PostMapping(path = "/salvar")
+	public ResponseEntity<?> salvar(@RequestBody Disciplina disciplina, HttpSession session) {
+		
+		Disciplina d = new Disciplina();
+		
+		List<Assunto> assuntos = disciplina.getAssuntos();
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		
+		d.setCodigo(disciplina.getCodigo());
+		d.setNome(disciplina.getNome());
+		d.setUsuario(usuario);
+		System.out.println(d.toString());
+		
+		d.addAssunto(new Assunto());
+		System.out.println(d.toString());
+		for(Assunto a : assuntos) {
+			System.out.println(a.toString());
+				
+		}
+		
+		return new ResponseEntity<>(new Resposta("Disciplina e assuntos salvos!"), HttpStatus.OK);
+
 	}
 }

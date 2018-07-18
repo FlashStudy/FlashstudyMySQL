@@ -73,6 +73,12 @@
 
 			/* Guarda as disciplinas do cronograma */
 			var disciplinas = [];
+
+			/* Materia selecionada para edição */
+			var materiaSelecionada = {};
+
+			/* Assuntos da materia selecionada */
+			var assuntos = [];
 			
 			/* Solicita o cronograma mais atual do usuário */
 			$.get("cronograma/atual", function (cronograma) {
@@ -231,7 +237,7 @@
 					console.log(disciplinas);
 					console.log("");
 					console.log(objCronograma);
-					
+					 
 					$.ajax({
 	                    type: "POST",
 	                    cache: false,
@@ -269,14 +275,12 @@
 
             /* Inicializa o modal da matéria selecionada */
             $( "#materiasDeck" ).on( "click", ".btnMateria", function() {
-           		var materiaSelecionada = disciplinas[$(this).attr("value")];
+           		materiaSelecionada = disciplinas[$(this).attr("value")];
             	console.log(materiaSelecionada);
 
 				var nome = materiaSelecionada.nome;
             	
             	$("#nomeMateria").html(nome);
-
-				var assuntos =[];
 
 				assuntos = materiaSelecionada.assuntos;
 
@@ -286,52 +290,53 @@
             });
 
             /* Confirma e salva/atualiza os assuntos da materia */
-            $("#btnConfirma").click(function(){
-				if($("#tblMaterias tr").length > 1){
+           	$("#btnSalvaAssunto").click(function(){
+				if($("#tblAssuntos tr").length > 1){
 
-					var arrDisciplinas =[];
-
-					console.log(rows);
-					console.log(disciplinas.length);
-
-					$("tr.materia").each(function() {
+					var arrAssuntos =[];
+					
+					$("tr.assunto").each(function() {
 						$this = $(this);
-						var disciplina ={nome: $this.find("td.nome").html()};
+						var assunto ={tema: $this.find("td.tema").html()};
 
-						arrDisciplinas.push(disciplina);
+						arrAssuntos.push(assunto);
 					});
 
-					if(arrDisciplinas.length == disciplinas.length){
-						alert("Nenhuma alteração foi feita nas disciplinas!");
+					if(arrAssuntos.length == assuntos.length){
+						alert("Nenhuma alteração foi feita nos assuntos!");
 					}else{
-						if(disciplinas.length == 0){
-							disciplinas = arrDisciplinas;
+						if(assuntos.length == 0){
+							assuntos = arrAssuntos;
 						}else{
-							var contador = disciplinas.length;
+							var contador = assuntos.length;
 							console.log(contador);
 							
-							for(; contador < arrDisciplinas.length; contador++){
-								disciplinas.push(arrDisciplinas[contador]);	
+							for(; contador < arrAssuntos.length; contador++){
+								assuntos.push(arrDisciplinas[contador]);	
 							}
 						}
 					}
-					
-					objCronograma.inicio = $("#minicio").val();
-					objCronograma.fim = $("#mfim").val();
-					objCronograma.disciplinas = disciplinas;
-					
-					console.log(disciplinas);
+
+					console.log(materiaSelecionada);
+
 					console.log("");
-					console.log(objCronograma);
+					
+					var disciplina = {	codigo: materiaSelecionada.codigo,
+										nome: materiaSelecionada.nome,
+										assuntos: assuntos,
+										usuario: materiaSelecionada.usuario};
+
+					console.log(disciplina);
 					
 					$.ajax({
 	                    type: "POST",
 	                    cache: false,
 	                    contentType: "application/json",
-	                    url: "/cronograma/salvar",
-	                    data: JSON.stringify(objCronograma),
+	                    url: "/disciplina/salvar",
+	                    data: JSON.stringify(disciplina),
 	                    dataType: "json",
 	                    success: function (resposta) {
+		                    alert("Salvo");
 	                        window.location.replace("cronograma");
 	                    } 
 	                });
@@ -419,8 +424,6 @@
 				<span class="icon icon-edit"> Editar Cronograma</span>
 			</button>
 
-			
-			
 			<!-- Matérias e assuntos -->
 			<div class="card-columns" id="materiasDeck"></div>
 				

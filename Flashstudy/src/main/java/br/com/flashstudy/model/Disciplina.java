@@ -22,11 +22,7 @@ public class Disciplina implements java.io.Serializable {
 	@NotEmpty
 	private String nome;
 
-	@OneToMany(
-	        mappedBy = "disciplina", 
-	        cascade = CascadeType.ALL, 
-	        orphanRemoval = true
-	    )
+	@OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Assunto> assuntos = new ArrayList<>();
 
 	@ManyToOne
@@ -34,6 +30,21 @@ public class Disciplina implements java.io.Serializable {
 
 	public Disciplina() {
 		super();
+	}
+
+	public Disciplina(Long codigo, String nome, Usuario usuario) {
+		super();
+		this.codigo = codigo;
+		this.nome = nome;
+		this.usuario = usuario;
+	}
+
+	public Disciplina(Long codigo, String nome, List<Assunto> assuntos, Usuario usuario) {
+		super();
+		this.codigo = codigo;
+		this.nome = nome;
+		this.assuntos = assuntos;
+		this.usuario = usuario;
 	}
 
 	public Disciplina(String nome, List<Assunto> assuntos, Usuario usuario) {
@@ -63,7 +74,7 @@ public class Disciplina implements java.io.Serializable {
 		return assuntos;
 	}
 
-	public void setAssunto(List<Assunto> assuntos) {
+	public void setAssuntos(List<Assunto> assuntos) {
 		this.assuntos = assuntos;
 	}
 
@@ -73,6 +84,16 @@ public class Disciplina implements java.io.Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public void addAssunto(Assunto assunto) {
+		assuntos.add(assunto);
+		assunto.setDisciplina(this);
+	}
+
+	public void removeAssunto(Assunto assunto) {
+		assuntos.remove(assunto);
+		assunto.setDisciplina(null);
 	}
 
 	@Override
