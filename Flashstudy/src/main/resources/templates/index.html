@@ -43,12 +43,10 @@
 
 			/* Testa se as senhas são iguais para cadastro */
 	    	$("#senhaConfirmacao").change(function(){
-	    		console.log("funcao");
 				var senha = $("#senhaRegistro").val();
 				var confirmacao = $("#senhaConfirmacao").val();
 				
 				if(senha !== confirmacao){
-					console.log("if");
 			    	$("#verifica").empty();
 			    	$("#verifica").append("<span>As senhas diferem!</span>");
 				}else{
@@ -63,9 +61,7 @@
 	    		var usuarioRegistro = {	nome: $("#nomeRegistro").val(),
 								email: $("#emailRegistro").val(),
 								senha: $("#senhaRegistro").val()};
-	    		
-	    		console.log("chamando requisicao de cadasrto");
-                
+	    		                
 	    		$.ajax({
                     type: "POST",
                     cache: false,
@@ -74,7 +70,6 @@
                     data: JSON.stringify(usuarioRegistro),
                     dataType: "json",
                     success: function (resposta) {
-                        console.log(resposta.mensagem);
                         window.location.replace("inicial");
                     } 
                 }); 
@@ -92,9 +87,7 @@
 				}else{
 				
 					var usuarioLogin = {email: $("#emailLogin").val(), senha: $("#senhaLogin").val()};
-					
-					console.log("chamando requisicao de login");
-	                
+						                
 		    		$.ajax({
 	                    type: "POST",
 	                    cache: false,
@@ -103,11 +96,9 @@
 	                    data: JSON.stringify(usuarioLogin),
 	                    dataType: "json",
 	                    success: function (resposta) {
-	                        console.log(resposta.mensagem);
 	                        window.location.replace("inicial");
 	                    },
 	                    error: function (resposta){
-	                        console.log("Email ou senha inválidos");
 							alert("Email ou senha inválidos");
 		                }
 	                }); 

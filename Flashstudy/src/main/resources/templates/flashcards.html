@@ -107,14 +107,9 @@
 			
 			/* Envia requisição para listar todos os flashcards */
 			$.get("flashcard/lista", function (cards) {
-				console.log(cards);
-				console.log("");
-				console.log(cards.length);
-
 				var strCard;
 
 				for( i = 0; i < cards.length; i++){
-					console.log(i);
 					strCard = "<div class='col-lg-4 col-md-6 col-sm-12 col-12' style='margin-top: 5px'>" +
 								"<div class='card align-self-center' style='width: 18rem;'>" +
 									"<div class='card-body'>" +
@@ -137,11 +132,7 @@
 
 			/* Adiciona as disciplinas ao select */
 			$.get("disciplina/lista", function(disciplinas){
-				console.log(disciplinas);
-
 				arrDisciplinas = disciplinas;
-
-				console.log(arrDisciplinas);
 
 				for(i = 0; i < arrDisciplinas.length; i++){
 					strDisciplina = "<option value='" + i +"'>" + arrDisciplinas[i].nome + "</option>"
@@ -152,7 +143,6 @@
             /* Salva o novo flashcard */
 			$("#btnSalvar").click(function(){
 				if(verificaCampos()){
-					console.log("Chamando requisicao");
 
 					var card = { titulo: $("#titulo").val(),
 								 pergunta: $("#pergunta").val(),
@@ -165,13 +155,10 @@
 	                    data: JSON.stringify(card),
 	                    dataType: "json",
 	                    success: function (resposta) {
-	                        console.log(resposta.mensagem);
 	                        window.location.replace("flashcards");
 	                    } 
 	                }); 
-					console.log("Salvo");
 				}else{
-					console.log("Erro");
 				}
 			});
 
@@ -197,10 +184,6 @@
 			var pergunta = $("#pergunta").val();
 			var resposta = $("#resposta").val();
 
-			console.log(titulo);
-			console.log(pergunta);
-			console.log(resposta);
-			
 			if((titulo === "") || (pergunta === "") || (resposta=== "")){
 				alert("Algum campo não foi preenchido!");
 				return false;

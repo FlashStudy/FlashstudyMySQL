@@ -40,8 +40,6 @@ public class UsuarioController {
 
 		httpSession.setAttribute("usuario", aux);
 
-		System.out.println(aux.toString());
-
 		return new ResponseEntity<>(new Resposta("Usuário cadastrado com sucesso!"), HttpStatus.OK);
 	}
 

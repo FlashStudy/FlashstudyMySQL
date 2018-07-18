@@ -38,8 +38,6 @@ public class FlashcardController {
 
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-		System.out.println(usuario.getNome());
-
 		flashcard.setUsuario(usuario);
 		flashcard.setNivel("1");
 		flashcard.setPublico("Publico");
