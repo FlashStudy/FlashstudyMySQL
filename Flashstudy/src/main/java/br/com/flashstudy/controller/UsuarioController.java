@@ -86,4 +86,8 @@ public class UsuarioController {
 
 	}
 
+	@GetMapping(value = "/logado")
+	public @ResponseBody ResponseEntity<?> logado(HttpSession session) {
+			return new ResponseEntity<>((Usuario) session.getAttribute("usuario"), HttpStatus.OK);
+	}
 }

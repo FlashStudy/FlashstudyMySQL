@@ -36,17 +36,12 @@ public class DisciplinaController {
 	@PostMapping(path = "/salvar")
 	public ResponseEntity<?> salvar(@RequestBody Disciplina disciplina, HttpSession session) {
 
-		Disciplina d = new Disciplina();
+		Disciplina d = new Disciplina(disciplina.getCodigo(), disciplina.getNome(), (Usuario) session.getAttribute("usuario"));
 
 		Set<Assunto> assuntos = disciplina.getAssuntos();
-		Usuario usuario = (Usuario) session.getAttribute("usuario");
-
-		d.setCodigo(disciplina.getCodigo());
-		d.setNome(disciplina.getNome());
-		d.setUsuario(usuario);
 
 		for (Assunto a : assuntos) {
-			a.setUsuario(usuario);
+			a.setUsuario((Usuario) session.getAttribute("usuario"));
 			d.addAssunto(a);
 		}
 

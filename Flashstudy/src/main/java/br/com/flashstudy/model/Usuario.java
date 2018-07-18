@@ -70,12 +70,10 @@ public class Usuario implements Serializable {
 		this.nome = nome;
 	}
 
-	@JsonIgnore
 	public String getEmail() {
 		return email;
 	}
 
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	public void setEmail(String email) {
 		this.email = email;
 	}
