@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.flashstudy.error.Resposta;
@@ -67,13 +68,24 @@ public class UsuarioController {
 	}
 
 	// Atualizar
-	@PutMapping(value = "/atualiza")
-	public @ResponseBody ResponseEntity<?> atualiza(@Valid @RequestBody Usuario usuario) {
+	@PostMapping(value = "/atualiza", produces = { "application/json", "application/xml" }, consumes = {
+			"application/x-www-form-urlencoded" })
+	public @ResponseBody String atualiza(@RequestBody MultiValueMap params, HttpSession session) throws Exception {
 
-		usuarioRepository.save(usuario);
+		System.out.println(params);
+		Usuario usuario = new Usuario();
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		System.out.println(params.get);
+		
+		
+		//usuario.setCodigo((Long) params.get("codigo"));
+		//usuario.setEmail((String) params.get("email"));
+		//usuario.setNome((String) params.get("nome"));
+		//usuario.setSenha((String) params.get("senha"));
 
+		System.out.println(usuario.toString());
+
+		return "index";
 	}
 
 	// Verifica se o email já está cadastrado
@@ -88,6 +100,6 @@ public class UsuarioController {
 
 	@GetMapping(value = "/logado")
 	public @ResponseBody ResponseEntity<?> logado(HttpSession session) {
-			return new ResponseEntity<>((Usuario) session.getAttribute("usuario"), HttpStatus.OK);
+		return new ResponseEntity<>((Usuario) session.getAttribute("usuario"), HttpStatus.OK);
 	}
 }
