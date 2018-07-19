@@ -2,21 +2,20 @@ package br.com.flashstudy.model;
 
 import javax.persistence.*;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Assunto")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Assunto implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long codigo;
 
-	@Column(name = "tema", unique = true)
-	@NotEmpty
+	@Column(name = "tema", nullable = false, unique = true)
 	private String tema;
 
 	@ManyToOne(fetch = FetchType.LAZY)

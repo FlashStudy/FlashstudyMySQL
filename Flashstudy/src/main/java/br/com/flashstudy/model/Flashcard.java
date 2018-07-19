@@ -1,54 +1,58 @@
 package br.com.flashstudy.model;
 
 import javax.persistence.*;
-import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Flashcard")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Flashcard implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long codigo;
 
-	@Column(name = "pergunta")
-	@NotEmpty
+	@Column(name = "pergunta", nullable = false)
 	private String pergunta;
 
-	@Column(name = "resposta")
-	@NotEmpty
+	@Column(name = "resposta", nullable = false)
 	private String resposta;
 
-	@Column(name = "nivel")
-	@NotEmpty
-	private String nivel;
+	@Column(name = "nivel", nullable = false)
+	private Nivel nivel;
 
-	@Column(name = "titulo")
-	@NotEmpty
+	@Column(name = "titulo", nullable = false)
 	private String titulo;
 
-	@Column(name = "publico")
-	@NotEmpty
-	private String publico;
+	@Column(name = "publico", nullable = false)
+	private boolean publico;
 
 	@ManyToOne
 	@JoinColumn(name = "codigo_usuario")
+	@JsonBackReference
 	private Usuario usuario;
 
 	@ManyToOne
 	@JoinColumn(name = "disciplina_codigo")
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Disciplina disciplina;
 
 	@ManyToOne
 	@JoinColumn(name = "assunto_codigo")
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private Assunto assunto;
 
 	public Flashcard() {
+		super();
 	}
 
-	public Flashcard(String pergunta, String resposta, String nivel, String titulo, String publico, Usuario usuario,
-			Disciplina disciplina, Assunto assunto) {
+	public Flashcard(Long codigo, String pergunta, String resposta, Nivel nivel, String titulo, boolean publico,
+			Usuario usuario, Disciplina disciplina, Assunto assunto) {
+		super();
+		this.codigo = codigo;
 		this.pergunta = pergunta;
 		this.resposta = resposta;
 		this.nivel = nivel;
@@ -83,11 +87,11 @@ public class Flashcard implements java.io.Serializable {
 		this.resposta = resposta;
 	}
 
-	public String getNivel() {
+	public Nivel getNivel() {
 		return nivel;
 	}
 
-	public void setNivel(String nivel) {
+	public void setNivel(Nivel nivel) {
 		this.nivel = nivel;
 	}
 
@@ -99,11 +103,11 @@ public class Flashcard implements java.io.Serializable {
 		this.titulo = titulo;
 	}
 
-	public String getPublico() {
+	public boolean isPublico() {
 		return publico;
 	}
 
-	public void setPublico(String publico) {
+	public void setPublico(boolean publico) {
 		this.publico = publico;
 	}
 

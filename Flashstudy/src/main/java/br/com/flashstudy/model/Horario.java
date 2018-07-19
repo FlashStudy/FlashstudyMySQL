@@ -2,8 +2,6 @@ package br.com.flashstudy.model;
 
 import javax.persistence.*;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Horario")
@@ -15,20 +13,16 @@ public class Horario implements java.io.Serializable {
 	@Column(name = "codigo", unique = true, nullable = false)
 	private Long codigo;
 
-	@NotEmpty
-	@Column
+	@Column(name = "inicio", nullable = false)
 	private String inicio;
 
-	@NotEmpty
-	@Column
+	@Column(name = "fim", nullable = false)
 	private String fim;
 
-	@NotEmpty
-	@Column
+	@Column(name = "ordem", nullable = false)
 	private int ordem;
 
-	@NotEmpty
-	@Column
+	@Column(name = "tempo", nullable = false)
 	private Integer tempo;
 
 	@ManyToOne

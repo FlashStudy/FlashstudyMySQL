@@ -39,9 +39,9 @@ public class FlashcardController {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 
 		flashcard.setUsuario(usuario);
-		flashcard.setNivel("1");
-		flashcard.setPublico("Publico");
-
+		
+		System.out.println(flashcard.getNivel());
+		
 		flashcardRepository.save(flashcard);
 
 		return new ResponseEntity<>(new Resposta("Flashcard salvo!"), HttpStatus.OK);
@@ -51,7 +51,7 @@ public class FlashcardController {
 	// Atualiza o flashcard
 	@PutMapping("/atualizar")
 	public ResponseEntity<?> atualizar(@Valid @RequestBody Flashcard flashcard) {
-		if (flashcardRepository.findOne(flashcard.getCodigo()) == null)
+		if (flashcardRepository.findById(flashcard.getCodigo()) == null)
 			return new ResponseEntity<>(new Resposta("Flashcard não encontrado no banco de dados!!"),
 					HttpStatus.NOT_FOUND);
 
@@ -63,11 +63,11 @@ public class FlashcardController {
 	// Deleta através do código do flashcard
 	@DeleteMapping("/{codigo}")
 	public ResponseEntity<?> deletar(@PathVariable("codigo") Long codigo) {
-		if (flashcardRepository.findOne(codigo) == null)
+		if (flashcardRepository.findById(codigo) == null)
 			return new ResponseEntity<>(new Resposta("Flashcard não encontrado no banco de dados!!"),
 					HttpStatus.NOT_FOUND);
 
-		flashcardRepository.delete(codigo);
+		flashcardRepository.deleteById(codigo);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

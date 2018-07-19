@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Pasta")
@@ -15,8 +13,7 @@ public class Pasta implements java.io.Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long codigo;
 
-	@Column(name = "nome")
-	@NotEmpty
+	@Column(name = "nome", nullable = false)
 	private String nome;
 
 	@ManyToOne(fetch = FetchType.LAZY)

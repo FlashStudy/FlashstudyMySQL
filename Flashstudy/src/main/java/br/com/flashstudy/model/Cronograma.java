@@ -5,12 +5,13 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Cronograma")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Cronograma implements java.io.Serializable {
 
 	@Id
@@ -18,12 +19,10 @@ public class Cronograma implements java.io.Serializable {
 	@Column(name = "codigo", unique = true, nullable = false)
 	private Long codigo;
 
-	@Column
-	@NotEmpty
+	@Column(name = "inicio", nullable = false)
 	private String inicio;
 
-	@Column
-	@NotEmpty
+	@Column(name = "fim", nullable = false)
 	private String fim;
 
 	@ManyToOne
@@ -106,7 +105,7 @@ public class Cronograma implements java.io.Serializable {
 	public void addDisciplina(Disciplina disciplina) {
 		disciplinas.add(disciplina);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Cronograma{" + "codigo=" + codigo + ", inicio=" + inicio + ", fim=" + fim + ", usuario=" + usuario

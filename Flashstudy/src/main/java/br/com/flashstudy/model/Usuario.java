@@ -4,14 +4,14 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "Usuario")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -21,16 +21,13 @@ public class Usuario implements Serializable {
 	@Column(name = "codigo", unique = true, nullable = false)
 	private Long codigo;
 
-	@Column(name = "nome")
-	@NotEmpty
+	@Column(name = "nome", nullable = false)
 	private String nome;
 
-	@Column(name = "email", unique = true)
-	@NotEmpty
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 
-	@Column(name = "senha")
-	@NotEmpty
+	@Column(name = "senha", nullable = false)
 	private String senha;
 
 	@Column(name = "foto")

@@ -109,18 +109,27 @@
 			$.get("flashcard/lista", function (cards) {
 				var strCard;
 
+				console.log(cards);
+				
 				for( i = 0; i < cards.length; i++){
-					strCard = "<div class='col-lg-4 col-md-6 col-sm-12 col-12' style='margin-top: 5px'>" +
+					var privacidade = "";
+					if(cards[i].publico)
+						privacidade = "Público";
+					else
+						privacidade = "Privado";
+					 
+					strCard = "<div class='col-lg-3 col-md-3 col-9' style='margin-top: 5px'>" +
 								"<div class='card align-self-center' style='width: 18rem;'>" +
 									"<div class='card-body'>" +
 										"<h5 class='card-title'>" + cards[i].titulo + "</h5>" +
 										"<p class='card-text'>"+
 											"<ul>" +
 												"<li>Nível: "+ cards[i].nivel +"</li>" +
-												"<li>Situação:" + cards[i].publico + " </li>" +
-												"<li>Disciplina: "+ cards[i].nivel +" </li>" +
-												"<li>Assunto: " + cards[i].publico + " </li>" +
-											"</ul>" +	
+												"<li>Situação:" + privacidade + " </li>" +
+												"<li>Disciplina: "+ cards[i].disciplina.nome +" </li>" +
+												"<li>Assunto: " + cards[i].assunto.tema + " </li>" +
+											"</ul>" +
+											"<input type='button' class='btn btn-dark btnSeleciona' value = 'Selecionar' style='width: 100%'/>"+	
 										"</p>" +
 									"</div>" +
 								"</div>" +
@@ -143,10 +152,21 @@
             /* Salva o novo flashcard */
 			$("#btnSalvar").click(function(){
 				if(verificaCampos()){
+					var publico = true;
+					if($("#selectPublico").val() == "true")
+						publico = true;
+					else
+						publico = false;
 
 					var card = { titulo: $("#titulo").val(),
 								 pergunta: $("#pergunta").val(),
-								 resposta: $("#resposta").val()};
+								 resposta: $("#resposta").val(),
+								 nivel: $("#selectNivel").val(),
+								 publico: publico,
+								 disciplina: arrDisciplinas[$("#selectMaterias").val()],
+								 assunto: assuntos[$("#selectAssuntos").val()]};
+
+					console.log(card);
 					$.ajax({
 	                    type: "POST",
 	                    cache: false,
@@ -157,11 +177,12 @@
 	                    success: function (resposta) {
 	                        window.location.replace("flashcards");
 	                    } 
-	                }); 
+	                });
 				}else{
 				}
 			});
 
+			/* Adiciona os assuntos no select */
 			$("#selectMaterias").change(function(){
                 $("#selectAssuntos").prop("disabled", false);
 
@@ -171,9 +192,9 @@
 				var pos = $("#selectMaterias").val();
 
 				assuntos = arrDisciplinas[pos].assuntos;
-
 				for(i = 0; i < assuntos.length; i++){
-					strAssunto = "<option>" + assuntos[i].tema + "</option>"
+					strAssunto = "<option value='" + i + "'>" + assuntos[i].tema + "</option>"
+					 $("#selectAssuntos").append(strAssunto);
 				}
 			});
 		});
@@ -184,10 +205,19 @@
 			var pergunta = $("#pergunta").val();
 			var resposta = $("#resposta").val();
 
+			var materia = $("#selectMaterias").val();
+			var assunto = $("#selectAssuntos").val();
+			var dificuldade = $("#selectNivel").val();
+			var publico = $("#selectPublico").val();
+			
 			if((titulo === "") || (pergunta === "") || (resposta=== "")){
 				alert("Algum campo não foi preenchido!");
 				return false;
 			}else{
+				if((materia == "default") || (assunto == "default") || (dificuldade == "default") || (publico == "default")){
+					alert("Seleção inválida!");
+					return false;
+				}
 				return true;
 			}
 		}
@@ -278,7 +308,7 @@
 						    	
 						    	<!-- Salvar o flashcard -->
 						    	<button type="button" 
-						    			class="btn btn-dark" 
+						    			class="btn btn-success" 
 						    			title="Salvar" 
 						    			id="btnSalvar">
 						    			<span class="icon icon-save"> Salvar</span>
@@ -286,24 +316,26 @@
 						    	
 						    	<!-- Editar o card selecionado -->
 						    	<button type="button" 
-						    			class="btn btn-dark" 
-						    			title="Salvar" 
-						    			id="btnSalvar">
+						    			class="btn btn-info" 
+						    			title="Editar card selecionado" 
+						    			id="btnSalvar"
+						    			disabled="disabled">
 						    			<span class="icon icon-edit"> Editar</span>
 						    	</button>
 						    	
 						    	<!-- Deletar o card selecionado -->
 						    	<button type="button" 
-						    			class="btn btn-dark" 
-						    			title="Salvar" 
-						    			id="btnSalvar">
+						    			class="btn btn-danger" 
+						    			title="Deletar card selecionado" 
+						    			id="btnSalvar"
+						    			disabled="disabled">
 						    			<span class="icon icon-trash"> Deletar</span>
 						    	</button>
 						    	
 						    	<!-- Limpar os campos para novo flashcard -->
 						    	<button type="button" 
-						    			class="btn btn-dark" 
-						    			title="Salvar" 
+						    			class="btn btn-primary" 
+						    			title="Limpar campos para novo card" 
 						    			id="btnSalvar">
 						    			<span class="icon icon-plus-sign"> Novo</span>
 						    	</button>
@@ -314,23 +346,39 @@
 		    	</div>
 		    	
 		    	<div class="row justify-content-center">
-		    		<div class="col-lg-5 col-md-7 col-sm-10 col-10">
-		    		<div class="form-group">
-			        		<select id="selectMaterias" name="selectMaterias" class="form-control bg-gray">
-			        			<option value="default">Escolha uma matéria</option>
-			        		</select>
-		           		</div>
-		    		</div>
-		    		<div class="col-lg-5 col-md-7 col-sm-10 col-10">
-		    		<div class="form-group">
+		    		<div class="col-lg-3 col-md-5 col-sm-10 col-10">
+			    		<div class="form-group">
+				        	<select id="selectMaterias" name="selectMaterias" class="form-control bg-gray">
+				        		<option value="default">Escolha uma matéria</option>
+				        		</select>
+			           		</div>
+			    		</div>
+		    		<div class="col-lg-3 col-md-5 col-sm-10 col-10">
+		    			<div class="form-group">
 			        		<select id="selectAssuntos" name="selectAssuntos" class="form-control" disabled="disabled">
 			        			<option value="default">Escolha um assunto</option>
 			        		</select>
 		        		</div>
 		    		</div>
-		    	</div>
-		    	<div class="row justify-content-center">
-		    		
+		    		<div class="col-lg-3 col-md-5 col-sm-10 col-10">
+		    			<div class="form-group">
+			        		<select id="selectNivel" name="selectNivel" class="form-control">
+			        			<option value="default">Dificuldade</option>
+			        			<option value="1">Fácil</option>
+			        			<option value="2">Médio</option>
+			        			<option value="3">Difícil</option>
+			        		</select>
+		        		</div>
+		    		</div>
+		    		<div class="col-lg-3 col-md-5 col-sm-10 col-10">
+		    			<div class="form-group">
+			        		<select id="selectPublico" name="selectPublico" class="form-control">
+			        			<option value="default">Privacidade</option>
+			        			<option value="true" title = "Outras pessoas poderão ver o seu flashcard">Público</option>
+			        			<option value="false" title = "Somente você terá acesso ao flashcard">Privado</option>
+			        		</select>
+		        		</div>
+		    		</div>
 		    	</div>
 		   		<div class="row">
 		        	
@@ -355,7 +403,7 @@
 		                    	<textarea 	class="form-control" 
 		                    				placeholder="Insira a sua pergunta aqui" 
 		                    				id="pergunta" 
-		                    				name="pergunta"/>
+		                    				name="pergunta"></textarea>
 		                    </div>
 		                </div> 
 		           	</div>
@@ -372,7 +420,7 @@
 		                    	<textarea 	class="form-control" 
 		                        			placeholder="Insira a sua resposta aqui" 
 		                        			id="resposta" 
-		                        			name="resposta"/>
+		                        			name="resposta"></textarea>
 		                    </div>
 		                </div>
 		            </div>    
@@ -389,7 +437,7 @@
 				<h2>Seus flashcards</h2>
 			</div>
 			
-			<div class="row" id="cardsRow">
+			<div class="row justify-content-center" id="cardsRow">
 			
 			</div>
 		</div>

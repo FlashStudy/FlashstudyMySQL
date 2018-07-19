@@ -89,6 +89,14 @@
 				$("#btnCancela").prop("disabled", true);
 				
             });
+
+            /* Salva as alterações */
+            $("#btnSalva").click(function(){
+				resposta = confirm("Tem certeza em alterar os dados?");
+				if(resposta == true){
+					console.log($("#txtFoto").val());
+				}
+            });
 		});
 		 //]]></script>
 

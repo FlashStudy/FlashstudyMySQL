@@ -5,12 +5,13 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Disciplina")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Disciplina implements java.io.Serializable {
 
 	@Id
@@ -18,8 +19,7 @@ public class Disciplina implements java.io.Serializable {
 	@Column(name = "codigo", unique = true, nullable = false)
 	private Long codigo;
 
-	@Column
-	@NotEmpty
+	@Column(name = "nome", nullable = false)
 	private String nome;
 
 	@OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL, orphanRemoval = true)
