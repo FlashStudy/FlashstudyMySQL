@@ -53,8 +53,6 @@
 
 				usuarioLogado = usuario;
 
-				console.log(usuario);
-				
 				$("#txtNome").prop("value", usuario.nome);
 				$("#txtEmail").prop("value", usuario.email);
             });
@@ -94,7 +92,6 @@
             $("#btnSalva").click(function(){
 				resposta = confirm("Tem certeza em alterar os dados?");
 				if(resposta == true){
-					console.log($("#txtFoto").val());
 				}
             });
 		});

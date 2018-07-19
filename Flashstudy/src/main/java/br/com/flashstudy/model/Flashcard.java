@@ -22,7 +22,7 @@ public class Flashcard implements java.io.Serializable {
 	private String resposta;
 
 	@Column(name = "nivel", nullable = false)
-	private Nivel nivel;
+	private String nivel;
 
 	@Column(name = "titulo", nullable = false)
 	private String titulo;
@@ -49,7 +49,7 @@ public class Flashcard implements java.io.Serializable {
 		super();
 	}
 
-	public Flashcard(Long codigo, String pergunta, String resposta, Nivel nivel, String titulo, boolean publico,
+	public Flashcard(Long codigo, String pergunta, String resposta, String nivel, String titulo, boolean publico,
 			Usuario usuario, Disciplina disciplina, Assunto assunto) {
 		super();
 		this.codigo = codigo;
@@ -87,11 +87,11 @@ public class Flashcard implements java.io.Serializable {
 		this.resposta = resposta;
 	}
 
-	public Nivel getNivel() {
+	public String getNivel() {
 		return nivel;
 	}
 
-	public void setNivel(Nivel nivel) {
+	public void setNivel(String nivel) {
 		this.nivel = nivel;
 	}
 

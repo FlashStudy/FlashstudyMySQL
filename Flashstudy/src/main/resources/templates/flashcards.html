@@ -118,14 +118,13 @@
 				var strCard;
 
 				flashcards = cards;
-				
 				for( i = 0; i < cards.length; i++){
 					var privacidade = "";
 					if(cards[i].publico)
 						privacidade = "Público";
 					else
 						privacidade = "Privado";
-					 
+					
 					strCard = "<div class='col-lg-12 col-md-12 col-sm-9' style='margin-top: 5px'>" +
 								"<div class='card align-self-center' style='width: 18rem;'>" +
 									"<div class='card-body'>" +
@@ -161,20 +160,48 @@
 			$("#btnSalvar").click(function(){
 				if(verificaCampos()){
 					var publico = true;
+					var nivel;
+					
 					if($("#selectPublico").val() == "true")
 						publico = true;
 					else
 						publico = false;
 
-					var card = { titulo: $("#titulo").val(),
+					sel = parseInt($("#selectNivel").val());
+					switch(sel){
+
+					case 0:
+						 nivel = "Fácil";
+						 break;
+
+					case 1:
+						 nivel = "Médio";
+						 break;
+
+					case 2:
+						 nivel = "Difícil";
+						 break;
+							
+					}
+					var card = {};
+					if(cardSelecionado.codigo > 0){
+						card = { codigo: cardSelecionado.codigo,
+								 titulo: $("#titulo").val(),
 								 pergunta: $("#pergunta").val(),
 								 resposta: $("#resposta").val(),
-								 nivel: $("#selectNivel").val(),
+								 nivel: nivel,
 								 publico: publico,
 								 disciplina: arrDisciplinas[$("#selectMaterias").val()],
 								 assunto: assuntos[$("#selectAssuntos").val()]};
-
-					console.log(card);
+					}else{
+						card = { titulo: $("#titulo").val(),
+								 pergunta: $("#pergunta").val(),
+								 resposta: $("#resposta").val(),
+								 nivel: nivel,
+								 publico: publico,
+								 disciplina: arrDisciplinas[$("#selectMaterias").val()],
+								 assunto: assuntos[$("#selectAssuntos").val()]};
+					}
 					$.ajax({
 	                    type: "POST",
 	                    cache: false,
@@ -186,7 +213,6 @@
 	                        window.location.replace("flashcards");
 	                    } 
 	                });
-				}else{
 				}
 			});
 
@@ -194,32 +220,132 @@
 			$("#selectMaterias").change(function(){
                 $("#selectAssuntos").prop("disabled", false);
 
-                $("#selectAssuntos").empty();
-                $("#selectAssuntos").append("<option value='default'>Escolha um assunto</option>");
-				
 				var pos = $("#selectMaterias").val();
 
 				assuntos = arrDisciplinas[pos].assuntos;
-				for(i = 0; i < assuntos.length; i++){
-					strAssunto = "<option value='" + i + "'>" + assuntos[i].tema + "</option>"
-					 $("#selectAssuntos").append(strAssunto);
-				}
+
+				addAssuntosSelect();
 			});
 
+			function addAssuntosSelect(){
+                $("#selectAssuntos").empty();
+                $("#selectAssuntos").append("<option value='default'>Escolha um assunto</option>");
+                
+                for(i = 0; i < assuntos.length; i++){
+					strAssunto = "<option value='" + i + "'>" + assuntos[i].tema + "</option>";
+					$("#selectAssuntos").append(strAssunto);
+				}
+			}
+			
 			/* Popula os campos com o card selecionado */
 	        $( "#cardsRow" ).on( "click", ".btnSeleciona", function() {
 	       		cardSelecionado = flashcards[$(this).attr("value")];
-				console.log("entrou na funcao");
+	       		
+	       		for( i = 0; i < arrDisciplinas.length; i++){
+		       		
+					if(cardSelecionado.disciplina.nome === arrDisciplinas[i].nome){
+						
+						$("#selectMaterias").val(i);
+						assuntos = arrDisciplinas[i].assuntos;
+						addAssuntosSelect();
+					}
+		       	}
+
+				for( i = 0; i < assuntos.length; i++){
+					if(cardSelecionado.assunto.tema === assuntos[i].tema){
+						$("#selectAssuntos").val(i);
+					}
+				}
+	       		
+				switch(cardSelecionado.nivel){
+					case "Fácil":
+						$("#selectNivel").val(0);
+						break;
+						
+					case "Médio":
+						$("#selectNivel").val(1);
+						break;
+						
+					case "Difícil":
+						$("#selectNivel").val(2);
+						break;	
+				}
+
+				if(cardSelecionado.publico){
+					$("#selectPublico").val("true");
+				}else{
+					$("#selectPublico").val("false");
+				}
+	       		
 	       		$("#titulo").val(cardSelecionado.titulo);
 	       		$("#pergunta").val(cardSelecionado.pergunta);
-	       		$( "#selectMaterias option:selected" ).text(cardSelecionado.disciplina.nome);
-	       		$( "#selectAssuntos option:selected" ).text(cardSelecionado.assunto.tema);
-	       		$( "#selectNivel option:selected" ).text(cardSelecionado.nivel);
-	       		$( "#selectPublico option:selected" ).text(cardSelecionado.publico);
-				
+				$("#resposta").prop("placeholder", "Clique no botão resposta para visualizar a resposta!");
+	       		habilitarBtns(true);
+	       		habilitarCampos(false);
 	        });
+
+	        $("#btnResposta").click(function(){
+                $("#resposta").val(cardSelecionado.resposta);
+			});
+			
+	        $("#btnNovo").click(function(){
+                window.location.replace("flashcards");
+			});
+
+	        $("#btnEditar").click(function(){
+                habilitarBtns(false);
+                habilitarCampos(true);
+				$("#resposta").prop("value", cardSelecionado.resposta);
+			});
+
+			$("#btnDeletar").click(function(){
+				resposta = confirm("Tem certeza em deletar o flashcard " + cardSelecionado.titulo + "?");
+				if(resposta == true){
+					$.ajax({
+					    url: '/flashcard/deleta/' + cardSelecionado.codigo,
+					    type: 'DELETE',
+					    success: function(result) {
+			                window.location.replace("flashcards");
+					    }
+					});
+				}
+			});
 		});
 
+		function habilitarBtns(habilitar){
+			if(habilitar){
+				$("#btnSalvar").prop("disabled", true);
+				$("#btnEditar").prop("disabled", false);
+				$("#btnDeletar").prop("disabled", false);
+				$("#btnResposta").prop("disabled", false);
+			}else{
+				$("#btnSalvar").prop("disabled", false);
+				$("#btnEditar").prop("disabled", true);
+				$("#btnDeletar").prop("disabled", true);
+				$("#btnResposta").prop("disabled", true);
+			}
+		}
+
+		function habilitarCampos(habilitar){
+			if(habilitar){
+				$("#titulo").prop("readonly", false);
+				$("#pergunta").prop("readonly", false);
+				$("#resposta").prop("readonly", false);
+				$("#selectMaterias").prop("disabled", false);
+				$("#selectAssuntos").prop("disabled", false);
+				$("#selectNivel").prop("disabled", false);
+				$("#selectPublico").prop("disabled", false);
+			}else{
+				$("#titulo").prop("readonly", true);
+				$("#pergunta").prop("readonly", true);
+				$("#resposta").prop("readonly", true);
+				$("#selectMaterias").prop("disabled", true);
+				$("#selectAssuntos").prop("disabled", true);
+				$("#selectNivel").prop("disabled", true);
+				$("#selectPublico").prop("disabled", true);
+			}
+		}
+		
 		/* Verifica se há algum campo vazio */
 		function verificaCampos(){
 			var titulo 	 = $("#titulo").val();
@@ -340,7 +466,7 @@
 						    	<button type="button" 
 						    			class="btn btn-info" 
 						    			title="Editar card selecionado" 
-						    			id="btnSalvar"
+						    			id="btnEditar"
 						    			disabled="disabled">
 						    			<span class="icon icon-edit"> Editar</span>
 						    	</button>
@@ -349,7 +475,7 @@
 						    	<button type="button" 
 						    			class="btn btn-danger" 
 						    			title="Deletar card selecionado" 
-						    			id="btnSalvar"
+						    			id="btnDeletar"
 						    			disabled="disabled">
 						    			<span class="icon icon-trash"> Deletar</span>
 						    	</button>
@@ -358,16 +484,16 @@
 						    	<button type="button" 
 						    			class="btn btn-warning" 
 						    			title="Visualizar a resposta"
-						    			id="btnSalvar"
+						    			id="btnResposta"
 						    			disabled="disabled">
-						    			<span class="icon icon-plus-sign"> Resposta</span>
+						    			<span class="icon icon-ok"> Resposta</span>
 						    	</button>
 						    	
 						    	<!-- Limpar os campos para novo flashcard -->
 						    	<button type="button" 
 						    			class="btn btn-primary" 
 						    			title="Limpar campos para novo card" 
-						    			id="btnSalvar">
+						    			id="btnNovo">
 						    			<span class="icon icon-plus-sign"> Novo</span>
 						    	</button>
 						    	
@@ -396,9 +522,9 @@
 		    			<div class="form-group">
 			        		<select id="selectNivel" name="selectNivel" class="form-control">
 			        			<option value="default">Dificuldade</option>
-			        			<option value="1">Fácil</option>
-			        			<option value="2">Médio</option>
-			        			<option value="3">Difícil</option>
+			        			<option value="0">Fácil</option>
+			        			<option value="1">Médio</option>
+			        			<option value="2">Difícil</option>
 			        		</select>
 		        		</div>
 		    		</div>
