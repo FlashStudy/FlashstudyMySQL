@@ -74,8 +74,6 @@ public class UsuarioController {
 
 		System.out.println(params);
 		Usuario usuario = new Usuario();
-
-		System.out.println(params.get);
 		
 		
 		//usuario.setCodigo((Long) params.get("codigo"));

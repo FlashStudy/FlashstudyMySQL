@@ -19,15 +19,17 @@
 	
 	<!-- Custom fonts for this template -->
 	<link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
-	
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
 	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
 	
 	<!-- Plugin CSS -->
-	<link th:href="@{/vendor/magnific-popup/magnific-popup.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/vendor/magnific-popup/magnific-popup.css}"
+		rel="stylesheet" type="text/css" />
 	
 	<!-- Custom styles for this template -->
-	<link type="text/css" th:href="@{/css/freelancer.min.css}" rel="stylesheet" />
+	<link type="text/css" th:href="@{/css/freelancer.min.css}"rel="stylesheet" />
+	
+	<script th:src="@{/js/jquery.min.js}"></script>
 	
 	<style type="text/css">
 		table {
@@ -62,6 +64,30 @@
 </head>
 
 <body>
+
+	<script type="text/javascript">
+
+		var dias_da_semana = ["Domingo", 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sábado'];
+	
+		$(document).ready(function(){
+			$("#addDia").click(function(){
+				var dia;
+
+				for(i=0;i<7;i++){
+					if(dias_da_semana[i] === $( "#selectDia option:selected" ).text();)
+					dia = dias_da_semana[i];
+					alert(dia);
+				}
+
+            	$("#tblDias").append("<tr class='ciclo'><td class='dia'>" + dia + "</td></tr>");
+			});
+
+			$("#btnSalvaCiclo").click(function(){
+				$("#tblCiclo").empty();
+			
+			});
+		});
+	</script>
 
 	<!-- Menu de navegação -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-primary rounded">
@@ -134,7 +160,97 @@
 	</div>
 
 	<!-- Container da página toda -->
-	<div class="container-fluid"></div>
+	<div class="container">
+		
+		<div class="jumbotron">
+			<button type="button" class="btn btn-primary" data-toggle="modal"
+				data-target="#modalCiclo" style="margin-bottom: 10px">
+				<span class="icon icon-edit"> Editar ciclo</span>
+			</button>
+		</div>
+		
+		
+		<table id="tblCiclo">
+			
+		</table>
+		
+	</div>
+	
+	<div class="container">
+		<div class="modal fade" tabindex="-1" role="dialog"
+			 aria-labelledby="myModalLabel" aria-hidden="true" id="modalCiclo">
+
+			<div class="modal-dialog">
+
+				<div class="modal-content">
+
+					<!-- Cabeçalho -->
+					<div class="modal-header">
+						<h4 class="modal-title">Ciclo de estudos</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<!-- Corpo -->
+					<div class="modal-body">
+						
+						<div class="form-row">
+								
+							<!-- Hora inicio -->
+							<div class="form-group col-md-6">
+								<label for="mInicio">Início:</label> 
+								<input class="form-control rounded" type="time" id="horaInicio" name="horaInicio" />
+							</div>
+
+							<!-- Hora fim -->
+							<div class="form-group col-md-6">
+								<label for="mFim">Fim:</label> 
+								<input class="form-control rounded" type="time" id="horaFim" name="horaFim"/>
+							</div>
+
+						</div>
+						
+						<div class="form-group">
+							
+							<!-- Campo para o dia -->
+							<label for="materia"><strong>Dia:</strong></label> 
+							<select id="selectDia" name="selectDia" class="form-control bg-gray">
+				        		<option value="0">Domingo</option>
+				        		<option value="1">Segunda-Feira</option>
+				        		<option value="2">Terça-Feira</option>
+				        		<option value="3">Quarta-Feira</option>
+				        		<option value="4">Quinta-Feira</option>
+				        		<option value="5">Sexta-Feira</option>
+				        		<option value="6">Sábado</option>
+				        	</select>
+						</div>
+							
+						<!-- Adiciona o dia na tabela -->
+						<button type="button" class="btn btn-primary" id="addDia" style="width: 100%">
+							<span class="icon icon-plus-sign"> Adicionar dia</span>
+						</button>
+							
+						<!-- Tabela com os dias -->
+						<table id="tblDias">
+							<tr>
+								<th colspan="2">Dias</th>
+							</tr>
+						</table>
+					</div>
+
+					<!-- Rodapé -->
+					<div class="modal-footer">
+							
+						<!-- Salva/atualiza a matéria -->
+						<button type="button" id="btnSalvaCiclo" class="btn btn-success">Confirmar</button>
+
+						<!-- Fecha o modal -->
+						<button type="button" class="btn btn-danger btnCancelar"
+								data-toggle="modal" data-target="#modalMateria">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<!-- Bootstrap core JavaScript -->
 	<script type="text/javascript" th:src="@{/vendor/jquery/jquery.min.js}"></script>

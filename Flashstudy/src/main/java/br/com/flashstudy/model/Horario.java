@@ -1,5 +1,8 @@
 package br.com.flashstudy.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 
 @SuppressWarnings("serial")
@@ -13,31 +16,28 @@ public class Horario implements java.io.Serializable {
 	@Column(name = "codigo", unique = true, nullable = false)
 	private Long codigo;
 
-	@Column(name = "inicio", nullable = false)
-	private String inicio;
+	@Column(name = "dia", nullable = false, unique = true)
+	private String dia;
 
-	@Column(name = "fim", nullable = false)
-	private String fim;
-
-	@Column(name = "ordem", nullable = false)
-	private int ordem;
-
-	@Column(name = "tempo", nullable = false)
-	private Integer tempo;
+	@Column(name = "horario", nullable = false, unique = true)
+	private String horario;
+	
+	@OneToMany
+	private Set<Disciplina> disciplinas = new HashSet<>();
 
 	@ManyToOne
 	private Usuario usuario;
+
+	@OneToOne
+	private Ciclo ciclo;
 
 	public Horario() {
 		super();
 	}
 
-	public Horario(String inicio, String fim, int ordem, Integer tempo, Usuario usuario) {
+	public Horario(String dia, Usuario usuario) {
 		super();
-		this.inicio = inicio;
-		this.fim = fim;
-		this.ordem = ordem;
-		this.tempo = tempo;
+		this.dia = dia;
 		this.usuario = usuario;
 	}
 
@@ -49,36 +49,20 @@ public class Horario implements java.io.Serializable {
 		this.codigo = codigo;
 	}
 
-	public String getInicio() {
-		return inicio;
+	public String getDia() {
+		return dia;
 	}
 
-	public void setInicio(String inicio) {
-		this.inicio = inicio;
+	public void setDia(String dia) {
+		this.dia = dia;
 	}
 
-	public String getFim() {
-		return fim;
+	public Set<Disciplina> getDisciplinas() {
+		return disciplinas;
 	}
 
-	public void setFim(String fim) {
-		this.fim = fim;
-	}
-
-	public int getOrdem() {
-		return ordem;
-	}
-
-	public void setOrdem(int ordem) {
-		this.ordem = ordem;
-	}
-
-	public Integer getTempo() {
-		return tempo;
-	}
-
-	public void setTempo(Integer tempo) {
-		this.tempo = tempo;
+	public void setDisciplinas(Set<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
 	}
 
 	public Usuario getUsuario() {
@@ -89,10 +73,22 @@ public class Horario implements java.io.Serializable {
 		this.usuario = usuario;
 	}
 
+	public Ciclo getCiclo() {
+		return ciclo;
+	}
+
+	public void setCiclo(Ciclo ciclo) {
+		this.ciclo = ciclo;
+	}
+
+	public void addDisciplina(Disciplina disciplina) {
+		disciplinas.add(disciplina);
+	}
+
 	@Override
 	public String toString() {
-		return "Horario [codigo=" + codigo + ", inicio=" + inicio + ", fim=" + fim + ", ordem=" + ordem + ", tempo="
-				+ tempo + ", usuario=" + usuario + "]";
+		return "Horario [codigo=" + codigo + ", dia=" + dia + ", disciplinas=" + disciplinas + ", usuario=" + usuario
+				+ ", ciclo=" + ciclo + "]";
 	}
 
 }
