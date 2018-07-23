@@ -64,7 +64,7 @@
 
 <body>
 
-	<script type="text/javascript">
+	<script type="text/javascript">//<![CDATA[
 
 		var dias_da_semana = ["Domingo", 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sábado'];
 
@@ -74,8 +74,56 @@
 			
 			/* Solicita o ciclo */
 			$.get("ciclo/atual", function (ciclo) {
+
+				var posDias = [];
+				
 				cicloAtual = ciclo;
-				console.log(ciclo);
+
+				arrDias = ciclo.dias;
+				console.log(arrDias);
+
+				for(i = 0; i< arrDias.length; i++){
+					for(j = 0; j < 7; j++){
+						if(dias_da_semana[j] === arrDias[i].nome){
+							dia = {diaDaSemana: i,
+									arrD : j}
+							posDias.push(dia);
+						}
+					}
+				}
+
+				posDias.sort(function(a, b){return a.arrD - b.arrD});
+
+				for(i = 0; i < arrDias.length; i++){
+					console.log(arrDias[posDias[i].diaDaSemana]);
+
+					dia = arrDias[posDias[i].diaDaSemana];
+					horarios = dia.horarios;
+
+					console.log(horarios);
+					console.log("");
+
+					var strCelulas = "";
+
+					horarios.sort(function(a, b){return a.tempo - b.tempo});
+					
+					for(j = 0; j< horarios.length; j++){
+						strCelulas += "<td>" + horarios[j].disciplina.nome +"</td>"
+					}
+
+					var strCabecalho = "<tr>";
+
+					strCabecalho += "<th>" +  + "</th>"
+					
+					var strCiclo = "";
+					strCiclo += "<tr>" + strCelulas + "</tr>";
+
+					$("#tblCiclo").append(strCiclo);
+					
+				}
+
+				strCabecalho += "</tr>";
+				
             });
 			
 			$("#btnSalvaCiclo").click(function(){
@@ -106,7 +154,8 @@
                 });
 			});
 		});
-	</script>
+					
+		//]]></script>
 
 	<!-- Menu de navegação -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-primary rounded">
@@ -146,13 +195,11 @@
 				data-target="#modalCiclo" style="margin-bottom: 10px">
 				<span class="icon icon-edit"> Editar ciclo</span>
 			</button>
+			
+			<table id="tblCiclo">
+
+			</table>
 		</div>
-
-
-		<table id="tblCiclo">
-
-		</table>
-
 	</div>
 
 	<div class="container">

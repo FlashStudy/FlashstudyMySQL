@@ -70,7 +70,7 @@ public class UsuarioController {
 	// Atualizar
 	@PostMapping(value = "/atualiza", produces = { "application/json", "application/xml" }, consumes = {
 			"application/x-www-form-urlencoded" })
-	public @ResponseBody String atualiza(@RequestBody MultiValueMap params, HttpSession session) throws Exception {
+	public @ResponseBody String atualiza(@SuppressWarnings("rawtypes") @RequestBody MultiValueMap params, HttpSession session) throws Exception {
 
 		System.out.println(params);
 		Usuario usuario = new Usuario();

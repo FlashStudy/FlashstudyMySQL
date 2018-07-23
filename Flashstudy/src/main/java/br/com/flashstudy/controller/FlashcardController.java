@@ -46,17 +46,7 @@ public class FlashcardController {
 
 	}
 
-	// Atualiza o flashcard
-	@PutMapping("/atualizar")
-	public ResponseEntity<?> atualizar(@Valid @RequestBody Flashcard flashcard) {
-		if (flashcardRepository.findById(flashcard.getCodigo()) == null)
-			return new ResponseEntity<>(new Resposta("Flashcard não encontrado no banco de dados!!"),
-					HttpStatus.NOT_FOUND);
-
-		flashcardRepository.save(flashcard);
-		return new ResponseEntity<>(HttpStatus.OK);
-
-	}
+	
 
 	// Deleta através do código do flashcard
 	@DeleteMapping("/deleta/{codigo}")

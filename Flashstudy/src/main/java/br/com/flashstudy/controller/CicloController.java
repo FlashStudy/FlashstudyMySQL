@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import br.com.flashstudy.error.Resposta;
 import br.com.flashstudy.model.*;
 import br.com.flashstudy.repository.CicloRepository;
 import br.com.flashstudy.repository.DisciplinaRepository;
