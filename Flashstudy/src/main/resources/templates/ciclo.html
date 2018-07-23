@@ -3,73 +3,63 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Flashstudy: Ciclo de Estudos</title>
-
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-<link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/ico" />
-
-<link th:href="@{/css/estudante-padrao.css}" rel="stylesheet"
-	type="text/css" />
-<link th:href="@{/raiz/fonts.css}" rel="stylesheet" type="text/css"
-	media="all" />
-
-
-<!-- Bootstrap core CSS -->
-<link rel="stylesheet" type="text/css"
-	th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" />
-
-<!-- Custom fonts for this template -->
-<link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}"
-	rel="stylesheet" type="text/css" />
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
-	rel="stylesheet" type="text/css" />
-<link
-	href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic"
-	rel="stylesheet" type="text/css" />
-
-<!-- Plugin CSS -->
-<link th:href="@{/vendor/magnific-popup/magnific-popup.css}"
-	rel="stylesheet" type="text/css" />
-
-<!-- Custom styles for this template -->
-<link type="text/css" th:href="@{/css/freelancer.min.css}"
-	rel="stylesheet" />
-
-<script th:src="@{/js/jquery.min.js}"></script>
-
-<style type="text/css">
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-	width: 100%;
-	border: 1px solid #ddd;
-	border-color: black;
-}
-
-body {
-	background-color: #2C3E50;
-}
-
-th, td {
-	text-align: center;
-	padding: 16px;
-}
-
-tr:nth-child(even) {
-	background-color: #f2f2f2
-}
-
-button {
-	margin-bottom: 10px;
-}
-
-#adHora {
-	float: right;
-}
-</style>
+	<title>Flashstudy: Ciclo de Estudos</title>
+	
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	
+	<link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/ico" />
+	
+	<link th:href="@{/css/estudante-padrao.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/raiz/fonts.css}" rel="stylesheet" type="text/css" media="all" />
+	
+	
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" />
+	
+	<!-- Custom fonts for this template -->
+	<link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+	
+	<!-- Plugin CSS -->
+	<link th:href="@{/vendor/magnific-popup/magnific-popup.css}" rel="stylesheet" type="text/css" />
+	
+	<!-- Custom styles for this template -->
+	<link type="text/css" th:href="@{/css/freelancer.min.css}" rel="stylesheet" />
+	
+	<script th:src="@{/js/jquery.min.js}"></script>
+	
+	<style type="text/css">
+		table {
+			border-collapse: collapse;
+			border-spacing: 0;
+			width: 100%;
+			border: 1px solid #ddd;
+			border-color: black;
+		}
+		
+		body {
+			background-color: #2C3E50;
+		}
+		
+		th, td {
+			text-align: center;
+			padding: 16px;
+		}
+		
+		tr:nth-child(even) {
+			background-color: #f2f2f2
+		}
+		
+		button {
+			margin-bottom: 10px;
+		}
+		
+		#adHora {
+			float: right;
+		}
+	</style>
 </head>
 
 <body>
@@ -77,23 +67,43 @@ button {
 	<script type="text/javascript">
 
 		var dias_da_semana = ["Domingo", 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sábado'];
-	
+
+		var cicloAtual = {};
+		
 		$(document).ready(function(){
-			$("#addDia").click(function(){
-				var dia;
-
-				for(i=0;i<7;i++){
-					if(dias_da_semana[i] === $( "#selectDia option:selected" ).text();)
-					dia = dias_da_semana[i];
-					console.log(dia);
-				}
-
-            	$("#tblDias").append("<tr class='ciclo'><td class='dia'>" + dia + "</td></tr>");
-			});
-
-			$("#btnSalvaCiclo").click(function(){
-				$("#tblCiclo").empty();
 			
+			/* Solicita o ciclo */
+			$.get("ciclo/atual", function (ciclo) {
+				cicloAtual = ciclo;
+				console.log(ciclo);
+            });
+			
+			$("#btnSalvaCiclo").click(function(){
+
+				var dias = [];
+				var dia = {};
+				
+				$("input:checkbox[name=dia]:checked").each(function(){
+					dia = {nome: dias_da_semana[$(this).val()]};
+					dias.push(dia);
+				});
+
+				console.log(dias);
+				var ciclo = {numMaterias : $("#numMaterias").val(),
+							 dias : dias};
+
+				console.log(ciclo);
+				$.ajax({
+                    type: "POST",
+                    cache: false,
+                    contentType: "application/json",
+                    url: "/ciclo/salvar",
+                    data: JSON.stringify(ciclo),
+                    dataType: "json",
+                    success: function (c) {
+                        console.log(c);
+                    } 
+                });
 			});
 		});
 	</script>
@@ -101,41 +111,31 @@ button {
 	<!-- Menu de navegação -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-primary rounded">
 
-		<a class="navbar-brand h1 mb-0 icon icon-group" href="inicial">
-			FlashStudy </a>
+		<a class="navbar-brand h1 mb-0 icon icon-group" href="inicial">	FlashStudy </a>
 
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-			aria-expanded="false" aria-label="Toggle navigation">
+				data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+				aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
 			<div class="navbar-nav ml-auto">
-				<a class="nav-item nav-link icon icon-calendar" href="cronograma"
-					style="color: #383838"> Cronograma </a> <a
-					class="nav-item nav-link icon icon-refresh link" href="ciclo"
-					style="color: #383838"> Ciclo de estudos </a> <a
-					class="nav-item nav-link icon icon-pushpin" href="flashcards"
-					style="color: #383838"> Flashcards </a> <a
-					class="nav-item nav-link icon icon-user" href="perfil"
-					style="color: #383838"> Perfil </a> <a
-					class="nav-item nav-link icon icon-question-sign" href="ajuda"
-					style="color: #383838"> Ajuda </a> <a
-					class="nav-item nav-link icon icon-signout" href="usuario/sair"
-					style="color: #383838"> Sair </a>
-
+				<a class="nav-item nav-link icon icon-calendar" href="cronograma" style="color: #383838"> Cronograma </a>
+				<a class="nav-item nav-link icon icon-refresh link" href="ciclo" style="color: #383838"> Ciclo de estudos </a>
+				<a class="nav-item nav-link icon icon-pushpin" href="flashcards" style="color: #383838"> Flashcards </a>
+				<a class="nav-item nav-link icon icon-user" href="perfil" style="color: #383838"> Perfil </a>
+				<a class="nav-item nav-link icon icon-question-sign" href="ajuda" style="color: #383838"> Ajuda </a>
+				<a class="nav-item nav-link icon icon-signout" href="usuario/sair" style="color: #383838"> Sair </a>
 			</div>
 		</div>
 	</nav>
 
 	<!-- Título da página -->
 	<div class="title">
-		<h2 class="icon icon-refresh" style="color: #cccccc">Ciclo de
-			Estudos</h2>
-		<span class="byline" style="color: #cccccc"> Veja aqui o que há
-			para hoje e para a semana </span>
+		<h2 class="icon icon-refresh" style="color: #cccccc">Ciclo de Estudos</h2>
+		<span class="byline" style="color: #cccccc"> Veja aqui o que há	para hoje e para a semana </span>
 	</div>
 
 	<!-- Container da página toda -->
@@ -174,18 +174,10 @@ button {
 
 						<div class="form-row">
 
-							<!-- Hora inicio -->
+							<!-- Materias por dia -->
 							<div class="form-group col-md-6">
-								<label for="inicio"><strong>Início:</strong></label> <input
-									class="form-control rounded" type="time" id="horaInicio"
-									name="horaInicio" />
-							</div>
-
-							<!-- Hora fim -->
-							<div class="form-group col-md-6">
-								<label for="fim"><strong>Fim:</strong></label> <input
-									class="form-control rounded" type="time" id="horaFim"
-									name="horaFim" />
+								<label for="inicio"><strong>Matérias por dia:</strong></label>
+								<input class="form-control rounded" type="number" min="1" max="6" id="numMaterias" name="numMaterias" />
 							</div>
 
 						</div>
@@ -198,37 +190,37 @@ button {
 								<div class="col-sm-10">
 								
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" name="dia1" id="dia1" value="0">
+										<input class="form-check-input boxDia" type="checkbox" name="dia" id="dia1" value="0">
 										<label class="form-check-label" for="dia1"> Domingo </label>
 									</div>
 								
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" name="dia2" id="dia2" value="1">
+										<input class="form-check-input boxDia" type="checkbox" name="dia" id="dia2" value="1">
 										<label class="form-check-label" for="dia2">	Segunda-Feira </label>
 									</div>
 								
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" name="dia3" id="dia3" value="2">
+										<input class="form-check-input boxDia" type="checkbox" name="dia" id="dia3" value="2">
 										<label class="form-check-label" for="dia3"> Terça-Feira </label>
 									</div>
 								
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" name="dia4" id="dia4" value="3">
+										<input class="form-check-input boxDia" type="checkbox" name="dia" id="dia4" value="3">
 										<label class="form-check-label" for="dia4"> Quarta-Feira </label>
 									</div>
 								
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" name="dia5" id="dia5" value="4">
+										<input class="form-check-input boxDia" type="checkbox" name="dia" id="dia5" value="4">
 										<label class="form-check-label" for="dia5"> Quinta-Feira </label>
 									</div>
 								
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" name="dia6" id="dia6" value="5">
+										<input class="form-check-input boxDia" type="checkbox" name="dia" id="dia6" value="5">
 										<label class="form-check-label" for="dia6"> Sexta-Feira </label>
 									</div>
 								
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" name="dia7" id="dia7" value="6">
+										<input class="form-check-input boxDia" type="checkbox" name="dia" id="dia7" value="6">
 										<label class="form-check-label" for="dia7"> Sábado </label>
 									</div>
 								</div>

@@ -20,7 +20,10 @@ public class Ciclo implements Serializable {
 	private Long codigo;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	private Set<Horario> horarios = new HashSet<>();
+	private Set<DiaDaSemana> dias = new HashSet<>();
+
+	@Column(name = "numero_de_materias", nullable = false)
+	private Integer numMaterias;
 
 	@ManyToOne
 	private Usuario usuario;
@@ -29,9 +32,10 @@ public class Ciclo implements Serializable {
 		super();
 	}
 
-	public Ciclo(Set<Horario> horarios, Usuario usuario) {
+	public Ciclo(Long codigo, Integer numMaterias, Usuario usuario) {
 		super();
-		this.horarios = horarios;
+		this.codigo = codigo;
+		this.numMaterias = numMaterias;
 		this.usuario = usuario;
 	}
 
@@ -43,12 +47,12 @@ public class Ciclo implements Serializable {
 		this.codigo = codigo;
 	}
 
-	public Set<Horario> getHorarios() {
-		return horarios;
+	public Set<DiaDaSemana> getDias() {
+		return dias;
 	}
 
-	public void setHorarios(Set<Horario> horarios) {
-		this.horarios = horarios;
+	public void setDias(Set<DiaDaSemana> dias) {
+		this.dias = dias;
 	}
 
 	public Usuario getUsuario() {
@@ -59,14 +63,26 @@ public class Ciclo implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public void addHorario(Horario horario) {
-		horarios.add(horario);
-		horario.setCiclo(this);
+	public Integer getNumMaterias() {
+		return numMaterias;
+	}
+
+	public void setNumMaterias(Integer numMaterias) {
+		this.numMaterias = numMaterias;
+	}
+
+	public void addDiaDaSemana(DiaDaSemana diaDaSemana) {
+		dias.add(diaDaSemana);
+	}
+
+	public void removeDiaDaSemana(DiaDaSemana diaDaSemana) {
+		dias.remove(diaDaSemana);
 	}
 
 	@Override
 	public String toString() {
-		return "Ciclo [codigo=" + codigo + ", horarios=" + horarios + ", usuario=" + usuario + "]";
+		return "Ciclo [codigo=" + codigo + ", dias=" + dias + ", numMaterias=" + numMaterias + ", usuario=" + usuario
+				+ "]";
 	}
 
 }

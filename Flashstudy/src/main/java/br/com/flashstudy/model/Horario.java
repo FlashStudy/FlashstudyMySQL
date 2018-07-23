@@ -1,9 +1,8 @@
 package br.com.flashstudy.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @SuppressWarnings("serial")
 @Entity
@@ -16,28 +15,28 @@ public class Horario implements java.io.Serializable {
 	@Column(name = "codigo", unique = true, nullable = false)
 	private Long codigo;
 
-	@Column(name = "dia", nullable = false, unique = true)
-	private String dia;
+	@Column(name = "horario", nullable = false)
+	private Integer tempo;
 
-	@Column(name = "horario", nullable = false, unique = true)
-	private String horario;
-	
-	@OneToMany
-	private Set<Disciplina> disciplinas = new HashSet<>();
+	@OneToOne
+	private Disciplina disciplina;
 
 	@ManyToOne
 	private Usuario usuario;
 
-	@OneToOne
-	private Ciclo ciclo;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "dia_codigo")
+	@JsonBackReference
+	private DiaDaSemana dia;
 
 	public Horario() {
 		super();
 	}
 
-	public Horario(String dia, Usuario usuario) {
+	public Horario(Integer tempo, Disciplina disciplina, Usuario usuario) {
 		super();
-		this.dia = dia;
+		this.tempo = tempo;
+		this.disciplina = disciplina;
 		this.usuario = usuario;
 	}
 
@@ -49,20 +48,20 @@ public class Horario implements java.io.Serializable {
 		this.codigo = codigo;
 	}
 
-	public String getDia() {
-		return dia;
+	public Integer getTempo() {
+		return tempo;
 	}
 
-	public void setDia(String dia) {
-		this.dia = dia;
+	public void setTempo(Integer tempo) {
+		this.tempo = tempo;
 	}
 
-	public Set<Disciplina> getDisciplinas() {
-		return disciplinas;
+	public Disciplina getDisciplina() {
+		return disciplina;
 	}
 
-	public void setDisciplinas(Set<Disciplina> disciplinas) {
-		this.disciplinas = disciplinas;
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
 	}
 
 	public Usuario getUsuario() {
@@ -73,22 +72,18 @@ public class Horario implements java.io.Serializable {
 		this.usuario = usuario;
 	}
 
-	public Ciclo getCiclo() {
-		return ciclo;
+	public DiaDaSemana getDia() {
+		return dia;
 	}
 
-	public void setCiclo(Ciclo ciclo) {
-		this.ciclo = ciclo;
-	}
-
-	public void addDisciplina(Disciplina disciplina) {
-		disciplinas.add(disciplina);
+	public void setDia(DiaDaSemana dia) {
+		this.dia = dia;
 	}
 
 	@Override
 	public String toString() {
-		return "Horario [codigo=" + codigo + ", dia=" + dia + ", disciplinas=" + disciplinas + ", usuario=" + usuario
-				+ ", ciclo=" + ciclo + "]";
+		return "Horario [codigo=" + codigo + ", tempo=" + tempo + ", disciplina=" + disciplina + ", usuario=" + usuario
+				+ ", dia=" + dia + "]";
 	}
 
 }
