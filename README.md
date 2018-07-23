@@ -10,15 +10,15 @@ Eu tô programando usando o Eclipse porque o Netbeans não tá conseguindo conec
 3. Criação de cronogramas e matérias;
 4. Criação dos assuntos de cada matéria;
 5. Lista e criação dos flashcards com assunto e materia;
-6. Crud total de flashcards.
+6. Crud total de flashcards;
+7. Ciclo.
 
 # Desenvolvimento
 1. Edição dos dados do usuário;
 
 # Ainda não iniciado
-1. Ciclo;
-2. Comunicação via email com o usuario.
-3. Atualizar/deletar materias, assuntos.
+1. Comunicação via email com o usuario.
+2. Atualizar/deletar materias, assuntos.
 
 # Extras
 Colocar as devidas mensagens em caso de erro/sucesso/alteração.
