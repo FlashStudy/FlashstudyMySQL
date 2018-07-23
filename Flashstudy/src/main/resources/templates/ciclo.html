@@ -3,64 +3,73 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Flashstudy: Ciclo de Estudos</title>
-	
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	
-	<link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/ico" />
-	
-	<link th:href="@{/css/estudante-padrao.css}" rel="stylesheet" type="text/css" />
-	<link th:href="@{/raiz/fonts.css}" rel="stylesheet" type="text/css" media="all" />
-	
-	
-	<!-- Bootstrap core CSS -->
-	<link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" />
-	
-	<!-- Custom fonts for this template -->
-	<link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-	
-	<!-- Plugin CSS -->
-	<link th:href="@{/vendor/magnific-popup/magnific-popup.css}"
-		rel="stylesheet" type="text/css" />
-	
-	<!-- Custom styles for this template -->
-	<link type="text/css" th:href="@{/css/freelancer.min.css}"rel="stylesheet" />
-	
-	<script th:src="@{/js/jquery.min.js}"></script>
-	
-	<style type="text/css">
-		table {
-			border-collapse: collapse;
-			border-spacing: 0;
-			width: 100%;
-			border: 1px solid #ddd;
-			border-color: black;
-		}
-		
-		body {
-			background-color: #2C3E50;
-		}
-		
-		th, td {
-			text-align: center;
-			padding: 16px;
-		}
-		
-		tr:nth-child(even) {
-			background-color: #f2f2f2
-		}
-		
-		button {
-			margin-bottom: 10px;
-		}
-		
-		#adHora {
-			float: right;
-		}
-	</style>
+<title>Flashstudy: Ciclo de Estudos</title>
+
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+<link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/ico" />
+
+<link th:href="@{/css/estudante-padrao.css}" rel="stylesheet"
+	type="text/css" />
+<link th:href="@{/raiz/fonts.css}" rel="stylesheet" type="text/css"
+	media="all" />
+
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" />
+
+<!-- Custom fonts for this template -->
+<link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}"
+	rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+	rel="stylesheet" type="text/css" />
+<link
+	href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic"
+	rel="stylesheet" type="text/css" />
+
+<!-- Plugin CSS -->
+<link th:href="@{/vendor/magnific-popup/magnific-popup.css}"
+	rel="stylesheet" type="text/css" />
+
+<!-- Custom styles for this template -->
+<link type="text/css" th:href="@{/css/freelancer.min.css}"
+	rel="stylesheet" />
+
+<script th:src="@{/js/jquery.min.js}"></script>
+
+<style type="text/css">
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	border: 1px solid #ddd;
+	border-color: black;
+}
+
+body {
+	background-color: #2C3E50;
+}
+
+th, td {
+	text-align: center;
+	padding: 16px;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2
+}
+
+button {
+	margin-bottom: 10px;
+}
+
+#adHora {
+	float: right;
+}
+</style>
 </head>
 
 <body>
@@ -76,7 +85,7 @@
 				for(i=0;i<7;i++){
 					if(dias_da_semana[i] === $( "#selectDia option:selected" ).text();)
 					dia = dias_da_semana[i];
-					alert(dia);
+					console.log(dia);
 				}
 
             	$("#tblDias").append("<tr class='ciclo'><td class='dia'>" + dia + "</td></tr>");
@@ -91,94 +100,64 @@
 
 	<!-- Menu de navegação -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-primary rounded">
-	
-		<a 	class="navbar-brand h1 mb-0 icon icon-group"
-			href="inicial">
-			 FlashStudy
-		</a>
-		
-		<button class="navbar-toggler" 
-				type="button" 
-				data-toggle="collapse"
-				data-target="#navbarNavAltMarkup" 
-				aria-controls="navbarNavAltMarkup"
-				aria-expanded="false" 
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
+
+		<a class="navbar-brand h1 mb-0 icon icon-group" href="inicial">
+			FlashStudy </a>
+
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
 		</button>
-		
+
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-			
+
 			<div class="navbar-nav ml-auto">
-				<a 	class="nav-item nav-link icon icon-calendar"
-					href="cronograma" 
-					style="color: #383838">
-					 Cronograma
-				</a> 
-				
-				<a  class="nav-item nav-link icon icon-refresh link"
-					href="ciclo"
-					style="color: #383838">
-					 Ciclo de estudos 
-				</a>
-				
-				<a 	class="nav-item nav-link icon icon-pushpin"
-					href="flashcards" 
-					style="color: #383838">
-					 Flashcards 
-				</a>
-				
-				<a 	class="nav-item nav-link icon icon-user"
-					href="perfil" 
-					style="color: #383838">
-					 Perfil 
-				</a> 
-				
-				<a	class="nav-item nav-link icon icon-question-sign"
-					href="ajuda"
-					style="color: #383838">
-					 Ajuda 
-				</a> 
-				
-				<a	class="nav-item nav-link icon icon-signout"
-					href="usuario/sair"
-					style="color: #383838">
-					 Sair 
-				</a>
-			
+				<a class="nav-item nav-link icon icon-calendar" href="cronograma"
+					style="color: #383838"> Cronograma </a> <a
+					class="nav-item nav-link icon icon-refresh link" href="ciclo"
+					style="color: #383838"> Ciclo de estudos </a> <a
+					class="nav-item nav-link icon icon-pushpin" href="flashcards"
+					style="color: #383838"> Flashcards </a> <a
+					class="nav-item nav-link icon icon-user" href="perfil"
+					style="color: #383838"> Perfil </a> <a
+					class="nav-item nav-link icon icon-question-sign" href="ajuda"
+					style="color: #383838"> Ajuda </a> <a
+					class="nav-item nav-link icon icon-signout" href="usuario/sair"
+					style="color: #383838"> Sair </a>
+
 			</div>
 		</div>
 	</nav>
 
 	<!-- Título da página -->
 	<div class="title">
-		<h2 class="icon icon-refresh" style="color: #cccccc">
-			Ciclo de Estudos</h2>
-		<span class="byline" style="color: #cccccc"> 
-			Veja aqui o que há para hoje e para a semana 
-		</span>
+		<h2 class="icon icon-refresh" style="color: #cccccc">Ciclo de
+			Estudos</h2>
+		<span class="byline" style="color: #cccccc"> Veja aqui o que há
+			para hoje e para a semana </span>
 	</div>
 
 	<!-- Container da página toda -->
 	<div class="container">
-		
+
 		<div class="jumbotron">
 			<button type="button" class="btn btn-primary" data-toggle="modal"
 				data-target="#modalCiclo" style="margin-bottom: 10px">
 				<span class="icon icon-edit"> Editar ciclo</span>
 			</button>
 		</div>
-		
-		
+
+
 		<table id="tblCiclo">
-			
+
 		</table>
-		
+
 	</div>
-	
+
 	<div class="container">
 		<div class="modal fade" tabindex="-1" role="dialog"
-			 aria-labelledby="myModalLabel" aria-hidden="true" id="modalCiclo">
+			aria-labelledby="myModalLabel" aria-hidden="true" id="modalCiclo">
 
 			<div class="modal-dialog">
 
@@ -192,73 +171,96 @@
 
 					<!-- Corpo -->
 					<div class="modal-body">
-						
+
 						<div class="form-row">
-								
+
 							<!-- Hora inicio -->
 							<div class="form-group col-md-6">
-								<label for="mInicio">Início:</label> 
-								<input class="form-control rounded" type="time" id="horaInicio" name="horaInicio" />
+								<label for="inicio"><strong>Início:</strong></label> <input
+									class="form-control rounded" type="time" id="horaInicio"
+									name="horaInicio" />
 							</div>
 
 							<!-- Hora fim -->
 							<div class="form-group col-md-6">
-								<label for="mFim">Fim:</label> 
-								<input class="form-control rounded" type="time" id="horaFim" name="horaFim"/>
+								<label for="fim"><strong>Fim:</strong></label> <input
+									class="form-control rounded" type="time" id="horaFim"
+									name="horaFim" />
 							</div>
 
 						</div>
+
+						<fieldset class="form-group">
 						
-						<div class="form-group">
-							
-							<!-- Campo para o dia -->
-							<label for="materia"><strong>Dia:</strong></label> 
-							<select id="selectDia" name="selectDia" class="form-control bg-gray">
-				        		<option value="0">Domingo</option>
-				        		<option value="1">Segunda-Feira</option>
-				        		<option value="2">Terça-Feira</option>
-				        		<option value="3">Quarta-Feira</option>
-				        		<option value="4">Quinta-Feira</option>
-				        		<option value="5">Sexta-Feira</option>
-				        		<option value="6">Sábado</option>
-				        	</select>
-						</div>
-							
-						<!-- Adiciona o dia na tabela -->
-						<button type="button" class="btn btn-primary" id="addDia" style="width: 100%">
-							<span class="icon icon-plus-sign"> Adicionar dia</span>
-						</button>
-							
-						<!-- Tabela com os dias -->
-						<table id="tblDias">
-							<tr>
-								<th colspan="2">Dias</th>
-							</tr>
-						</table>
+							<div class="row">
+								<legend class="col-form-label col-sm-2 pt-0"><strong>Dias:</strong></legend>
+								
+								<div class="col-sm-10">
+								
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" name="dia1" id="dia1" value="0">
+										<label class="form-check-label" for="dia1"> Domingo </label>
+									</div>
+								
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" name="dia2" id="dia2" value="1">
+										<label class="form-check-label" for="dia2">	Segunda-Feira </label>
+									</div>
+								
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" name="dia3" id="dia3" value="2">
+										<label class="form-check-label" for="dia3"> Terça-Feira </label>
+									</div>
+								
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" name="dia4" id="dia4" value="3">
+										<label class="form-check-label" for="dia4"> Quarta-Feira </label>
+									</div>
+								
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" name="dia5" id="dia5" value="4">
+										<label class="form-check-label" for="dia5"> Quinta-Feira </label>
+									</div>
+								
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" name="dia6" id="dia6" value="5">
+										<label class="form-check-label" for="dia6"> Sexta-Feira </label>
+									</div>
+								
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" name="dia7" id="dia7" value="6">
+										<label class="form-check-label" for="dia7"> Sábado </label>
+									</div>
+								</div>
+							</div>
+						</fieldset>
 					</div>
 
 					<!-- Rodapé -->
 					<div class="modal-footer">
-							
+
 						<!-- Salva/atualiza a matéria -->
 						<button type="button" id="btnSalvaCiclo" class="btn btn-success">Confirmar</button>
 
 						<!-- Fecha o modal -->
 						<button type="button" class="btn btn-danger btnCancelar"
-								data-toggle="modal" data-target="#modalMateria">Cancelar</button>
+							data-toggle="modal" data-target="#modalCiclo">Cancelar</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Bootstrap core JavaScript -->
 	<script type="text/javascript" th:src="@{/vendor/jquery/jquery.min.js}"></script>
-	<script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
 	<!-- Plugin JavaScript -->
-	<script type="text/javascript" th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
-	<script type="text/javascript" th:src="@{/vendor/magnific-popup/jquery.magnific-popup.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/vendor/magnific-popup/jquery.magnific-popup.min.js}"></script>
 
 	<!-- Contact Form JavaScript -->
 	<script type="text/javascript" th:src="@{/js/jqBootstrapValidation.js}"></script>
