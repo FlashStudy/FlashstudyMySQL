@@ -94,26 +94,32 @@
 
 				posDias.sort(function(a, b){return a.arrD - b.arrD});
 
+				strCabecalho = "<tr>";
+				
 				for(i = 0; i < arrDias.length; i++){
-					console.log(arrDias[posDias[i].diaDaSemana]);
-
 					dia = arrDias[posDias[i].diaDaSemana];
-					horarios = dia.horarios;
 
-					console.log(horarios);
-					console.log("");
+					console.log(dia);
 
-					var strCelulas = "";
-
-					horarios.sort(function(a, b){return a.tempo - b.tempo});
+					strCabecalho += "<th>" + dia.nome + "</th>";
 					
-					for(j = 0; j< horarios.length; j++){
-						strCelulas += "<td>" + horarios[j].disciplina.nome +"</td>"
+				}
+
+				strCabecalho += "</tr>"; 
+
+				$("#tblCiclo").append(strCabecalho);
+				
+				
+				for(i = 0; i < ciclo.numMaterias; i++){
+					strCelulas = "";
+					
+					for(j = 0; j < arrDias.length; j++){
+						dia = arrDias[posDias[j].diaDaSemana];
+						horarios = dia.horarios;
+						horarios.sort(function(a, b){return a.tempo - b.tempo});
+						
+						strCelulas += "<td>" + horarios[i].disciplina.nome +"</td>"
 					}
-
-					var strCabecalho = "<tr>";
-
-					strCabecalho += "<th>" +  + "</th>"
 					
 					var strCiclo = "";
 					strCiclo += "<tr>" + strCelulas + "</tr>";
@@ -122,7 +128,6 @@
 					
 				}
 
-				strCabecalho += "</tr>";
 				
             });
 			
