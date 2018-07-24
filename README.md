@@ -13,16 +13,16 @@ Utiliza Java, Html 5, CSS3, JavaScript (Jquery), Projeto Spring Boot (Web, Actua
 6. Crud total de flashcards;
 7. Ciclo;
 8. Atualização de cronograma;
-9. Comunicação via email com o usuario.
+9. Comunicação via email com o usuario;
+10. Atualizar/deletar materias, assuntos.
 
 # Desenvolvimento
 1. Edição dos dados do usuário;
 
 # Ainda não iniciado
-1. Atualizar/deletar materias, assuntos;
-2. Criação das pastas dos flashcards;
-3. Atualizar ciclo;
-4. Pesquisar flashcards de outros usuários.
+1. Criação das pastas dos flashcards;
+2. Atualizar ciclo;
+3. Pesquisar flashcards de outros usuários.
 
 # Extras
 1. Colocar as devidas mensagens em caso de erro/sucesso/alteração.
