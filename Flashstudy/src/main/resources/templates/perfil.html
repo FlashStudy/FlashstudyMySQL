@@ -49,10 +49,14 @@
 			/* Usuário logado */
 			var usuarioLogado = {};
 
+			var nome;
+			var senha;
+			var confirmaSenha;
+			
 			$.get("usuario/logado", function (usuario) {
-
 				usuarioLogado = usuario;
 
+				
 				$("#txtNome").prop("value", usuario.nome);
 				$("#txtEmail").prop("value", usuario.email);
 				$("#codigo").prop("value", usuario.codigo);
@@ -63,7 +67,6 @@
 				$("#txtNome").prop("readonly", false);
 				$("#txtSenha").prop("readonly", false);
 				$("#txtConfirmaSenha").prop("readonly", false);
-				$("#txtFoto").prop("disabled", false);
 				
 				$("#btnEdit").prop("disabled", true);
 				$("#btnSalva").prop("disabled", false);
@@ -81,13 +84,65 @@
 				$("#txtNome").prop("readonly", true);
 				$("#txtSenha").prop("readonly", true);
 				$("#txtConfirmaSenha").prop("readonly", true);
-				$("#txtFoto").prop("disabled", true);
 				
 				$("#btnEdit").prop("disabled", false);
 				$("#btnSalva").prop("disabled", true);
 				$("#btnCancela").prop("disabled", true);
 				
             });
+
+            $("#btnSalva").click(function(){
+				if(validaCampos() == true){
+					console.log(usuarioLogado);
+					console.log(nome);
+					console.log(senha);
+					
+					var usuario =  {codigo : usuarioLogado.codigo, email: usuarioLogado.email, nome:nome, senha:senha};
+					 $.ajax({
+	                    type: "PUT",
+	                    cache: false,
+	                    contentType: "application/json",
+	                    url: "/usuario/atualizar",
+	                    data: JSON.stringify(usuario),
+	                    dataType: "json",
+	                    success: function (c) {
+	                        alert(c.mensagem);
+	                    } 
+	                }); 
+				}
+           	});
+
+           	function validaCampos(){
+           		nome = $("#txtNome").val();
+				senha = $("#txtSenha").val();
+				confirmaSenha = $("#txtConfirmaSenha").val();
+
+				console.log(nome);
+				console.log(senha);
+				console.log(confirmaSenha);
+				if((nome === "" ) && (senha === "" ) && (confirmaSenha === "" )){
+					alert("Todos os campos estão vazios!");
+					return false;
+				}else{
+					if(nome !== ""){
+						if((senha === "" ) || (confirmaSenha === "" )){
+							alert("Algum dos campos das senhas está vazio!");
+							return false;
+						}else{
+							if(senha === confirmaSenha){
+								nome = usuarioLogado.nome;
+								return true;
+							}else{
+								alert("As senhas diferem!");
+								return false;
+							}
+						}
+					}else{
+						alert("O campo de nome está vazio!");
+						return false;
+					}
+				}
+            }
 		});
 		 //]]></script>
 
@@ -138,9 +193,7 @@
 			
 			<div class="col-lg-5 col-md-7 col-sm-10 col-10 jumbotron bg-secondary">
 				<div class="form-group">
-					<h4 class="card-title" style="color: white">Seus dados</h4>
-    					<form action="usuario/atualiza" method="POST" >
-	    					
+					<h4 class="card-title" style="color: white">Seus dados</h4>	    					
 	    					<!-- Nome -->
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
@@ -173,33 +226,19 @@
 								<input type="password" class="form-control" aria-describedby="confirma senha" readonly="readonly" id="txtConfirmaSenha" name="confirmaSenha"/>
 							</div>
 							
-							<!-- Upload da foto -->
-							<div class="input-group mb-3">
-						  		<div class="input-group-prepend">
-						    		<span class="input-group-text" id="inputGroupFileAddon01">Foto de perfil</span>
-						  		</div>
-						  		<div class="custom-file">
-						    		<input type="file" class="custom-file-input" id="txtFoto" aria-describedby="foto" disabled="disabled" name="foto"/>
-						    		<label class="custom-file-label" for="foto">Fazer upload</label>
-						  		</div>
-							</div>
-							
-							<input type="hidden" id="codigo" name="codigo"/>
-							
 							<div class="row justify-content-center">
 								<div class="col">
 									<input type="button" class="btn btn-info" id="btnEdit" value="Editar dados"/>
 								</div>
 								
 								<div class="col">
-									<input type="submit" class="btn btn-success" id="btnSalva" value="Salvar dados"/>
+									<input type="button" class="btn btn-success" id="btnSalva" value="Salvar dados" disabled="disabled"/>
 								</div>
 								
 								<div class="col">
 									<input type="button" class="btn btn-danger" id="btnCancela" value="Cancelar" disabled="disabled"/>
 								</div>
 							</div>
-    					</form>
 				</div>
 			</div>
 		</div>

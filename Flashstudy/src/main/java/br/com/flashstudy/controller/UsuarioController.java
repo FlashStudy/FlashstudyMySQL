@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.flashstudy.error.Resposta;
@@ -108,5 +109,23 @@ public class UsuarioController {
 					new Resposta("Ocorreu um erro ao enviar sua mensagem! Por favor, tente mais tarde."),
 					HttpStatus.BAD_GATEWAY);
 		}
+	}
+
+	@PutMapping(value = "/atualizar")
+	public @ResponseBody ResponseEntity<?> atualizar(@RequestBody Usuario usuario, HttpSession session) {
+
+		usuarioRepository.save(usuario);
+
+		session.setAttribute("usuario", usuario);
+		
+		System.out.println();
+		
+		try {
+			emailService.enviarEmailAtualizacao(usuario);
+		} catch (MailException e) {
+			System.out.println(e.getMessage());
+		}
+
+		return new ResponseEntity<>(new Resposta("Seus dados foram atualizados com êxito!"), HttpStatus.OK);
 	}
 }
