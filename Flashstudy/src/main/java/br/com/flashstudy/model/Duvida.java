@@ -1,5 +1,6 @@
 package br.com.flashstudy.model;
 
+//Classe com o assunto e mensagem do usuário em caso de dúvida/crítica/sugestão
 public class Duvida {
 
 	private String assunto;

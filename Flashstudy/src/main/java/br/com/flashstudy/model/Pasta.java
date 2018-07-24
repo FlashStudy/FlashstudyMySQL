@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "Pasta")
+@SuppressWarnings("serial")
 public class Pasta implements java.io.Serializable {
 
 	@Id

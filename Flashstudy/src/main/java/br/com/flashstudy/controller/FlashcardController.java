@@ -1,7 +1,6 @@
 package br.com.flashstudy.controller;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,12 +14,12 @@ import br.com.flashstudy.model.Usuario;
 import br.com.flashstudy.repository.FlashcardRepository;
 
 //Controller dos flashcards
-
 @Component
 @RestController
 @RequestMapping(value = "/flashcard")
 public class FlashcardController {
 
+	// Operações no BD dos flashcards
 	@Autowired
 	FlashcardRepository flashcardRepository;
 
@@ -39,22 +38,16 @@ public class FlashcardController {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 
 		flashcard.setUsuario(usuario);
-				
+
 		flashcardRepository.save(flashcard);
 
 		return new ResponseEntity<>(new Resposta("Flashcard salvo!"), HttpStatus.OK);
 
 	}
 
-	
-
 	// Deleta através do código do flashcard
 	@DeleteMapping("/deleta/{codigo}")
 	public ResponseEntity<?> deletar(@PathVariable("codigo") Long codigo) {
-		if (flashcardRepository.findById(codigo) == null)
-			return new ResponseEntity<>(new Resposta("Flashcard não encontrado no banco de dados!!"),
-					HttpStatus.NOT_FOUND);
-
 		flashcardRepository.deleteById(codigo);
 		return new ResponseEntity<>(new Resposta("Card deletado com sucesso!"), HttpStatus.OK);
 	}

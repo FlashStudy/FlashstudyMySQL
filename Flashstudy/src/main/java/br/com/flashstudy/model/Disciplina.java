@@ -7,9 +7,9 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "Disciplina")
+@SuppressWarnings("serial")
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Disciplina implements java.io.Serializable {

@@ -28,7 +28,7 @@ public class DiaDaSemana implements Serializable {
 
 	@ManyToOne
 	private Usuario usuario;
-	
+
 	public DiaDaSemana() {
 		super();
 	}

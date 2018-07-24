@@ -34,6 +34,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                         "classpath:/static/");
     }
     
+    //Configurações para mandar email
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();

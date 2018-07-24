@@ -23,12 +23,15 @@ import br.com.flashstudy.repository.DisciplinaRepository;
 @RequestMapping(value = "/ciclo")
 public class CicloController {
 
+	// Operações no BD do ciclo
 	@Autowired
 	private CicloRepository cicloRepository;
 
+	// Operações no BD das disciplinas
 	@Autowired
 	private DisciplinaRepository disciplinaRepository;
 
+	// Solicita o ciclo atual
 	@GetMapping(path = "/atual")
 	public ResponseEntity<?> getAtual(HttpSession session) {
 		return new ResponseEntity<>(cicloRepository.getByUsuario((Usuario) session.getAttribute("usuario")),
@@ -39,7 +42,7 @@ public class CicloController {
 	@PostMapping(path = "/salvar")
 	public ResponseEntity<?> salvar(@RequestBody Ciclo ciclo, HttpSession session) {
 		Random rand = new Random();
-		
+
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 
 		Ciclo c = new Ciclo(ciclo.getCodigo(), ciclo.getNumMaterias(), usuario);
@@ -49,19 +52,19 @@ public class CicloController {
 		List<Disciplina> disciplinas = disciplinaRepository.getByUsuario(usuario);
 
 		int arrLength = disciplinas.size();
-		
+
 		c.setDias(new HashSet<>());
 
 		for (DiaDaSemana dia : dias) {
-			for(int i = 0; i < ciclo.getNumMaterias(); i++) {
-				
+			for (int i = 0; i < ciclo.getNumMaterias(); i++) {
+
 				Horario horario = new Horario(i, disciplinas.get(rand.nextInt(arrLength)), usuario);
 				dia.addHorario(horario);
 			}
 			dia.setUsuario(usuario);
 			c.addDiaDaSemana(dia);
 		}
-		
+
 		return new ResponseEntity<>(cicloRepository.save(c), HttpStatus.OK);
 
 	}

@@ -13,7 +13,6 @@
 	<link th:href="@{/css/estudante-padrao.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/raiz/fonts.css}" rel="stylesheet" type="text/css" media="all" />
 	
-	
 	<!-- Bootstrap core CSS -->
 	<link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" />
 	
@@ -184,25 +183,32 @@
 	<!-- Título da página -->
 	<div class="title">
 		<h2 class="icon icon-refresh" style="color: #cccccc">Ciclo de Estudos</h2>
-		<span class="byline" style="color: #cccccc"> Veja aqui o que há	para hoje e para a semana </span>
+		<span class="byline" style="color: #cccccc">
+			Veja aqui o que há para hoje e para a semana
+		</span>
 	</div>
 
-	<!-- Container da página toda -->
+	<!-- Container da página -->
 	<div class="container">
 
 		<div class="jumbotron">
+		
+			<!-- Botão para abrir o modal do ciclo -->
 			<button type="button" class="btn btn-primary" data-toggle="modal"
 				data-target="#modalCiclo" style="margin-bottom: 10px">
 				<span class="icon icon-edit"> Editar ciclo</span>
 			</button>
-			
+
+			<!-- Tabela com o ciclo -->
 			<table id="tblCiclo">
 
 			</table>
 		</div>
 	</div>
 
+	<!-- Container do modal -->
 	<div class="container">
+	
 		<div class="modal fade" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true" id="modalCiclo">
 
@@ -228,47 +234,55 @@
 							</div>
 
 						</div>
-
-						<fieldset class="form-group">
 						
+						<fieldset class="form-group">
+							
+							<!-- Dias da semana -->
 							<div class="row">
-								<legend class="col-form-label col-sm-2 pt-0"><strong>Dias:</strong></legend>
-								
+								<legend class="col-form-label col-sm-2 pt-0">
+									<strong>Dias:</strong>
+								</legend>
+
 								<div class="col-sm-10">
-								
+
 									<div class="form-check">
 										<input class="form-check-input boxDia" type="checkbox" name="dia" id="dia1" value="0">
 										<label class="form-check-label" for="dia1"> Domingo </label>
 									</div>
-								
+
 									<div class="form-check">
 										<input class="form-check-input boxDia" type="checkbox" name="dia" id="dia2" value="1">
-										<label class="form-check-label" for="dia2">	Segunda-Feira </label>
+										<label class="form-check-label" for="dia2"> Segunda-Feira </label>
 									</div>
-								
+
 									<div class="form-check">
-										<input class="form-check-input boxDia" type="checkbox" name="dia" id="dia3" value="2">
-										<label class="form-check-label" for="dia3"> Terça-Feira </label>
+										<input class="form-check-input boxDia" type="checkbox"
+											name="dia" id="dia3" value="2"> <label
+											class="form-check-label" for="dia3"> Terça-Feira </label>
 									</div>
-								
+
 									<div class="form-check">
-										<input class="form-check-input boxDia" type="checkbox" name="dia" id="dia4" value="3">
-										<label class="form-check-label" for="dia4"> Quarta-Feira </label>
+										<input class="form-check-input boxDia" type="checkbox"
+											name="dia" id="dia4" value="3"> <label
+											class="form-check-label" for="dia4"> Quarta-Feira </label>
 									</div>
-								
+
 									<div class="form-check">
-										<input class="form-check-input boxDia" type="checkbox" name="dia" id="dia5" value="4">
-										<label class="form-check-label" for="dia5"> Quinta-Feira </label>
+										<input class="form-check-input boxDia" type="checkbox"
+											name="dia" id="dia5" value="4"> <label
+											class="form-check-label" for="dia5"> Quinta-Feira </label>
 									</div>
-								
+
 									<div class="form-check">
-										<input class="form-check-input boxDia" type="checkbox" name="dia" id="dia6" value="5">
-										<label class="form-check-label" for="dia6"> Sexta-Feira </label>
+										<input class="form-check-input boxDia" type="checkbox"
+											name="dia" id="dia6" value="5"> <label
+											class="form-check-label" for="dia6"> Sexta-Feira </label>
 									</div>
-								
+
 									<div class="form-check">
-										<input class="form-check-input boxDia" type="checkbox" name="dia" id="dia7" value="6">
-										<label class="form-check-label" for="dia7"> Sábado </label>
+										<input class="form-check-input boxDia" type="checkbox"
+											name="dia" id="dia7" value="6"> <label
+											class="form-check-label" for="dia7"> Sábado </label>
 									</div>
 								</div>
 							</div>

@@ -4,9 +4,9 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "Horario")
+@SuppressWarnings("serial")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Horario implements java.io.Serializable {
 

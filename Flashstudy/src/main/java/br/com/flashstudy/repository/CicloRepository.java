@@ -5,7 +5,9 @@ import org.springframework.data.repository.CrudRepository;
 import br.com.flashstudy.model.Ciclo;
 import br.com.flashstudy.model.Usuario;
 
-public interface CicloRepository extends CrudRepository<Ciclo, Long>{
-	
-	Ciclo getByUsuario (Usuario usuario);
+//Repository do ciclo (Comunicação com o BD)
+public interface CicloRepository extends CrudRepository<Ciclo, Long> {
+
+	// Solicita o ciclo do usuário
+	Ciclo getByUsuario(Usuario usuario);
 }

@@ -5,9 +5,9 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "Assunto")
+@SuppressWarnings("serial")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Assunto implements java.io.Serializable {
 
@@ -18,7 +18,7 @@ public class Assunto implements java.io.Serializable {
 	@Column(name = "tema", nullable = false, unique = true)
 	private String tema;
 
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "disciplina_codigo")
 	@JsonBackReference
 	private Disciplina disciplina;

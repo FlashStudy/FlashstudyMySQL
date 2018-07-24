@@ -22,6 +22,7 @@ import br.com.flashstudy.repository.DisciplinaRepository;
 @RequestMapping(value = "/disciplina")
 public class DisciplinaController {
 
+	// Operações no BD das disciplinas
 	@Autowired
 	private DisciplinaRepository disciplinaRepository;
 
@@ -36,7 +37,8 @@ public class DisciplinaController {
 	@PostMapping(path = "/salvar")
 	public ResponseEntity<?> salvar(@RequestBody Disciplina disciplina, HttpSession session) {
 
-		Disciplina d = new Disciplina(disciplina.getCodigo(), disciplina.getNome(), (Usuario) session.getAttribute("usuario"));
+		Disciplina d = new Disciplina(disciplina.getCodigo(), disciplina.getNome(),
+				(Usuario) session.getAttribute("usuario"));
 
 		Set<Assunto> assuntos = disciplina.getAssuntos();
 

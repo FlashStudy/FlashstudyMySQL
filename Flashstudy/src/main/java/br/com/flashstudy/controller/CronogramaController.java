@@ -28,9 +28,11 @@ import br.com.flashstudy.repository.DisciplinaRepository;
 @RequestMapping(value = "/cronograma")
 public class CronogramaController {
 
+	//Operações no BD do cronograma
 	@Autowired
 	CronogramaRepository cronogramaRepository;
 
+	//Operações no BD das disciplinas
 	@Autowired
 	DisciplinaRepository disciplinaRepository;
 
@@ -57,8 +59,6 @@ public class CronogramaController {
 			
 			c.addDisciplina(disciplina);
 		}
-
-		//cronogramaRepository.save(c);
 
 		return new ResponseEntity<>(cronogramaRepository.save(c), HttpStatus.OK);
 
