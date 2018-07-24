@@ -117,7 +117,8 @@
     				strDisciplina = "<div class='card bg-secundary' title='Clique para editar as informações da matéria'>" +
     								"<div class='card-body text-center'> <h4 class='card-title'>" + disciplinas[i].nome + "</h4>"+
     								"<p class='card-text'>" + strassunto + "<button type='button' class='btn btn-dark btnMateria' value='" + i + 
-    								"' style='width: 100%' data-toggle='modal' data-target='#modalMateria'>Editar</button></p></div></div>";
+    								"' style='width: 50%' data-toggle='modal' data-target='#modalMateria'>Editar</button>" +
+    								"<button type'button' class='btn btn-danger btnDeletaMateria' value'" + i + "' style='width: 50%'>Deletar</button></p></div></div>";
 					$("#materiasDeck").append(strDisciplina);
     			}
 				
@@ -226,6 +227,8 @@
 					objCronograma.inicio = $("#minicio").val();
 					objCronograma.fim = $("#mfim").val();
 					objCronograma.disciplinas = disciplinas;
+
+					console.log(objCronograma);
 					
 					$.ajax({
 	                    type: "POST",
@@ -235,7 +238,7 @@
 	                    data: JSON.stringify(objCronograma),
 	                    dataType: "json",
 	                    success: function (resposta) {
-	                        window.location.replace("cronograma");
+	                        console.log(resposta);
 	                    } 
 	                });
 				}

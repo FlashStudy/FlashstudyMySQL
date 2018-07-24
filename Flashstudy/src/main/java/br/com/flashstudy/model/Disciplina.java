@@ -22,7 +22,7 @@ public class Disciplina implements java.io.Serializable {
 	@Column(name = "nome", nullable = false)
 	private String nome;
 
-	@OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
 	private Set<Assunto> assuntos = new HashSet<>();
 
 	@ManyToOne

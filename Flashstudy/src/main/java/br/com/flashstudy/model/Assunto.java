@@ -18,7 +18,7 @@ public class Assunto implements java.io.Serializable {
 	@Column(name = "tema", nullable = false, unique = true)
 	private String tema;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "disciplina_codigo")
 	@JsonBackReference
 	private Disciplina disciplina;

@@ -1,19 +1,24 @@
 package br.com.flashstudy.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import br.com.flashstudy.error.Resposta;
-
+import br.com.flashstudy.model.Assunto;
 import br.com.flashstudy.model.Cronograma;
 import br.com.flashstudy.model.Disciplina;
 import br.com.flashstudy.model.Usuario;
-
 import br.com.flashstudy.repository.CronogramaRepository;
 import br.com.flashstudy.repository.DisciplinaRepository;
 
@@ -35,15 +40,27 @@ public class CronogramaController {
 
 		Cronograma c = new Cronograma(cronograma.getCodigo(), cronograma.getInicio(), cronograma.getFim(),
 				(Usuario) session.getAttribute("usuario"));
-
+		
+		c.setDisciplinas(new HashSet<>());
+		
 		for (Disciplina disciplina : cronograma.getDisciplinas()) {
 			disciplina.setUsuario((Usuario) session.getAttribute("usuario"));
+			
+			Set<Assunto> assuntos = disciplina.getAssuntos();
+			
+			if(assuntos != null) {
+				disciplina.setAssuntos(new HashSet<>());
+				for(Assunto assunto : assuntos) {
+					disciplina.addAssunto(assunto);
+				}
+			}
+			
 			c.addDisciplina(disciplina);
 		}
 
-		cronogramaRepository.save(c);
+		//cronogramaRepository.save(c);
 
-		return new ResponseEntity<>(new Resposta("Cronograma e Disciplinas salvos!"), HttpStatus.OK);
+		return new ResponseEntity<>(cronogramaRepository.save(c), HttpStatus.OK);
 
 	}
 
