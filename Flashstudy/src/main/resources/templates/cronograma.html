@@ -118,7 +118,7 @@
     								"<div class='card-body text-center'> <h4 class='card-title'>" + disciplinas[i].nome + "</h4>"+
     								"<p class='card-text'>" + strassunto + "<button type='button' class='btn btn-dark btnMateria' value='" + i + 
     								"' style='width: 50%' data-toggle='modal' data-target='#modalMateria'>Editar</button>" +
-    								"<button type'button' class='btn btn-danger btnDeletaMateria' value'" + i + "' style='width: 50%'>Deletar</button></p></div></div>";
+    								"<button type'button' class='btn btn-danger btnDeletaMateria' value='" + i + "' style='width: 50%'>Deletar</button></p></div></div>";
 					$("#materiasDeck").append(strDisciplina);
     			}
 				
@@ -274,10 +274,72 @@
 				assuntos = materiaSelecionada.assuntos;
 
           		for(i = 0; i < assuntos.length; i++){
-                    $("#tblAssuntos").append("<tr class='assunto'><td class='tema'>" + assuntos[i].tema + "</td></tr>");					
+                    $("#tblAssuntos").append("<tr class='assunto'><td class='tema'>" + assuntos[i].tema + "</td><td><input class='form-check-input boxAssunto' type='checkbox' name='assunto' value='" + i + "'></td></tr>");					
 	            }
             });
 
+			
+            
+			$("#materiasDeck").on("click", ".btnDeletaMateria", function(){
+           		materiaSelecionada = disciplinas[$(this).attr("value")];
+
+				console.log(materiaSelecionada);
+				
+				var r = confirm("Deletar matéria: " + materiaSelecionada.nome + "?");
+
+				if(r == true){
+					$.ajax({
+					    url: '/disciplina/deleta/' + materiaSelecionada.codigo,
+					    type: 'DELETE',
+					    success: function(result) {
+			                window.location.replace("cronograma");
+					    }
+					});
+				}
+			})
+			
+			$("#modalMateria").on("change", ".boxAssunto", function(){
+
+				var selecionado = false;
+				
+				$("input:checkbox[name=assunto]:checked").each(function(){
+					selecionado = true;
+				});
+
+				if(selecionado == true){
+					$("#btnDeletaAssuntos").prop("disabled", false);
+				}else{
+					$("#btnDeletaAssuntos").prop("disabled", true);
+				}
+				
+			});
+
+			$("#btnDeletaAssuntos").click(function(){
+				resposta = confirm("Tem certeza em deletar todos os assuntos selecionados?");
+
+				if (resposta == true){
+					var assuntosSelecionados = [];
+					
+					$("input:checkbox[name=assunto]:checked").each(function(){
+						assuntosSelecionados.push(assuntos[$(this).val()]);
+					});
+
+					console.log(assuntosSelecionados);
+					
+					$.ajax({
+	                    type: "DELETE",
+	                    cache: false,
+	                    contentType: "application/json",
+	                    url: "/assunto/deleta",
+	                    data: JSON.stringify(assuntosSelecionados),
+	                    dataType: "json",
+	                    success: function (resposta) {
+	                        window.location.replace("cronograma");
+	                    } 
+	                });
+				}
+			});
+            
             /* Confirma e salva/atualiza os assuntos da materia */
            	$("#btnSalvaAssunto").click(function(){
 				if($("#tblAssuntos tr").length > 1){
@@ -529,6 +591,8 @@
 							
 						<!-- Salva/atualiza a matéria -->
 						<button type="button" id="btnSalvaAssunto" class="btn btn-success">Confirmar</button>
+
+						<button type="button" id="btnDeletaAssuntos" class="btn btn-danger" disabled="disabled">Deletar assuntos selecionados</button>
 
 						<!-- Fecha o modal -->
 						<button type="button" class="btn btn-danger btnCancelar"

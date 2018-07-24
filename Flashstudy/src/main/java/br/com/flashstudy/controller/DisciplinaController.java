@@ -52,4 +52,11 @@ public class DisciplinaController {
 		return new ResponseEntity<>(new Resposta("Disciplina e assuntos salvos!"), HttpStatus.OK);
 
 	}
+
+	// Deleta através do código da disciplina
+	@DeleteMapping("/deleta/{codigo}")
+	public ResponseEntity<?> deletar(@PathVariable("codigo") Long codigo) {
+		disciplinaRepository.deleteById(codigo);
+		return new ResponseEntity<>(new Resposta("Matéria deletada com sucesso!"), HttpStatus.OK);
+	}
 }
