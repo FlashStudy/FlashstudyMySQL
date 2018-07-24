@@ -227,8 +227,6 @@
 					objCronograma.inicio = $("#minicio").val();
 					objCronograma.fim = $("#mfim").val();
 					objCronograma.disciplinas = disciplinas;
-
-					console.log(objCronograma);
 					
 					$.ajax({
 	                    type: "POST",
@@ -238,7 +236,7 @@
 	                    data: JSON.stringify(objCronograma),
 	                    dataType: "json",
 	                    success: function (resposta) {
-	                        console.log(resposta);
+	                        window.location.replace("cronograma");
 	                    } 
 	                });
 				}

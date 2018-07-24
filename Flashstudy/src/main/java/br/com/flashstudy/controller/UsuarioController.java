@@ -6,23 +6,27 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.util.MultiValueMap;
+import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.flashstudy.error.Resposta;
+import br.com.flashstudy.model.Duvida;
 import br.com.flashstudy.model.Usuario;
 import br.com.flashstudy.repository.UsuarioRepository;
+import br.com.flashstudy.service.EmailService;
 
 //Controller do Usário
 
-@Controller
+@RestController
 @RequestMapping(value = "/usuario")
 public class UsuarioController {
 
 	@Autowired
 	UsuarioRepository usuarioRepository;
 
+	@Autowired
+	private EmailService emailService;
+	
 	// Finalizar a sessão
 	@GetMapping(path = "/sair")
 	public String sair(HttpSession http) {
@@ -33,14 +37,20 @@ public class UsuarioController {
 
 	}
 
-	// Cadastrar
+	// Cadastrar/atualizar
 	@PostMapping(value = "/cadastro")
 	public @ResponseBody ResponseEntity<?> cadastro(@Valid @RequestBody Usuario usuario, HttpSession httpSession) {
 
 		Usuario aux = usuarioRepository.save(usuario);
 
 		httpSession.setAttribute("usuario", aux);
-
+		
+		try {
+			emailService.enviarEmailCadastro(aux);
+		}catch(MailException e) {
+			System.out.println(e.getMessage());
+		}
+		
 		return new ResponseEntity<>(new Resposta("Usuário cadastrado com sucesso!"), HttpStatus.OK);
 	}
 
@@ -67,24 +77,6 @@ public class UsuarioController {
 		}
 	}
 
-	// Atualizar
-	@PostMapping(value = "/atualiza", produces = { "application/json", "application/xml" }, consumes = {
-			"application/x-www-form-urlencoded" })
-	public @ResponseBody String atualiza(@SuppressWarnings("rawtypes") @RequestBody MultiValueMap params, HttpSession session) throws Exception {
-
-		System.out.println(params);
-		Usuario usuario = new Usuario();
-		
-		
-		//usuario.setCodigo((Long) params.get("codigo"));
-		//usuario.setEmail((String) params.get("email"));
-		//usuario.setNome((String) params.get("nome"));
-		//usuario.setSenha((String) params.get("senha"));
-
-		System.out.println(usuario.toString());
-
-		return "index";
-	}
 
 	// Verifica se o email já está cadastrado
 	@GetMapping(value = "/verifica/{email}")
@@ -99,5 +91,16 @@ public class UsuarioController {
 	@GetMapping(value = "/logado")
 	public @ResponseBody ResponseEntity<?> logado(HttpSession session) {
 		return new ResponseEntity<>((Usuario) session.getAttribute("usuario"), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/mensagem")
+	public @ResponseBody ResponseEntity<?> enviarMensagem(@RequestBody Duvida duvida, HttpSession session){
+		try {
+			emailService.enviarEmailDuvida((Usuario)session.getAttribute("usuario"), duvida);
+			return new ResponseEntity<>(new Resposta("Sua mensagem foi enviada com êxito!"), HttpStatus.OK);
+		}catch(MailException e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(new Resposta("Ocorreu um erro ao enviar sua mensagem! Por favor, tente mais tarde."), HttpStatus.BAD_GATEWAY);
+		}
 	}
 }
