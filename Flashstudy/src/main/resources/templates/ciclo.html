@@ -137,8 +137,16 @@
 					dias.push(dia);
 				});
 
-				var ciclo = {numMaterias : $("#numMaterias").val(),
+				var ciclo = {};
+
+				if(cicloAtual == null){
+					ciclo = {numMaterias : $("#numMaterias").val(),
 							 dias : dias};
+				}else{
+					ciclo = {codigo : cicloAtual.codigo,
+							 numMaterias : $("#numMaterias").val(),
+							 dias : dias};
+				}
 
 				$.ajax({
                     type: "POST",
