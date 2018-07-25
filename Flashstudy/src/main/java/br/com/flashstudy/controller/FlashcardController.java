@@ -13,7 +13,7 @@ import br.com.flashstudy.model.Flashcard;
 import br.com.flashstudy.model.Usuario;
 import br.com.flashstudy.repository.FlashcardRepository;
 
-//Controller dos flashcards
+//Controller dos flashcards 
 @Component
 @RestController
 @RequestMapping(value = "/flashcard")
