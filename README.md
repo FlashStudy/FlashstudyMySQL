@@ -14,14 +14,14 @@ Utiliza Java, Html 5, CSS3, JavaScript (Jquery), Projeto Spring Boot (Web, Actua
 7. Ciclo;
 8. Atualização de cronograma;
 9. Comunicação via email com o usuario;
-10. Atualizar/deletar materias, assuntos.
+10. Atualizar/deletar materias, assuntos;
+11. Atualizar ciclo;
+12. Edição dos dados do usuário (sem foto).
 
 # Desenvolvimento
-1. Edição dos dados do usuário;
 
 # Ainda não iniciado
 1. Criação das pastas dos flashcards;
-2. Atualizar ciclo;
 3. Pesquisar flashcards de outros usuários.
 
 # Extras
