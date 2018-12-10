@@ -22,41 +22,41 @@ import br.com.flashstudy.repository.DisciplinaRepository;
 @RequestMapping(value = "/disciplina")
 public class DisciplinaController {
 
-	// Operações no BD das disciplinas
-	@Autowired
-	private DisciplinaRepository disciplinaRepository;
+    // Operações no BD das disciplinas
+    @Autowired
+    private DisciplinaRepository disciplinaRepository;
 
-	// Lista as disciplinas de um usuário
-	@GetMapping(value = "/lista")
-	public ResponseEntity<?> lista(HttpSession session) {
-		return new ResponseEntity<>(disciplinaRepository.getByUsuario((Usuario) session.getAttribute("usuario")),
-				HttpStatus.OK);
-	}
+    // Lista as disciplinas de um usuário
+    @GetMapping(value = "/lista")
+    public ResponseEntity<?> lista(HttpSession session) {
+        return new ResponseEntity<>(disciplinaRepository.getByUsuario((Usuario) session.getAttribute("usuario")),
+                HttpStatus.OK);
+    }
 
-	// Salva/atualiza a disciplina
-	@PostMapping(path = "/salvar")
-	public ResponseEntity<?> salvar(@RequestBody Disciplina disciplina, HttpSession session) {
+    // Salva/atualiza a disciplina
+    @PostMapping(path = "/salvar")
+    public ResponseEntity<?> salvar(@RequestBody Disciplina disciplina, HttpSession session) {
 
-		Disciplina d = new Disciplina(disciplina.getCodigo(), disciplina.getNome(),
-				(Usuario) session.getAttribute("usuario"));
+        Disciplina d = new Disciplina(disciplina.getCodigo(), disciplina.getNome(),
+                (Usuario) session.getAttribute("usuario"));
 
-		Set<Assunto> assuntos = disciplina.getAssuntos();
+        Set<Assunto> assuntos = disciplina.getAssuntos();
 
-		for (Assunto a : assuntos) {
-			a.setUsuario((Usuario) session.getAttribute("usuario"));
-			d.addAssunto(a);
-		}
+        for (Assunto a : assuntos) {
+            a.setUsuario((Usuario) session.getAttribute("usuario"));
+            d.addAssunto(a);
+        }
 
-		disciplinaRepository.save(d);
+        disciplinaRepository.save(d);
 
-		return new ResponseEntity<>(new Resposta("Disciplina e assuntos salvos!"), HttpStatus.OK);
+        return new ResponseEntity<>(new Resposta("Disciplina e assuntos salvos!"), HttpStatus.OK);
 
-	}
+    }
 
-	// Deleta através do código da disciplina
-	@DeleteMapping("/deleta/{codigo}")
-	public ResponseEntity<?> deletar(@PathVariable("codigo") Long codigo) {
-		disciplinaRepository.deleteById(codigo);
-		return new ResponseEntity<>(new Resposta("Matéria deletada com sucesso!"), HttpStatus.OK);
-	}
+    // Deleta através do código da disciplina
+    @DeleteMapping("/deleta/{codigo}")
+    public ResponseEntity<?> deletar(@PathVariable("codigo") Long codigo) {
+        disciplinaRepository.deleteById(codigo);
+        return new ResponseEntity<>(new Resposta("Matéria deletada com sucesso!"), HttpStatus.OK);
+    }
 }

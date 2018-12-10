@@ -31,7 +31,6 @@ public class Flashcard implements java.io.Serializable {
 	private boolean publico;
 
 	@ManyToOne
-	@JoinColumn(name = "codigo_usuario")
 	@JsonBackReference
 	private Usuario usuario;
 

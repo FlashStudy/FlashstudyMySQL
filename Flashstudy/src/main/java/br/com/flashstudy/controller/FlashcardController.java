@@ -19,37 +19,37 @@ import br.com.flashstudy.repository.FlashcardRepository;
 @RequestMapping(value = "/flashcard")
 public class FlashcardController {
 
-	// Operações no BD dos flashcards
-	@Autowired
-	FlashcardRepository flashcardRepository;
+    // Operações no BD dos flashcards
+    @Autowired
+    FlashcardRepository flashcardRepository;
 
-	// Lista os flashcards do usuário
-	@GetMapping(path = "/lista")
-	public ResponseEntity<?> lista(HttpSession session) {
+    // Lista os flashcards do usuário
+    @GetMapping(path = "/lista")
+    public ResponseEntity<?> lista(HttpSession session) {
 
-		return new ResponseEntity<>(flashcardRepository.getByUsuario((Usuario) session.getAttribute("usuario")),
-				HttpStatus.OK);
-	}
+        return new ResponseEntity<>(flashcardRepository.getByUsuario((Usuario) session.getAttribute("usuario")),
+                HttpStatus.OK);
+    }
 
-	// Salva o flashcard
-	@PostMapping(path = "/salvar")
-	public ResponseEntity<?> salvar(@RequestBody Flashcard flashcard, HttpSession session) {
+    // Salva o flashcard
+    @PostMapping(path = "/salvar")
+    public ResponseEntity<?> salvar(@RequestBody Flashcard flashcard, HttpSession session) {
 
-		Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-		flashcard.setUsuario(usuario);
+        flashcard.setUsuario(usuario);
 
-		flashcardRepository.save(flashcard);
+        flashcardRepository.save(flashcard);
 
-		return new ResponseEntity<>(new Resposta("Flashcard salvo!"), HttpStatus.OK);
+        return new ResponseEntity<>(new Resposta("Flashcard salvo!"), HttpStatus.OK);
 
-	}
+    }
 
-	// Deleta através do código do flashcard
-	@DeleteMapping("/deleta/{codigo}")
-	public ResponseEntity<?> deletar(@PathVariable("codigo") Long codigo) {
-		flashcardRepository.deleteById(codigo);
-		return new ResponseEntity<>(new Resposta("Card deletado com sucesso!"), HttpStatus.OK);
-	}
+    // Deleta através do código do flashcard
+    @DeleteMapping("/deleta/{codigo}")
+    public ResponseEntity<?> deletar(@PathVariable("codigo") Long codigo) {
+        flashcardRepository.deleteById(codigo);
+        return new ResponseEntity<>(new Resposta("Card deletado com sucesso!"), HttpStatus.OK);
+    }
 
 }
